@@ -1,0 +1,28 @@
+# Ambiente / segredos
+.env
+.env.*
+
+# Dump do banco — contém dados de usuários (CPF, telefone, hashes de senha).
+# Distribuído separadamente, fora do repositório.
+database/
+*.sql
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Logs
+*.log
+
+# Editor (preferências locais)
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
