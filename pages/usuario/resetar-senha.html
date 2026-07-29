@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Senac Tech - Redefinir Senha</title>
+		<link rel="stylesheet" type="text/css" href="../../statics/css/base.css">
+		<link rel="stylesheet" type="text/css" href="../../statics/css/menu.css">
+		<link rel="stylesheet" type="text/css" href="../../statics/css/usuario/usuario.css">
+	</head>
+	<body>
+		<section>
+
+			<img src="../../statics/img/banners/logo-senac.png" alt="Logo Senac" title="Senac" id="logosenac">
+
+			<input type="checkbox" id="bt_menu">
+			<label for="bt_menu">&#9776;</label>
+			<nav id="menu">
+			<ul>
+				<li>
+					<a href="../../index.html">Início</a>
+					<u>
+				</li>
+				<li>
+					<a href="../cursos.html">Cursos</a>
+					<ul>
+						<li><a href="../cursoinfo.html">Informática</a></li>
+						<li><a href="../cursoredes.html">Redes de Computadores</a></li>
+						<li><a href="../cursosistemas.html">Desenvolvimento de Sistemas</a></li>
+						<li><a href="../cursoadmin.html">Administração</a></li>
+						<li><a href="../cursojogos.html">Programação de Jogos Digitais</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="../localizacao.html">Localização</a>
+				</li>
+				<li>
+					<a href="cadastro.html">Cadastro</a>
+				</li>
+				<li>
+					<a href="login.html">Entrar</a>
+				</li>
+			</ul>
+			</nav>
+		</section>
+
+		<hr>
+
+		<main class="usuario-container">
+			<h2>Redefinir Senha</h2>
+			<p class="descricao">Digite o código recebido por e-mail e escolha uma nova senha.</p>
+			<form id="form-resetar-senha" class="form-usuario" novalidate>
+				<div class="campo">
+					<label for="email">E-mail</label>
+					<input type="email" id="email" name="email" placeholder="nome@dominio.com" required>
+				</div>
+
+				<div class="campo">
+					<label for="codigo">Código de verificação</label>
+					<input type="text" id="codigo" name="codigo" maxlength="6" required>
+				</div>
+
+				<div class="campo">
+					<label for="senha">Nova senha</label>
+					<input type="password" id="senha" name="senha" required>
+				</div>
+
+				<p class="mensagem" id="mensagem-resetar" role="alert"></p>
+
+				<div class="acoes">
+					<button type="submit">Redefinir senha</button>
+				</div>
+
+				<div class="links-auxiliares">
+					<a href="login.html">Voltar para o login</a>
+				</div>
+			</form>
+		</main>
+
+		<script src="../../statics/js/config.js"></script>
+		<script src="../../statics/js/components.js"></script>
+
+		<hr>
+		<footer>
+			<p>&copy; Senac Tech</p>
+		</footer>
+	<script src="../../statics/js/menu.js"></script>
+
+	</body>
+</html>

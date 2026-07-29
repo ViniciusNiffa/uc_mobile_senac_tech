@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Senac Tech - Referência de Design</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  h1 { font-size: 26px; margin: 0 0 4px; color: #b35a1a; }
+  h2 {
+    font-size: 17px;
+    margin: 0 0 10px;
+    color: #b35a1a;
+    border-bottom: 2px solid #db7a29;
+    padding-bottom: 4px;
+  }
+  h3 { font-size: 13.5px; margin: 14px 0 6px; color: #333; }
+  .cover {
+    text-align: center;
+    padding: 60px 10px 40px;
+    border-bottom: 4px solid #db7a29;
+    margin-bottom: 10px;
+  }
+  .cover .tag {
+    display: inline-block;
+    background: #db7a29;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .cover p.subtitle { font-size: 14px; color: #555; margin-top: 6px; }
+  .cover .meta { margin-top: 30px; font-size: 11px; color: #888; }
+  section { page-break-inside: avoid; margin-bottom: 26px; }
+  .page-break { page-break-before: always; }
+
+  .swatch-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .swatch {
+    width: 150px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .swatch .color { height: 60px; }
+  .swatch .info { padding: 6px 8px; background: #fafafa; }
+  .swatch .name { font-weight: bold; font-size: 11.5px; }
+  .swatch .hex { font-family: "Courier New", monospace; font-size: 11px; color: #555; }
+  .swatch .use { font-size: 10.5px; color: #777; margin-top: 3px; }
+
+  table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 6px 8px;
+    font-size: 11.5px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #f3f3f3; }
+  code {
+    font-family: "Courier New", monospace;
+    background: #f3f3f3;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+  ul, ol { margin: 4px 0 4px 18px; padding: 0; }
+  li { margin-bottom: 3px; }
+  .badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #fff;
+  }
+  .badge.problem { background: #c0392b; }
+  .badge.ok { background: #2e8b57; }
+  .type-sample { border: 1px solid #eee; border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; }
+  footer.pagefoot { font-size: 10px; color: #999; text-align: center; margin-top: 30px; }
+  .two-col { display: flex; gap: 20px; }
+  .two-col > div { flex: 1; }
+  .contrast-good { color: #1a7a1a; font-weight: bold; }
+  .contrast-bad { color: #c0392b; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <span class="tag">Documento de Referência Visual</span>
+  <h1>Senac Tech — Sistema de Cursos</h1>
+  <p class="subtitle">Paleta de cores, tipografia e inventário visual do projeto atual,<br>
+  para servir de base ao redesign completo do front-end.</p>
+  <p class="meta">Projeto escolar — refazer sistema existente · Gerado em 29/07/2026</p>
+</div>
+
+<section>
+  <h2>1. Como este documento foi feito</h2>
+  <p>Todas as cores, fontes e componentes abaixo foram extraídos diretamente dos arquivos CSS/HTML do
+  projeto atual (<code>statics/css/*.css</code> e <code>index.html</code> / <code>templates/</code>),
+  não são suposições. Isso serve como "antes" para comparar com o que for desenhado no redesign.</p>
+</section>
+
+<section>
+  <h2>2. Paleta de cores atual (extraída do código)</h2>
+  <p>O site usa muito poucas cores — basicamente um laranja de marca, branco, preto e um azul escuro
+  usado só em estados de hover. Isso é uma base ok para manter identidade com o Senac, mas falta uma
+  escala de neutros e cores semânticas (sucesso/erro) para formulários como o de cadastro/login.</p>
+
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="color" style="background:#db7a29;"></div>
+      <div class="info">
+        <div class="name">Laranja Senac</div>
+        <div class="hex">#DB7A29</div>
+        <div class="use">Menu, cards de curso (fundo)</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#ffa500;"></div>
+      <div class="info">
+        <div class="name">Laranja secundário</div>
+        <div class="hex">#FFA500</div>
+        <div class="use">Fundo de #pagina (uso isolado/legado)</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#ffffff; border-bottom:1px solid #eee;"></div>
+      <div class="info">
+        <div class="name">Branco</div>
+        <div class="hex">#FFFFFF</div>
+        <div class="use">Fundo geral, texto sobre laranja no hover</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#000000;"></div>
+      <div class="info">
+        <div class="name">Preto</div>
+        <div class="hex">#000000</div>
+        <div class="use">Texto padrão, links visitados</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:darkblue;"></div>
+      <div class="info">
+        <div class="name">Azul escuro</div>
+        <div class="hex">darkblue (#00008B)</div>
+        <div class="use">Hover em menu e tabelas de curso</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#0000ff;"></div>
+      <div class="info">
+        <div class="name">Azul (link)</div>
+        <div class="hex">blue (#0000FF)</div>
+        <div class="use">Link visitado em stylecursos.css</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#cccccc;"></div>
+      <div class="info">
+        <div class="name">Cinza borda</div>
+        <div class="hex">#CCCCCC</div>
+        <div class="use">Borda de submenu</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#dddddd;"></div>
+      <div class="info">
+        <div class="name">Cinza borda 2</div>
+        <div class="hex">#DDDDDD</div>
+        <div class="use">Borda inferior de células de tabela</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Contraste (acessibilidade) do que já existe</h3>
+  <table>
+    <tr><th>Combinação</th><th>Uso atual</th><th>Resultado</th></tr>
+    <tr><td>Branco sobre #DB7A29</td><td>Texto do menu</td><td class="contrast-good">Contraste ~2.3:1 — abaixo do mínimo AA (4.5:1) para texto pequeno</td></tr>
+    <tr><td>Preto sobre branco</td><td>Texto de parágrafos</td><td class="contrast-good">Ótimo contraste</td></tr>
+    <tr><td>darkblue sobre branco</td><td>Hover de menu/tabela</td><td class="contrast-good">Bom contraste</td></tr>
+  </table>
+  <p style="font-size:10.5px; color:#888;">
+  O laranja de marca (#DB7A29) com texto branco em cima fica abaixo do recomendado para acessibilidade.
+  No redesign, considere usar essa cor só em fundos grandes com texto escuro, ou escurecer o tom quando
+  usado como fundo atrás de texto branco pequeno.
+  </p>
+</section>
+
+<section class="page-break">
+  <h2>3. Paleta sugerida para o redesign</h2>
+  <p>Mantendo a identidade visual do Senac (laranja), mas organizada em tokens reutilizáveis: uma cor
+  primária com variações de tom, uma escala neutra completa (em vez de só branco/preto) e cores
+  semânticas para feedback de formulários (cadastro, login, recuperação de senha).</p>
+
+  <h3>Primária (marca)</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="color" style="background:#8f4d1a;"></div><div class="info"><div class="name">Primary 700</div><div class="hex">#8F4D1A</div><div class="use">Texto sobre fundo claro, títulos</div></div></div>
+    <div class="swatch"><div class="color" style="background:#b35a1a;"></div><div class="info"><div class="name">Primary 600</div><div class="hex">#B35A1A</div><div class="use">Hover de botões</div></div></div>
+    <div class="swatch"><div class="color" style="background:#db7a29;"></div><div class="info"><div class="name">Primary 500 (base)</div><div class="hex">#DB7A29</div><div class="use">Botões, menu, destaques</div></div></div>
+    <div class="swatch"><div class="color" style="background:#f2a866;"></div><div class="info"><div class="name">Primary 300</div><div class="hex">#F2A866</div><div class="use">Fundos suaves, badges</div></div></div>
+    <div class="swatch"><div class="color" style="background:#fdeee0;"></div><div class="info"><div class="name">Primary 100</div><div class="hex">#FDEEE0</div><div class="use">Fundo de seção, hover sutil</div></div></div>
+  </div>
+
+  <h3>Neutros</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="color" style="background:#1a1a1a;"></div><div class="info"><div class="name">Neutral 900</div><div class="hex">#1A1A1A</div><div class="use">Texto principal</div></div></div>
+    <div class="swatch"><div class="color" style="background:#4d4d4d;"></div><div class="info"><div class="name">Neutral 700</div><div class="hex">#4D4D4D</div><div class="use">Texto secundário</div></div></div>
+    <div class="swatch"><div class="color" style="background:#8a8a8a;"></div><div class="info"><div class="name">Neutral 500</div><div class="hex">#8A8A8A</div><div class="use">Placeholders, ícones</div></div></div>
+    <div class="swatch"><div class="color" style="background:#e0e0e0; border:1px solid #ddd;"></div><div class="info"><div class="name">Neutral 200</div><div class="hex">#E0E0E0</div><div class="use">Bordas, divisores</div></div></div>
+    <div class="swatch"><div class="color" style="background:#f7f7f7; border:1px solid #ddd;"></div><div class="info"><div class="name">Neutral 100</div><div class="hex">#F7F7F7</div><div class="use">Fundo de página/cards</div></div></div>
+    <div class="swatch"><div class="color" style="background:#ffffff; border:1px solid #ddd;"></div><div class="info"><div class="name">Neutral 0</div><div class="hex">#FFFFFF</div><div class="use">Fundo base</div></div></div>
+  </div>
+
+  <h3>Semânticas (para formulários: cadastro, login, reset de senha)</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="color" style="background:#2e8b57;"></div><div class="info"><div class="name">Sucesso</div><div class="hex">#2E8B57</div><div class="use">Cadastro/reset com sucesso</div></div></div>
+    <div class="swatch"><div class="color" style="background:#c0392b;"></div><div class="info"><div class="name">Erro</div><div class="hex">#C0392B</div><div class="use">Erros de validação de formulário</div></div></div>
+    <div class="swatch"><div class="color" style="background:#2b6cc0;"></div><div class="info"><div class="name">Informação</div><div class="hex">#2B6CC0</div><div class="use">Links, mensagens neutras</div></div></div>
+    <div class="swatch"><div class="color" style="background:#d9a017;"></div><div class="info"><div class="name">Atenção</div><div class="hex">#D9A017</div><div class="use">Avisos, campos obrigatórios</div></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>4. Tipografia</h2>
+  <p><strong>Atual:</strong> apenas <code>Arial, Helvetica, sans-serif</code>, sem escala de tamanhos
+  definida — tamanhos de fonte não aparecem nos CSS (só herda o padrão do navegador). Não há
+  hierarquia clara entre h2/h3/parágrafo além do <code>text-align: center</code>.</p>
+
+  <h3>Sugestão de escala tipográfica para o redesign</h3>
+  <div class="type-sample" style="font-size:28px; font-weight:bold;">H1 — Título de página (28px / bold)</div>
+  <div class="type-sample" style="font-size:22px; font-weight:bold;">H2 — Título de seção (22px / bold)</div>
+  <div class="type-sample" style="font-size:17px; font-weight:bold;">H3 — Subtítulo (17px / bold)</div>
+  <div class="type-sample" style="font-size:14px;">Parágrafo / corpo de texto (14px / regular, altura de linha 1.5)</div>
+  <div class="type-sample" style="font-size:12px; color:#777;">Legenda / texto auxiliar (12px)</div>
+  <p style="font-size:10.5px; color:#888;">
+  Família sugerida: manter <code>Arial/Helvetica/sans-serif</code> (ou trocar por algo como
+  <code>Inter</code>/<code>Roboto</code> via Google Fonts, se o professor permitir dependências
+  externas) — mas definindo os tamanhos acima em vez de deixar no padrão do navegador.
+  </p>
+</section>
+
+<section class="page-break">
+  <h2>5. Inventário de páginas e arquivos do projeto atual</h2>
+  <table>
+    <tr><th>Arquivo</th><th>Função</th></tr>
+    <tr><td><code>index.html</code></td><td>Home — sobre o Senac</td></tr>
+    <tr><td><code>templates/pages/cursos.html</code></td><td>Lista de cursos (tabela)</td></tr>
+    <tr><td><code>templates/cursoinfo.html</code></td><td>Curso: Informática</td></tr>
+    <tr><td><code>templates/cursoredes.html</code></td><td>Curso: Redes de Computadores</td></tr>
+    <tr><td><code>templates/pages/cursosistemas.html</code></td><td>Curso: Desenvolvimento de Sistemas</td></tr>
+    <tr><td><code>templates/cursoadmin.html</code></td><td>Curso: Administração</td></tr>
+    <tr><td><code>templates/cursojogos.html</code></td><td>Curso: Jogos Digitais</td></tr>
+    <tr><td><code>templates/localizacao.html</code></td><td>Localização da unidade</td></tr>
+    <tr><td><code>templates/usuario/cadastro.html</code></td><td>Formulário de cadastro</td></tr>
+    <tr><td><code>templates/usuario/login.html</code></td><td>Login</td></tr>
+    <tr><td><code>templates/usuario/perfil.html</code></td><td>Perfil do usuário</td></tr>
+    <tr><td><code>templates/usuario/recuperar_senha.html</code>, <code>resetar_senha.html</code>, <code>verificar_email.html</code>, <code>sucesso.html</code></td><td>Fluxo de recuperação de conta</td></tr>
+  </table>
+
+  <h3>CSS atual</h3>
+  <table>
+    <tr><th>Arquivo</th><th>Escopo</th><th>Status</th></tr>
+    <tr><td><code>styleindex.css</code></td><td>Estilos específicos da home</td><td><span class="badge problem">misturado</span></td></tr>
+    <tr><td><code>body.css</code></td><td>Reset básico + header/nav/footer globais</td><td><span class="badge ok">reaproveitável</span></td></tr>
+    <tr><td><code>menu.css</code></td><td>Menu responsivo (checkbox hack)</td><td><span class="badge problem">com bugs</span></td></tr>
+    <tr><td><code>stylecursos.css</code></td><td>Tabela de cursos</td><td><span class="badge problem">layout rígido em tabela</span></td></tr>
+    <tr><td><code>pag cursos style.css</code></td><td>Página de curso individual</td><td><span class="badge problem">espaço no nome do arquivo</span></td></tr>
+    <tr><td><code>cadastro.css</code></td><td>Formulário de cadastro</td><td><span class="badge problem">arquivo vazio</span></td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>6. Problemas encontrados no CSS atual (para não repetir)</h2>
+  <ul>
+    <li><span class="badge problem">bug</span> <code>menu.css</code> tem propriedades inválidas/erros de digitação: <code>smargin</code>, <code>sfont-family</code>, <code>stransition</code>, e em <code>pag cursos style.css</code> há <code>wdith</code> sem valor — CSS quebrado que o navegador ignora silenciosamente.</li>
+    <li><span class="badge problem">bug</span> <code>cadastro.css</code> está vazio — a página de cadastro provavelmente depende só de estilo inline ou de outro arquivo.</li>
+    <li><span class="badge problem">layout</span> Larguras fixas em pixels (<code>width:500px</code>) em vários lugares (parágrafos, tabelas) em vez de unidades relativas — quebra em telas menores mesmo com media query.</li>
+    <li><span class="badge problem">layout</span> Página de cursos usa <code>&lt;table&gt;</code> para organizar cards de curso — tabelas devem ser usadas para dados tabulares, não para layout de cards.</li>
+    <li><span class="badge problem">nome de arquivo</span> <code>"pag cursos style.css"</code> tem espaço no nome, o que obriga a escrever a URL com <code>%20</code> ou aspas — evite espaços em nomes de arquivo.</li>
+    <li><span class="badge problem">acessibilidade</span> Menu mobile usa o "checkbox hack" com <code>visibility</code> em vez de classe JS — funciona, mas é frágil e sem estados <code>aria-*</code>.</li>
+    <li><span class="badge problem">cor</span> Poucas cores nomeadas — <code>darkblue</code>, <code>blue</code> usados como palavras-chave CSS em vez de valores hex consistentes com o resto da paleta.</li>
+  </ul>
+</section>
+
+<section class="page-break">
+  <h2>7. Espaçamento e grid sugeridos</h2>
+  <table>
+    <tr><th>Token</th><th>Valor</th><th>Uso</th></tr>
+    <tr><td><code>--space-xs</code></td><td>4px</td><td>Espaço entre ícone e texto</td></tr>
+    <tr><td><code>--space-sm</code></td><td>8px</td><td>Padding interno pequeno</td></tr>
+    <tr><td><code>--space-md</code></td><td>16px</td><td>Padding padrão de cards/seções</td></tr>
+    <tr><td><code>--space-lg</code></td><td>24px</td><td>Espaço entre seções</td></tr>
+    <tr><td><code>--space-xl</code></td><td>40px</td><td>Espaço entre blocos grandes de página</td></tr>
+  </table>
+  <p>Sugestão: usar <code>max-width</code> (ex.: 1100px) + <code>margin: 0 auto</code> no container
+  principal em vez de larguras fixas em cada parágrafo/tabela, e <code>display:grid</code> ou
+  <code>flexbox</code> com <code>gap</code> para os cards de curso, substituindo a tabela atual.</p>
+
+  <h2>8. Componentes a redesenhar</h2>
+  <ul>
+    <li><strong>Menu principal</strong> — trocar o checkbox hack por classe JS simples; usar cor primária 500 no fundo e garantir contraste do texto.</li>
+    <li><strong>Cards de curso</strong> — substituir a <code>&lt;table&gt;</code> por grid de cards com imagem, título e botão "saiba mais".</li>
+    <li><strong>Formulários (cadastro/login/senha)</strong> — precisam de estilo próprio (hoje <code>cadastro.css</code> está vazio); usar cores semânticas para erro/sucesso e campos com foco visível.</li>
+    <li><strong>Rodapé</strong> — manter ícones de redes sociais, mas padronizar tamanho (hoje <code>footer img</code> usa <code>width:5%</code>, que fica minúsculo em telas largas).</li>
+  </ul>
+</section>
+
+<footer class="pagefoot">Senac Tech — documento gerado automaticamente a partir do código-fonte do projeto para apoiar o redesign.</footer>
+
+</body>
+</html>

@@ -52,7 +52,11 @@
 
 }
 #menu a:hover{
-	background-color: #ffffff;	
+	background-color: #ffffff;
+	color: darkblue;
+}
+#menu a.ativo{
+	background-color: #ffffff;
 	color: darkblue;
 }
 
