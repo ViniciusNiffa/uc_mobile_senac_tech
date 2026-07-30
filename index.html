@@ -2,25 +2,60 @@
 <html lang="pt-br">
 	<head>
 		<title>Senac Tech - Home</title>
-		
-		<!-- Definição de codificação de caracteres. Recomenda-se usar sempre UTF-8 -->
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="./statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="./statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="./statics/css/home.css">
-		<script src="./statics/js/menu.js"></script>
-		<script src="./statics/js/home.js"></script>
+		<!-- "defer" faz o navegador baixar os scripts em paralelo com o HTML, mas só
+		     executá-los depois que a página inteira foi lida — evita erro de tentar
+		     manipular um elemento que ainda não existe. -->
+		<script src="./statics/js/menu.js" defer></script>
+		<script src="./statics/js/home.js" defer></script>
 
 	</head>
 	<body id="s1">
-		<senac-header></senac-header>
-		
-		<hr>
-		<!-- Elemento de parágrafo -->
-		<!-- Texto do parágrafo centralizado -->
-		<br>
-		
+		<header>
+			<a href="index.html"></a>
+		</header>
+
+		<!-- Checkbox invisível + label: técnica "checkbox hack" que permite abrir/fechar
+		     o menu no celular usando só CSS, sem precisar de JavaScript. -->
+		<input type="checkbox" id="bt_menu">
+		<label for="bt_menu">&#9776;</label>
+
+		<nav id="menu">
+			<ul>
+				<li>
+					<a href="index.html">Início</a>
+				</li>
+				<li>
+					<a href="pages/cursos.html">Cursos</a>
+					<!-- Submenu: aparece ao passar o mouse (desktop) ou como lista
+					     recuada logo abaixo do item "Cursos" (celular) -->
+					<ul>
+						<li><a href="pages/cursoinfo.html">Informática</a></li>
+						<li><a href="pages/cursoredes.html">Redes de Computadores</a></li>
+						<li><a href="pages/cursosistemas.html">Desenvolvimento de Sistemas</a></li>
+						<li><a href="pages/cursoadmin.html">Administração</a></li>
+						<li><a href="pages/cursojogos.html">Programação de Jogos Digitais</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="pages/localizacao.html">Localização</a>
+				</li>
+				<li>
+					<a href="pages/usuario/cadastro.html">Cadastro</a>
+				</li>
+				<li>
+					<a href="pages/usuario/login.html">Entrar</a>
+				</li>
+			</ul>
+		</nav>
+
+		<!-- Conteúdo principal da home: texto institucional "Sobre o Senac" em dois
+		     blocos (#primeiropar e #segundopar), cada um com imagem + parágrafos.
+		     Layout (lado a lado / empilhado no celular) é feito em statics/css/home.css -->
 		<section>
 			<article>
 			<div id="primeiropar">
@@ -62,8 +97,12 @@
 			</article>
 		</section>
 		
+	<!-- Rodapé: link "voltar ao topo" (rolagem suave via statics/js/home.js) e
+		     ícones de redes sociais. Estilizado em statics/css/base.css porque o
+		     <footer> também aparece (hoje vazio) em outras páginas do site. -->
 	<footer>
 		<p align="center">
+		<!-- href="#s1" aponta para o id do <body>, ou seja, o topo da própria página -->
 		<a href="#s1">
 		<img src="statics/img/icons/seta-topo.png" alt="seta" width="68" height="68"
 		title="Subir para o topo" >
