@@ -1,0 +1,157 @@
+:root {
+	/* Laranja de marca do Senac, em 5 tons (do mais escuro ao mais claro) */
+	--cor-primaria-700: #8f4d1a;
+	--cor-primaria-600: #b35a1a;
+	--cor-primaria-500: #db7a29; /* laranja principal da marca */
+	--cor-primaria-300: #f2a866;
+	--cor-primaria-100: #fdeee0;
+
+	/* Escala de cinzas usada em textos, bordas e fundos neutros */
+	--cor-neutra-900: #1a1a1a; /* texto principal */
+	--cor-neutra-700: #4d4d4d; /* texto secundário */
+	--cor-neutra-500: #8a8a8a; /* texto auxiliar / ícones */
+	--cor-neutra-200: #e0e0e0; /* bordas e divisórias */
+	--cor-neutra-100: #f7f7f7; /* fundo de seções/cards */
+	--cor-neutra-0: #ffffff; /* branco puro */
+
+	/* Cores de feedback (usadas hoje só como referência para telas de formulário) */
+	--cor-sucesso: #2e8b57;
+	--cor-erro: #c0392b;
+	--cor-info: #2b6cc0;
+	--cor-atencao: #d9a017;
+
+	/* Escala de espaçamento: usar sempre uma dessas variáveis em vez de números soltos */
+	--espaco-xs: 4px;
+	--espaco-sm: 8px;
+	--espaco-md: 16px;
+	--espaco-lg: 24px;
+	--espaco-xl: 40px;
+
+	/* Largura máxima do conteúdo, para o texto não esticar até a borda em telas grandes */
+	--largura-conteudo: 1100px;
+}
+
+/* Reset básico: navegadores aplicam margin/padding diferentes por padrão,
+   então zeramos tudo e definimos box-sizing para bordas/padding não somarem
+   à largura declarada de um elemento (facilita calcular layout). */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	/* Permite rolagem suave quando usamos links âncora (ex.: "voltar ao topo") */
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--cor-neutra-900);
+	background-color: var(--cor-neutra-0);
+}
+
+/* Hierarquia de títulos, seguindo a escala definida no documento de referência */
+h1 {
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: var(--espaco-md);
+}
+
+h2 {
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: var(--espaco-sm);
+}
+
+h3 {
+	font-size: 17px;
+	font-weight: bold;
+	margin-bottom: var(--espaco-sm);
+}
+
+p {
+	margin-bottom: var(--espaco-md);
+}
+
+/* Links: cor de marca, sem sublinhado por padrão (fica mais "botão"), sublinha só no hover
+   para indicar que é clicável sem poluir o texto o tempo todo. */
+a {
+	color: var(--cor-primaria-600);
+	text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+	text-decoration: underline;
+}
+
+/* Imagens nunca devem ultrapassar a largura do elemento pai — evita quebrar o
+   layout em telas pequenas quando alguém esquece de redimensionar a imagem. */
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* Container central usado para limitar a largura do conteúdo e centralizar na página */
+.container {
+	width: 100%;
+	max-width: var(--largura-conteudo);
+	margin: 0 auto;
+	padding: 0 var(--espaco-md);
+}
+
+/*
+	Rodapé (footer)
+	---------------
+	Fica em base.css (e não em home.css) porque o <footer> se repete em várias
+	páginas do site, não só na home.
+*/
+footer {
+	background-color: var(--cor-primaria-700);
+	color: var(--cor-neutra-0);
+	padding: var(--espaco-lg) var(--espaco-md);
+	margin-top: var(--espaco-xl);
+	text-align: center;
+}
+
+/* Link "voltar ao topo" (a seta que aponta pra cima no rodapé) */
+footer a[href="#s1"] {
+	display: inline-block;
+	margin-bottom: var(--espaco-sm);
+}
+
+/* A seta em si: deixamos ela branca (o PNG original é escuro) para contrastar
+   com o fundo laranja escuro do rodapé, e giramos no hover como uma pequena
+   confirmação visual de que o elemento é interativo. */
+footer a[href="#s1"] img {
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+	filter: brightness(0) invert(1);
+	transition: transform 0.2s ease;
+}
+
+footer a[href="#s1"]:hover img {
+	transform: translateY(-4px);
+}
+
+/* Ícones de redes sociais: todos com o mesmo tamanho fixo (o CSS antigo usava
+   "width: 5%", que ficava minúsculo em telas grandes) e um espaçamento entre eles. */
+footer .imgredes {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	margin: 0 var(--espaco-sm);
+	filter: brightness(0) invert(1);
+	transition: opacity 0.2s ease;
+}
+
+footer .imgredes:hover {
+	opacity: 0.7;
+}

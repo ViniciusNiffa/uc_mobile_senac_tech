@@ -1,0 +1,40 @@
+section {
+	max-width: var(--largura-conteudo);
+	margin: 0 auto;
+	padding: var(--espaco-xl) var(--espaco-md);
+}
+
+/* Cada "par" (#primeiropar e #segundopar) é um bloco com imagem de um lado e
+   texto do outro. Usamos flexbox em vez de float, que era a técnica antiga e
+   dava problema de sobreposição com o texto. */
+#primeiropar,
+#segundopar {
+	display: flex;
+	flex-wrap: wrap; /* empilha em telas estreitas */
+	align-items: flex-start;
+	gap: var(--espaco-lg);
+	margin-bottom: var(--espaco-xl);
+}
+
+#primeiropar h3 {
+	/* título ocupa a largura toda antes do texto/imagem começarem */
+	flex-basis: 100%;
+}
+
+#foto1senac,
+#foto2senac {
+	flex: 1 1 320px; /* cresce/encolhe, mas nunca fica menor que 320px */
+	border-radius: 8px;
+}
+
+/* No primeiro par a imagem fica entre dois parágrafos; nos dois casos o texto
+   ocupa o espaço restante ao lado da imagem. */
+#primeiropar p,
+#segundopar p {
+	flex: 2 1 400px; /* o texto ocupa mais espaço que a imagem quando cabe lado a lado */
+}
+
+#pt1,
+#pt2 {
+	flex-basis: 100%; /* os dois parágrafos do segundo par ficam abaixo da imagem */
+}

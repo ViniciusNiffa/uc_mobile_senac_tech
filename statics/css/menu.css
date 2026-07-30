@@ -1,0 +1,136 @@
+header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--espaco-sm) var(--espaco-md);
+	background-color: var(--cor-neutra-0);
+	border-bottom: 1px solid var(--cor-neutra-200);
+}
+
+#logosenac {
+	height: 48px;
+	width: auto;
+}
+
+/* Checkbox invisível que guarda o estado "menu aberto/fechado" no mobile.
+   Ele continua no DOM (por isso o navegador permite clicar no <label>), só não
+   é exibido visualmente. */
+#bt_menu {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* O ícone de hamburguer (☰) que abre/fecha o menu no mobile.
+   Por padrão fica escondido — só aparece na media query de telas pequenas, lá embaixo. */
+label[for="bt_menu"] {
+	display: none;
+	position: absolute;
+	top: var(--espaco-sm);
+	right: var(--espaco-md);
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+	color: var(--cor-primaria-700);
+}
+
+/* Barra de navegação principal */
+#menu {
+	background-color: var(--cor-primaria-700);
+}
+
+#menu > ul {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+#menu > ul > li {
+	position: relative; /* referência para o submenu de "Cursos" se posicionar dentro */
+}
+
+#menu a {
+	display: block;
+	padding: var(--espaco-md);
+	color: var(--cor-neutra-0); /* texto branco sobre o fundo escuro (--cor-primaria-700) */
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+/* Estado de hover/foco: fundo um pouco mais escuro para indicar interatividade,
+   sem depender só da cor do texto (acessível também para quem navega por teclado). */
+#menu a:hover,
+#menu a:focus-visible {
+	background-color: var(--cor-primaria-600);
+	text-decoration: none;
+}
+
+/* Classe adicionada via JavaScript (statics/js/menu.js) no link da página atual,
+   pra o usuário sempre saber "onde" está dentro do site. */
+#menu a.ativo {
+	background-color: var(--cor-primaria-500);
+}
+
+/* Submenu (ex.: "Cursos" > Informática, Redes, etc).
+   Escondido por padrão e mostrado no hover/foco do item pai. */
+#menu li > ul {
+	list-style: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 220px;
+	background-color: var(--cor-neutra-0);
+	border: 1px solid var(--cor-neutra-200);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 10;
+}
+
+#menu li:hover > ul,
+#menu li:focus-within > ul {
+	display: block;
+}
+
+#menu li > ul a {
+	color: var(--cor-neutra-900);
+	font-weight: normal;
+}
+
+#menu li > ul a:hover,
+#menu li > ul a:focus-visible {
+	background-color: var(--cor-primaria-100);
+}
+
+/*
+	Responsivo (telas de celular/tablet estreitas)
+	-----------------------------------------------
+	Abaixo de 768px: mostra o ícone de hamburguer e transforma o menu num painel
+	vertical que só aparece quando o checkbox #bt_menu está marcado.
+*/
+@media (max-width: 768px) {
+	label[for="bt_menu"] {
+		display: block;
+	}
+
+	#menu > ul {
+		flex-direction: column;
+		display: none; /* escondido até o checkbox ser marcado */
+	}
+
+	/* Seletor "irmão adjacente": quando o checkbox (que vem antes no HTML) está
+	   marcado, exibe o <nav id="menu"> que vem logo em seguida. */
+	#bt_menu:checked ~ #menu > ul {
+		display: flex;
+	}
+
+	/* No mobile o submenu não faz sentido "flutuar" por cima do conteúdo,
+	   então ele vira uma lista normal, recuada, dentro do próprio menu. */
+	#menu li > ul {
+		display: block;
+		position: static;
+		box-shadow: none;
+		border: none;
+		padding-left: var(--espaco-md);
+	}
+}
