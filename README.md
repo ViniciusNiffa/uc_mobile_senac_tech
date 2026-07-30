@@ -1,6 +1,6 @@
 # Senac Tech
 
-Projeto escolar (SENAC) de um sistema de divulgação e matrícula em cursos técnicos, com um front-end estático (HTML/CSS/JS) e um back-end de autenticação em Flask.
+1° Projeto da UC de Mobile: refazer o sistema do site do Senac com um front-end (HTML/CSS/JS) e um back-end em microsserviços.
 
 ## Estrutura do projeto
 
@@ -53,21 +53,13 @@ Projeto escolar (SENAC) de um sistema de divulgação e matrícula em cursos té
             └── validator.py
 ```
 
-## Front-end
-
-Site estático (sem framework), aberto direto pelo navegador ou por um live server. Os links entre páginas são relativos, então basta abrir `index.html`.
-
-## Back-end (auth_service)
-
-API em Flask que expõe login, cadastro, recuperação de senha e verificação de e-mail em `/api/auth/*` (ver `services/auth_service/app/routes.py`).
-
 ### Configuração
 
 1. Instale as dependências:
    ```
    pip install -r requirements.txt
    ```
-2. Crie um arquivo `.env` dentro de `services/auth_service/` com pelo menos:
+2. Crie um arquivo `.env` dentro de `services/*_service/` com pelo menos:
    ```
    SECRET_KEY=uma-chave-secreta
    DB_HOST=localhost
@@ -79,14 +71,3 @@ API em Flask que expõe login, cadastro, recuperação de senha e verificação 
    ```
    run_all_services.bat
    ```
-   ou diretamente:
-   ```
-   cd services/auth_service
-   python run.py
-   ```
-
-O front-end assume a API rodando em `http://127.0.0.1:5000/api/auth` (configurável em `statics/js/config.js`).
-
-## Status
-
-O front-end está em processo de redesign (ver `statics/pdf/design-system-referencia.pdf` para a paleta de cores e diretrizes visuais usadas como referência).
