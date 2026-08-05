@@ -1,0 +1,172 @@
+/*
+	Páginas de usuário (login, cadastro, perfil, recuperar/resetar senha,
+	verificar e-mail, sucesso) — todas compartilham a mesma estrutura:
+	<main class="usuario-container"> > <h2> + <form class="form-usuario">
+	com campos em <div class="campo">. Um único arquivo estiliza todas.
+*/
+.usuario-container {
+	max-width: 420px;
+	margin: var(--espaco-xl) auto;
+	padding: var(--espaco-xl) var(--espaco-lg);
+	background-color: var(--cor-neutra-0);
+	border: 1px solid var(--cor-neutra-200);
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Formulários com mais campos (ex.: cadastro) usam essa variante mais larga. */
+.usuario-container--largo {
+	max-width: 720px;
+}
+
+.usuario-container--centro {
+	text-align: center;
+}
+
+.usuario-container h2 {
+	text-align: center;
+	color: var(--cor-primaria-700);
+}
+
+.usuario-container .descricao {
+	text-align: center;
+	color: var(--cor-neutra-700);
+}
+
+.form-usuario {
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-md);
+}
+
+/* Variante em grade de 2 colunas para formulários longos (cadastro). */
+.form-usuario--grade {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--espaco-md) var(--espaco-lg);
+}
+
+.form-usuario--grade .campo--completo {
+	grid-column: 1 / -1;
+}
+
+.campo {
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-xs);
+}
+
+.campo label {
+	font-size: 13px;
+	font-weight: bold;
+	color: var(--cor-neutra-700);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+	padding: var(--espaco-sm);
+	border: 1px solid var(--cor-neutra-200);
+	border-radius: 4px;
+	font-family: inherit;
+	font-size: 14px;
+	color: var(--cor-neutra-900);
+	background-color: var(--cor-neutra-0);
+}
+
+.campo textarea {
+	resize: vertical;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+	outline: none;
+	border-color: var(--cor-primaria-500);
+	box-shadow: 0 0 0 3px var(--cor-primaria-100);
+}
+
+/* Mensagem de erro/sucesso do formulário (preenchida via JS). Reserva altura
+   mínima pra não "pular" o layout quando o texto aparece. */
+.mensagem {
+	min-height: 1.2em;
+	font-size: 14px;
+	text-align: center;
+	color: var(--cor-erro);
+}
+
+.mensagem:empty {
+	display: none;
+}
+
+.mensagem.sucesso {
+	color: var(--cor-sucesso);
+}
+
+.acoes {
+	display: flex;
+	justify-content: center;
+	gap: var(--espaco-md);
+	flex-wrap: wrap;
+	margin-top: var(--espaco-sm);
+}
+
+.acoes button,
+.botao-link {
+	display: inline-block;
+	padding: var(--espaco-sm) var(--espaco-lg);
+	background-color: var(--cor-primaria-500);
+	color: var(--cor-neutra-0);
+	border: 1px solid var(--cor-primaria-500);
+	border-radius: 4px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	text-align: center;
+	transition: background-color 0.2s ease;
+}
+
+.acoes button:hover,
+.acoes button:focus-visible,
+.botao-link:hover,
+.botao-link:focus-visible {
+	background-color: var(--cor-primaria-600);
+	border-color: var(--cor-primaria-600);
+	text-decoration: none;
+}
+
+.acoes button[type="reset"],
+.botao-link--secundario {
+	background-color: transparent;
+	color: var(--cor-primaria-600);
+	border-color: var(--cor-primaria-500);
+}
+
+.acoes button[type="reset"]:hover,
+.acoes button[type="reset"]:focus-visible,
+.botao-link--secundario:hover,
+.botao-link--secundario:focus-visible {
+	background-color: var(--cor-primaria-100);
+	color: var(--cor-primaria-700);
+}
+
+.links-auxiliares {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--espaco-xs);
+	margin-top: var(--espaco-md);
+	font-size: 13px;
+}
+
+@media (max-width: 700px) {
+	.usuario-container,
+	.usuario-container--largo {
+		margin: var(--espaco-lg) var(--espaco-md);
+		padding: var(--espaco-lg);
+	}
+
+	.form-usuario--grade {
+		grid-template-columns: 1fr;
+	}
+}
