@@ -24,3 +24,6 @@ def token_required(f):
             return jsonify({"error": "Token inválido"}), 401
         return f(*args, **kwargs)
     return decorated
+
+
+def adm_required(f):
