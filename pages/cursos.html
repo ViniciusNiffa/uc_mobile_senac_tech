@@ -2,12 +2,13 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Senac Tech - Nossos Cursos</title>
-		<link rel="stylesheet" type="text/css" href="../statics/css/pages/cursos.css">
-		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
+		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
+		<link rel="stylesheet" type="text/css" href="../statics/css/pages/cursos.css">
 	</head>
-	<body> 
+	<body id="topo">
 		<section>
 			<header>
 			<img src="../statics/img/banners/logo-senac.png" alt="Logo Senac" title="Senac" id="logosenac">
@@ -52,105 +53,94 @@
 		</section>
 		
 		<hr>
-		
-		
-		<table id="tabela">		
-		<tbody>
-			<tr>
-				<td><h3>Técnico em Redes de Computadores</h3>
-				<br>
-				<a href="cursoredes.html"><img src="../statics/img/banners/curso-redes.png"alt="Curso TI"
-				title="Técnico em Redes de Computadores">
-				</td>
-				<td>
-				<p>
-				Pesquisas apontam que as profissões de TI mais promissoras da atualidade estão relacionadas com o desenvolvimento de softwares e aplicativos para dispositivos móveis, com a segurança e a infraestrutura de redes e com os projetos em User Experience (U.E). Todas elas necessitam de um profissional da área de redes...				
-				<br>
-				<a href="cursoredes.html">Clique para mais informações</a>
-				</p>
-				</td>
-				
-				
-			</tr>
-			<tr>
-				<td><h3>Técnico em Informática</h3>
-				<br>
-				<br>
-				<a href="cursoinfo.html"><img src="../statics/img/banners/curso-ti.png" alt="Curso TI"
-				title="Técnico em Informática"></a>
-				</td>
-				<td>
-				<p>
-				O Técnico em Informática realiza o planejamento e a execução dos processos de manutenção de computadores e a operação de redes locais de computadores, além do desenvolvimento de aplicativos para desktop, dispositivos móveis e internet. Atualmente, o uso de tecnologias de computadores tem crescido...
-				<br>
-				<a href="cursoinfo.html">Clique para mais informações</a>
-				</p>
-				</td>
-				
-				
-			</tr>
-			<tr>
-				<td><h3>Técnico em Programação de Jogos Digitais</h3>
-				<br>
-				<a href="cursojogos.html"><img src="../statics/img/banners/curso-jogos.png" alt="Curso TI"	title="Técnico em PRogramação de Jogos Digitais"></a>
-				</td>
-				<td>
-				<p>
-				A perspectiva da internet ampliou ainda mais o mercado de desenvolvimento de jogos digitais, que passaram a ser produzidos na perspectiva de multiplataformas, ou seja, o mesmo jogo é produzido e distribuído para computadores, tablets, celulares e consoles, usando a internet como meio de transmissão de dados... 
-				<br>
-				<a href="cursojogos.html">Clique para mais informações</a>
-				</p>
-				</td>
-				
-				
-			</tr>
-			<tr>
-				<td><h3>Técnico em Desenvolvimento de Sistemas</h3>
-				<br>
-				<a href="cursosistemas.html"><img src="../statics/img/banners/curso-sistemas.png"alt="Curso TI"				
-				title="Técnico em Informática"></a>
-				</td>
-				<td>
-				<p>
-				
-				O sistema de informação cria milhares de dados todos os dias, o profissional que integra esses dados e transforma em informações relevantes para empresas, está em grande ascensão. O Técnico em Desenvolvimento de Sistema – Bilíngue surge para suprir uma demanda de mercado, desenvolve sistemas...
-				<br>
-				<a href="cursosistemas.html">Clique para mais informações</a>
-				</p>
-				</td>
-				
-				
-			</tr>
-			<tr>
-				<td><h3>Técnico em Administração</h3>
-				<br>
-				<br>
-				<a href="cursoadmin.html"><img src="../statics/img/banners/curso-administracao.png" alt="Curso de Administração" title="Técnico em Informática"></a>
-				</td>
-				<td>
-				<p>
-				Os setores e departamentos que compõem a estrutura das organizações apresentam fluxos de processos e formas de comunicação internas que requerem profissionais capazes de compreender o funcionamento e a dinâmica de cada área da empresa.
-				Nesse contexto...
-				<br>
-				<a href="cursoadmin.html">Clique para mais informações</a>
-				</p>
-				</td>
-				
-				
-			</tr>			
-		</tbody>
-		</table>
-		<a href="cursos.html">
-		<h3>Clique para voltar ao topo</h3>
-		</a>
-	<script src="../statics/js/menu.js"></script>
 
-		
-		
-		
-		
-				
-	
+		<section class="cursos-lista">
+			<article class="curso-card">
+				<a class="curso-card__imagem" href="cursoredes.html">
+					<img src="../statics/img/banners/curso-redes.png" alt="Curso Técnico em Redes de Computadores">
+				</a>
+				<div class="curso-card__conteudo">
+					<h3>Técnico em Redes de Computadores</h3>
+					<p>Pesquisas apontam que as profissões de TI mais promissoras da atualidade estão relacionadas com o desenvolvimento de softwares e aplicativos para dispositivos móveis, com a segurança e a infraestrutura de redes e com os projetos em User Experience (U.E). Todas elas necessitam de um profissional da área de redes...</p>
+					<a class="curso-card__link" href="cursoredes.html">Clique para mais informações</a>
+				</div>
+			</article>
+
+			<article class="curso-card">
+				<a class="curso-card__imagem" href="cursoinfo.html">
+					<img src="../statics/img/banners/curso-ti.png" alt="Curso Técnico em Informática">
+				</a>
+				<div class="curso-card__conteudo">
+					<h3>Técnico em Informática</h3>
+					<p>O Técnico em Informática realiza o planejamento e a execução dos processos de manutenção de computadores e a operação de redes locais de computadores, além do desenvolvimento de aplicativos para desktop, dispositivos móveis e internet. Atualmente, o uso de tecnologias de computadores tem crescido...</p>
+					<a class="curso-card__link" href="cursoinfo.html">Clique para mais informações</a>
+				</div>
+			</article>
+
+			<article class="curso-card">
+				<a class="curso-card__imagem" href="cursojogos.html">
+					<img src="../statics/img/banners/curso-jogos.png" alt="Curso Técnico em Programação de Jogos Digitais">
+				</a>
+				<div class="curso-card__conteudo">
+					<h3>Técnico em Programação de Jogos Digitais</h3>
+					<p>A perspectiva da internet ampliou ainda mais o mercado de desenvolvimento de jogos digitais, que passaram a ser produzidos na perspectiva de multiplataformas, ou seja, o mesmo jogo é produzido e distribuído para computadores, tablets, celulares e consoles, usando a internet como meio de transmissão de dados...</p>
+					<a class="curso-card__link" href="cursojogos.html">Clique para mais informações</a>
+				</div>
+			</article>
+
+			<article class="curso-card">
+				<a class="curso-card__imagem" href="cursosistemas.html">
+					<img src="../statics/img/banners/curso-sistemas.png" alt="Curso Técnico em Desenvolvimento de Sistemas">
+				</a>
+				<div class="curso-card__conteudo">
+					<h3>Técnico em Desenvolvimento de Sistemas</h3>
+					<p>O sistema de informação cria milhares de dados todos os dias, o profissional que integra esses dados e transforma em informações relevantes para empresas, está em grande ascensão. O Técnico em Desenvolvimento de Sistema – Bilíngue surge para suprir uma demanda de mercado, desenvolve sistemas...</p>
+					<a class="curso-card__link" href="cursosistemas.html">Clique para mais informações</a>
+				</div>
+			</article>
+
+			<article class="curso-card">
+				<a class="curso-card__imagem" href="cursoadmin.html">
+					<img src="../statics/img/banners/curso-administracao.png" alt="Curso Técnico em Administração">
+				</a>
+				<div class="curso-card__conteudo">
+					<h3>Técnico em Administração</h3>
+					<p>Os setores e departamentos que compõem a estrutura das organizações apresentam fluxos de processos e formas de comunicação internas que requerem profissionais capazes de compreender o funcionamento e a dinâmica de cada área da empresa. Nesse contexto...</p>
+					<a class="curso-card__link" href="cursoadmin.html">Clique para mais informações</a>
+				</div>
+			</article>
+		</section>
+
+		<a class="voltar-topo" href="#topo">Voltar ao topo</a>
+
+		<footer>
+			<p align="center">
+			<a href="#topo">
+			<img src="../statics/img/icons/seta-topo.png" alt="seta" width="68" height="68"
+			title="Subir para o topo" >
+			</a>
+			</p>
+
+			<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener">
+			<img class="imgredes" src="../statics/img/icons/facebook.png" alt="Facebook" title="facebook" >
+			</a>
+			<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener">
+			<img class="imgredes" src="../statics/img/icons/instagram.png" alt="instagram"  title="instagram" >
+			</a>
+			<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener">
+			<img class="imgredes" src="../statics/img/icons/twitter.png" alt="twitter"  title="twitter" >
+			</a>
+			<a href="https://www.linkedin.com/" target="_blank" rel="noopener">
+			<img class="imgredes" src="../statics/img/icons/linkedin.png" alt="linkedin" title="linkedin" >
+			</a>
+			<a href="https://wa.me/" target="_blank" rel="noopener">
+			<img class="imgredes" src="../statics/img/icons/whatsapp.png" alt="whatsapp" title="whatsapp" >
+			</a>
+			<a href="https://www.youtube.com/" target="_blank" rel="noopener">
+			<img class="imgredes" src="../statics/img/icons/youtube.png" alt="youtube" title="youtube" >
+			</a>
+		</footer>
+	<script src="../statics/js/menu.js"></script>
 	</body>
 
 

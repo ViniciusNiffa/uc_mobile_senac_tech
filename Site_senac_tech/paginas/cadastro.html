@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<title>Senac Tech - Cursos</title>
+		<link rel="stylesheet" type="text/css" href="../css/body.css">
+		<link rel="stylesheet" type="text/css" href="../css/menu.css">
+		<link rel="stylesheet" type="text/css" href="../css/pag cursos style.css">
+	</head>
+	<body> 
+		<section>
+		
+			<img src="../imagens/logosenac.png" alt="Logo Senac" title="Senac" id="logosenac">
+			
+			<input type="checkbox" id="bt_menu">
+			<label for="bt_menu">&#9776;</label>
+			<nav id="menu">
+			<ul>
+				<li>
+					<a href="../index.html">Início</a>
+					<u>
+				</li>
+				<li>
+					<a href="cursos.html">Cursos</a>
+					<ul>
+						<li><a href="cursoinfo.html">Informática</a></li>
+						<li><a href="cursoredes.html">Redes de Computadores</a></li>
+						<li><a href="cursosistemas.html">Desenvolvimento de Sistemas</a></li>
+						<li><a href="cursoadmin.html">Administração</a></li>
+						<li><a href="cursojogos.html">Programação de Jogos Digitais</a></li>						
+					</ul>
+				</li>	
+				<li>
+					<a href="localizacao.html">Localização</a>												
+				</li>
+				<li>
+					<a href="cadastro.html">Cadastro</a>					
+				</li>
+				
+			</ul>
+		</nav>
+		</section>
+		
+		
+<h3>
+
+		
+
+		<hr>
+
+			<h2>Crie Seu Cadastro</h2>
+
+
+			<form action="cadastrar.php" method="post">
+				
+				<table id="formulário">
+
+				 	<thead>
+						<tr>
+							<td colspan="2">
+							<h3>Todos os Campos São Obrigatórios</h3>	
+							</td>
+						</tr>
+					</thead>
+
+					<tbody>
+						
+						<tr>
+							<td>
+								<h3>
+									Nome:
+								</h3>
+							</td>
+
+							<td>
+								<input type="text" name="Nome" required size="30" maxlength="30">
+							</td>
+
+						</tr>						
+
+						<tr>
+							<td>
+								<h3>
+									Sobrenome:
+								</h3>
+							</td>
+
+							<td>
+								<input type="text" name="Sobrenome" required size="30" maxlength="30">
+							</td>
+
+						</tr>						
+				
+						<tr>
+							<td>
+								<h3>
+									Endereço:
+								</h3>
+							</td>
+
+							<td>
+								<input type="text" name="Endereco" required size="30" maxlength="30">
+							</td>
+
+						</tr>	
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Número:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="number" name="Numero" required size="30" maxlength="5"> 
+							</td>
+
+						</tr>							
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Bairro:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="text" name="Bairro" required size="30">
+							</td>
+
+						</tr>		
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Cidade:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="text" name="cidade" required size="30">
+							</td>
+
+						</tr>	
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Estado:
+								</h3>
+							</td>
+
+							<td align="left">
+
+								<select >
+
+							<option value="">Selecione o Estado (UF)</option>		
+							<option value="">Acre</option>
+							<option value="">Alagoas</option>
+							<option value="">Amapá</option>
+							<option value="">Amazonas</option>
+							<option value="">Bahia</option>
+							<option value="">Ceará</option>
+							<option value="">Distrito</option>
+							<option value="">Espírito</option>
+							<option value="">Goiás</option>
+							<option value="">Maranhão</option>
+							<option value="">Mato Grosso</option>
+							<option value="">Mato Grosso do Sul</option>
+							<option value="">Minas Gerais</option>
+							<option value="">Pará</option>
+							<option value="">Paraíba</option>
+							<option value="">Paraná</option>
+							<option value="">Pernambuco</option>
+							<option value="">Piauí</option>
+							<option value="">Rio de Janeiro</option>
+							<option value="">Rio Grande do Norte</option>
+							<option value="">Rio Grande do Sul</option>
+							<option value="">Rondônia</option>
+							<option value="">Roraima</option>
+							<option value="">Santa Catarina</option>
+							<option value="">São Paulo</option>
+							<option value="">Sergipe</option>
+							<option value="">Tocantins</option>
+
+								</select>
+							</td>
+
+						</tr>						
+						
+						<tr>
+							<td align="right" >
+								<h3>
+									CPF:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="number" name="cpf" required size="30" maxlength="11">
+							</td>
+
+						</tr>	
+
+						<tr>
+							<td align="right" >
+								<h3>
+									RG:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="number" name="rg" required size="30" maxlength="10">
+							</td>
+
+						</tr>	
+
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Data de Nascimento:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="date" name="datanascsc" required>
+							</td>
+
+						</tr>			
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Celular:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="tel" name="celular" required size="30" maxlength="12" hyphen-minus placeholder="(xx)xxxxx-xxxx">
+							</td>
+
+						</tr>
+
+						<tr>
+							<td align="right" >
+								<h3>
+									E-mail:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="email" name="email" required size="30" placeholder="nome@dominio.com">
+							</td>
+
+						</tr>
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Usuário:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="text" name="usuario" required size="30">
+							</td>
+
+						</tr>
+
+						<tr>
+							<td align="right" >
+								<h3>
+									Senha:
+								</h3>
+							</td>
+
+							<td align="left">
+								<input type="password" name="senha" required size="30">
+							</td>
+
+						</tr>
+
+						<tr>
+							
+							<td align="right">
+								<h3>
+									Observação:
+								</h3>
+							</td>
+
+							<td align="left">
+								<textarea name="obs" rows="4" cols="30"> </textarea>
+							</td>
+						</tr>
+
+					</tbody>
+
+					<tr>
+						
+						<td>
+							<br>
+							<br>
+
+						</td>
+					</tr>
+
+
+					<tfoot>
+							
+						<tr>
+							<td align="center" colspan="2"> 
+							<input type="submit"value="Cadastrar">&nbsp;&nbsp;&nbsp;
+							<input type="reset" value="Limpar">
+
+							</td>
+
+						</tr>
+
+
+					</tfoot>
+
+				</table>
+			</form>
+
+		<hr>
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		
+		<footer>
+    
+  </footer>
+</body>
+</html>

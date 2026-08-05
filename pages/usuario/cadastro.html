@@ -2,14 +2,15 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Senac Tech - Criar Cadastro</title>
 		<link rel="stylesheet" type="text/css" href="../../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../../statics/css/usuario/usuario.css">
 	</head>
-	<body> 
+	<body>
 		<section>
-		
+
 			<img src="../../statics/img/banners/logo-senac.png" alt="Logo Senac" title="Senac" id="logosenac">
 			
 			<input type="checkbox" id="bt_menu">
@@ -44,297 +45,137 @@
 		</nav>
 		</section>
 		
-		
-<h3>
-
-		
-
 		<hr>
 
-			<h2>Crie Seu Cadastro</h2>
+		<main class="usuario-container usuario-container--largo">
+			<h2>Crie seu cadastro</h2>
+			<p class="descricao">Todos os campos são obrigatórios.</p>
 
+			<form id="form-cadastro" class="form-usuario form-usuario--grade" novalidate>
+				<div class="campo">
+					<label for="nome">Nome</label>
+					<input type="text" id="nome" name="nome" required maxlength="30">
+				</div>
 
-			<form action="cadastrar.php" method="post">
-				
-				<table id="formulário">
+				<div class="campo">
+					<label for="sobrenome">Sobrenome</label>
+					<input type="text" id="sobrenome" name="sobrenome" required maxlength="30">
+				</div>
 
-				 	<thead>
-						<tr>
-							<td colspan="2">
-							<h3>Todos os Campos São Obrigatórios</h3>	
-							</td>
-						</tr>
-					</thead>
+				<div class="campo">
+					<label for="endereco">Endereço</label>
+					<input type="text" id="endereco" name="endereco" required maxlength="30">
+				</div>
 
-					<tbody>
-						
-						<tr>
-							<td>
-								<h3>
-									Nome:
-								</h3>
-							</td>
+				<div class="campo">
+					<label for="numero">Número</label>
+					<input type="number" id="numero" name="numero" required maxlength="5">
+				</div>
 
-							<td>
-								<input type="text" name="Nome" required size="30" maxlength="30">
-							</td>
+				<div class="campo">
+					<label for="bairro">Bairro</label>
+					<input type="text" id="bairro" name="bairro" required>
+				</div>
 
-						</tr>						
+				<div class="campo">
+					<label for="cidade">Cidade</label>
+					<input type="text" id="cidade" name="cidade" required>
+				</div>
 
-						<tr>
-							<td>
-								<h3>
-									Sobrenome:
-								</h3>
-							</td>
+				<div class="campo">
+					<label for="estado">Estado</label>
+					<select id="estado" name="estado" required>
+						<option value="">Selecione o Estado (UF)</option>
+						<option value="AC">Acre</option>
+						<option value="AL">Alagoas</option>
+						<option value="AP">Amapá</option>
+						<option value="AM">Amazonas</option>
+						<option value="BA">Bahia</option>
+						<option value="CE">Ceará</option>
+						<option value="DF">Distrito Federal</option>
+						<option value="ES">Espírito Santo</option>
+						<option value="GO">Goiás</option>
+						<option value="MA">Maranhão</option>
+						<option value="MT">Mato Grosso</option>
+						<option value="MS">Mato Grosso do Sul</option>
+						<option value="MG">Minas Gerais</option>
+						<option value="PA">Pará</option>
+						<option value="PB">Paraíba</option>
+						<option value="PR">Paraná</option>
+						<option value="PE">Pernambuco</option>
+						<option value="PI">Piauí</option>
+						<option value="RJ">Rio de Janeiro</option>
+						<option value="RN">Rio Grande do Norte</option>
+						<option value="RS">Rio Grande do Sul</option>
+						<option value="RO">Rondônia</option>
+						<option value="RR">Roraima</option>
+						<option value="SC">Santa Catarina</option>
+						<option value="SP">São Paulo</option>
+						<option value="SE">Sergipe</option>
+						<option value="TO">Tocantins</option>
+					</select>
+				</div>
 
-							<td>
-								<input type="text" name="Sobrenome" required size="30" maxlength="30">
-							</td>
+				<div class="campo">
+					<label for="cpf">CPF</label>
+					<input type="text" id="cpf" name="cpf" required inputmode="numeric" maxlength="11">
+				</div>
 
-						</tr>						
-				
-						<tr>
-							<td>
-								<h3>
-									Endereço:
-								</h3>
-							</td>
+				<div class="campo">
+					<label for="rg">RG</label>
+					<input type="text" id="rg" name="rg" required inputmode="numeric" maxlength="10">
+				</div>
 
-							<td>
-								<input type="text" name="Endereco" required size="30" maxlength="30">
-							</td>
+				<div class="campo">
+					<label for="data-nascimento">Data de nascimento</label>
+					<input type="date" id="data-nascimento" name="data-nascimento" required>
+				</div>
 
-						</tr>	
+				<div class="campo">
+					<label for="celular">Celular</label>
+					<input type="tel" id="celular" name="celular" required maxlength="15" placeholder="(xx) xxxxx-xxxx">
+				</div>
 
-						<tr>
-							<td align="right" >
-								<h3>
-									Número:
-								</h3>
-							</td>
+				<div class="campo">
+					<label for="email">E-mail</label>
+					<input type="email" id="email" name="email" required placeholder="nome@dominio.com">
+				</div>
 
-							<td align="left">
-								<input type="number" name="Numero" required size="30" maxlength="5"> 
-							</td>
+				<div class="campo">
+					<label for="usuario">Usuário</label>
+					<input type="text" id="usuario" name="usuario" required>
+				</div>
 
-						</tr>							
+				<div class="campo">
+					<label for="senha">Senha</label>
+					<input type="password" id="senha" name="senha" required>
+				</div>
 
-						<tr>
-							<td align="right" >
-								<h3>
-									Bairro:
-								</h3>
-							</td>
+				<div class="campo campo--completo">
+					<label for="obs">Observação</label>
+					<textarea id="obs" name="obs" rows="4"></textarea>
+				</div>
 
-							<td align="left">
-								<input type="text" name="Bairro" required size="30">
-							</td>
+				<p class="mensagem campo--completo" id="mensagem-cadastro" role="alert"></p>
 
-						</tr>		
+				<div class="acoes campo--completo">
+					<button type="submit">Cadastrar</button>
+					<button type="reset">Limpar</button>
+				</div>
 
-						<tr>
-							<td align="right" >
-								<h3>
-									Cidade:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="text" name="cidade" required size="30">
-							</td>
-
-						</tr>	
-
-						<tr>
-							<td align="right" >
-								<h3>
-									Estado:
-								</h3>
-							</td>
-
-							<td align="left">
-
-								<select >
-
-							<option value="">Selecione o Estado (UF)</option>		
-							<option value="">Acre</option>
-							<option value="">Alagoas</option>
-							<option value="">Amapá</option>
-							<option value="">Amazonas</option>
-							<option value="">Bahia</option>
-							<option value="">Ceará</option>
-							<option value="">Distrito</option>
-							<option value="">Espírito</option>
-							<option value="">Goiás</option>
-							<option value="">Maranhão</option>
-							<option value="">Mato Grosso</option>
-							<option value="">Mato Grosso do Sul</option>
-							<option value="">Minas Gerais</option>
-							<option value="">Pará</option>
-							<option value="">Paraíba</option>
-							<option value="">Paraná</option>
-							<option value="">Pernambuco</option>
-							<option value="">Piauí</option>
-							<option value="">Rio de Janeiro</option>
-							<option value="">Rio Grande do Norte</option>
-							<option value="">Rio Grande do Sul</option>
-							<option value="">Rondônia</option>
-							<option value="">Roraima</option>
-							<option value="">Santa Catarina</option>
-							<option value="">São Paulo</option>
-							<option value="">Sergipe</option>
-							<option value="">Tocantins</option>
-
-								</select>
-							</td>
-
-						</tr>						
-						
-						<tr>
-							<td align="right" >
-								<h3>
-									CPF:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="number" name="cpf" required size="30" maxlength="11">
-							</td>
-
-						</tr>	
-
-						<tr>
-							<td align="right" >
-								<h3>
-									RG:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="number" name="rg" required size="30" maxlength="10">
-							</td>
-
-						</tr>	
-
-
-						<tr>
-							<td align="right" >
-								<h3>
-									Data de Nascimento:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="date" name="datanascsc" required>
-							</td>
-
-						</tr>			
-
-						<tr>
-							<td align="right" >
-								<h3>
-									Celular:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="tel" name="celular" required size="30" maxlength="12" hyphen-minus placeholder="(xx)xxxxx-xxxx">
-							</td>
-
-						</tr>
-
-						<tr>
-							<td align="right" >
-								<h3>
-									E-mail:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="email" name="email" required size="30" placeholder="nome@dominio.com">
-							</td>
-
-						</tr>
-
-						<tr>
-							<td align="right" >
-								<h3>
-									Usuário:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="text" name="usuario" required size="30">
-							</td>
-
-						</tr>
-
-						<tr>
-							<td align="right" >
-								<h3>
-									Senha:
-								</h3>
-							</td>
-
-							<td align="left">
-								<input type="password" name="senha" required size="30">
-							</td>
-
-						</tr>
-
-						<tr>
-							
-							<td align="right">
-								<h3>
-									Observação:
-								</h3>
-							</td>
-
-							<td align="left">
-								<textarea name="obs" rows="4" cols="30"> </textarea>
-							</td>
-						</tr>
-
-					</tbody>
-
-					<tr>
-						
-						<td>
-							<br>
-							<br>
-
-						</td>
-					</tr>
-
-
-					<tfoot>
-							
-						<tr>
-							<td align="center" colspan="2"> 
-							<input type="submit"value="Cadastrar">&nbsp;&nbsp;&nbsp;
-							<input type="reset" value="Limpar">
-
-							</td>
-
-						</tr>
-
-
-					</tfoot>
-
-				</table>
+				<div class="links-auxiliares campo--completo">
+					<a href="login.html">Já tenho uma conta</a>
+				</div>
 			</form>
+		</main>
+
+		<script src="../../statics/js/config.js"></script>
+		<script src="../../statics/js/components.js"></script>
 
 		<hr>
-		<br>
-		<br>
-		<br>
-		<br>
-		
-		
 		<footer>
-    
-  </footer>
+			<p>&copy; Senac Tech</p>
+		</footer>
 	<script src="../../statics/js/menu.js"></script>
 
 </body>
