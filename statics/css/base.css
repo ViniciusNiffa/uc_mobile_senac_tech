@@ -20,6 +20,14 @@
 	--cor-info: #2b6cc0;
 	--cor-atencao: #d9a017;
 
+	/* Cores do cabeçalho institucional (topo branco + barra de navegação) */
+	--cor-menu-borda-topo: #2c2a5c; /* linha fina no topo da página */
+	--cor-menu-texto: #1d4e89; /* azul dos links da barra de navegação */
+
+	/* Cores do rodapé institucional (fundo azul-marinho) */
+	--cor-footer-fundo: #0d2f5c;
+	--cor-footer-divisor: #17427a; /* faixa mais clara que separa o menu do bloco de marca/redes */
+
 	/* Escala de espaçamento: usar sempre uma dessas variáveis em vez de números soltos */
 	--espaco-xs: 4px;
 	--espaco-sm: 8px;
@@ -110,48 +118,104 @@ img {
 	Rodapé (footer)
 	---------------
 	Fica em base.css (e não em home.css) porque o <footer> se repete em várias
-	páginas do site, não só na home.
+	páginas do site, não só na home. Estrutura em 3 blocos empilhados: menu
+	(espelha a navegação principal), uma faixa divisória mais clara, e a base
+	com marca/copyright de um lado e redes sociais do outro.
 */
-footer {
-	background-color: var(--cor-primaria-700);
+footer.rodape {
+	background-color: var(--cor-footer-fundo);
 	color: var(--cor-neutra-0);
-	padding: var(--espaco-lg) var(--espaco-md);
 	margin-top: var(--espaco-xl);
-	text-align: center;
+	border-top: 4px solid var(--cor-primaria-500);
 }
 
-/* Link "voltar ao topo" (a seta que aponta pra cima no rodapé) */
-footer a[href="#s1"] {
-	display: inline-block;
-	margin-bottom: var(--espaco-sm);
+.rodape__menu ul {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: var(--espaco-xl);
+	padding: var(--espaco-lg) var(--espaco-md);
 }
 
-/* A seta em si: deixamos ela branca (o PNG original é escuro) para contrastar
-   com o fundo laranja escuro do rodapé, e giramos no hover como uma pequena
-   confirmação visual de que o elemento é interativo. */
-footer a[href="#s1"] img {
-	width: 40px;
-	height: 40px;
+.rodape__menu a {
+	color: var(--cor-neutra-0);
+	font-weight: bold;
+}
+
+.rodape__menu a:hover,
+.rodape__menu a:focus-visible {
+	color: var(--cor-primaria-300);
+	text-decoration: none;
+}
+
+.rodape__divisor {
+	height: 14px;
+	background-color: var(--cor-footer-divisor);
+}
+
+.rodape__base {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: var(--espaco-md);
+	max-width: var(--largura-conteudo);
 	margin: 0 auto;
+	padding: var(--espaco-lg) var(--espaco-md);
+}
+
+.rodape__marca {
+	display: flex;
+	align-items: center;
+	gap: var(--espaco-md);
+}
+
+/* Logo original é colorido sobre fundo claro; invertemos pra branco pra
+   funcionar sobre o azul-marinho do rodapé. */
+#logo-rodape {
+	height: 40px;
+	width: auto;
 	filter: brightness(0) invert(1);
-	transition: transform 0.2s ease;
 }
 
-footer a[href="#s1"]:hover img {
-	transform: translateY(-4px);
+.rodape__marca p {
+	margin: 0;
+	font-size: 13px;
+	color: var(--cor-neutra-200);
 }
 
-/* Ícones de redes sociais: todos com o mesmo tamanho fixo (o CSS antigo usava
-   "width: 5%", que ficava minúsculo em telas grandes) e um espaçamento entre eles. */
-footer .imgredes {
-	width: 32px;
-	height: 32px;
-	display: inline-block;
-	margin: 0 var(--espaco-sm);
-	filter: brightness(0) invert(1);
-	transition: opacity 0.2s ease;
+.rodape__redes {
+	display: flex;
+	gap: var(--espaco-sm);
 }
 
-footer .imgredes:hover {
-	opacity: 0.7;
+/* Ícones de redes sociais (+ "voltar ao topo") em selos brancos arredondados,
+   do mesmo tamanho, sem depender de filtro de cor — o ícone original já
+   contrasta bem sobre fundo branco. */
+.rodape__redes a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 6px;
+	background-color: var(--cor-neutra-0);
+	transition: background-color 0.2s ease;
+}
+
+.rodape__redes img {
+	width: 18px;
+	height: 18px;
+}
+
+.rodape__redes a:hover {
+	background-color: var(--cor-primaria-300);
+}
+
+@media (max-width: 600px) {
+	.rodape__base {
+		flex-direction: column;
+		text-align: center;
+	}
 }

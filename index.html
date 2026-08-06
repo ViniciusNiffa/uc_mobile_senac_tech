@@ -15,8 +15,27 @@
 
 	</head>
 	<body id="s1">
-		<header>
-			<a href="index.html"></a>
+		<header class="topo">
+			<a class="topo__marca" href="index.html">
+				<img src="statics/img/banners/logo-senac.png" alt="Logo Senac" title="Senac" id="logosenac">
+			</a>
+			<div class="topo__redes">
+				<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener" title="Facebook">
+					<img src="statics/img/icons/facebook.png" alt="Facebook">
+				</a>
+				<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener" title="Twitter">
+					<img src="statics/img/icons/twitter.png" alt="Twitter">
+				</a>
+				<a href="https://www.linkedin.com/" target="_blank" rel="noopener" title="LinkedIn">
+					<img src="statics/img/icons/linkedin.png" alt="LinkedIn">
+				</a>
+				<a href="https://www.youtube.com/" target="_blank" rel="noopener" title="YouTube">
+					<img src="statics/img/icons/youtube.png" alt="YouTube">
+				</a>
+				<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener" title="Instagram">
+					<img src="statics/img/icons/instagram.png" alt="Instagram">
+				</a>
+			</div>
 		</header>
 
 		<!-- Checkbox invisível + label: técnica "checkbox hack" que permite abrir/fechar
@@ -97,36 +116,46 @@
 			</article>
 		</section>
 		
-	<!-- Rodapé: link "voltar ao topo" (rolagem suave via statics/js/home.js) e
-		     ícones de redes sociais. Estilizado em statics/css/base.css porque o
-		     <footer> também aparece (hoje vazio) em outras páginas do site. -->
-	<footer>
-		<p align="center">
-		<!-- href="#s1" aponta para o id do <body>, ou seja, o topo da própria página -->
-		<a href="#s1">
-		<img src="statics/img/icons/seta-topo.png" alt="seta" width="68" height="68"
-		title="Subir para o topo" >
-		</a>
-		</p>
+	<!-- Rodapé: espelha o menu principal, depois marca/copyright e redes sociais.
+		     Estilizado em statics/css/base.css porque o <footer> se repete em
+		     várias páginas do site, não só na home. -->
+	<footer class="rodape">
+		<nav class="rodape__menu">
+			<ul>
+				<li><a href="index.html">Início</a></li>
+				<li><a href="pages/cursos.html">Cursos</a></li>
+				<li><a href="pages/localizacao.html">Localização</a></li>
+				<li><a href="pages/usuario/cadastro.html">Cadastro</a></li>
+				<li><a href="pages/usuario/login.html">Entrar</a></li>
+			</ul>
+		</nav>
 
-		<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener">
-		<img class="imgredes" src="statics/img/icons/facebook.png" alt="Facebook" title="facebook" >
-		</a>
-		<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener">
-		<img class="imgredes" src="statics/img/icons/instagram.png" alt="instagram"  title="instagram" >
-		</a>
-		<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener">
-		<img class="imgredes" src="statics/img/icons/twitter.png" alt="twitter"  title="twitter" >
-		</a>
-		<a href="https://www.linkedin.com/" target="_blank" rel="noopener">
-		<img class="imgredes" src="statics/img/icons/linkedin.png" alt="linkedin" title="linkedin" >
-		</a>
-		<a href="https://wa.me/" target="_blank" rel="noopener">
-		<img class="imgredes" src="statics/img/icons/whatsapp.png" alt="whatsapp" title="whatsapp" >
-		</a>
-		<a href="https://www.youtube.com/" target="_blank" rel="noopener">
-		<img class="imgredes" src="statics/img/icons/youtube.png" alt="youtube" title="youtube" >
-		</a>
+		<div class="rodape__divisor"></div>
+
+		<div class="rodape__base">
+			<div class="rodape__marca">
+				<img src="statics/img/banners/logo-senac.png" alt="Logo Senac" id="logo-rodape">
+				<p>&copy; Todos os direitos reservados - Senac Tech</p>
+			</div>
+
+			<div class="rodape__redes">
+				<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener" title="Facebook">
+					<img src="statics/img/icons/facebook.png" alt="Facebook">
+				</a>
+				<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener" title="Twitter">
+					<img src="statics/img/icons/twitter.png" alt="Twitter">
+				</a>
+				<a href="https://www.linkedin.com/" target="_blank" rel="noopener" title="LinkedIn">
+					<img src="statics/img/icons/linkedin.png" alt="LinkedIn">
+				</a>
+				<a href="https://www.youtube.com/" target="_blank" rel="noopener" title="YouTube">
+					<img src="statics/img/icons/youtube.png" alt="YouTube">
+				</a>
+				<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener" title="Instagram">
+					<img src="statics/img/icons/instagram.png" alt="Instagram">
+				</a>
+			</div>
+		</div>
 	</footer>
 	</body>
 </html>

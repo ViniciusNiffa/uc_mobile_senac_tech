@@ -6,16 +6,16 @@
 
 ```
 .
-├── index.html                  # Página inicial
-├── pages/                      # Demais páginas do site
-│   ├── cursos.html             # Lista de cursos
-│   ├── cursoinfo.html          # Curso: Informática
-│   ├── cursoredes.html         # Curso: Redes de Computadores
-│   ├── cursosistemas.html      # Curso: Desenvolvimento de Sistemas
-│   ├── cursoadmin.html         # Curso: Administração
-│   ├── cursojogos.html         # Curso: Programação de Jogos Digitais
-│   ├── localizacao.html        # Localização da unidade
-│   └── usuario/                # Fluxo de conta do usuário
+├── index.html                  
+├── pages/                      
+│   ├── cursos.html             
+│   ├── cursoinfo.html          
+│   ├── cursoredes.html         
+│   ├── cursosistemas.html      
+│   ├── cursoadmin.html         
+│   ├── cursojogos.html         
+│   ├── localizacao.html        
+│   └── usuario/                
 │       ├── cadastro.html
 │       ├── login.html
 │       ├── perfil.html
@@ -25,29 +25,29 @@
 │       └── sucesso.html
 ├── statics/
 │   ├── css/
-│   │   ├── base.css            # Reset + layout global (header/nav/footer)
-│   │   ├── menu.css            # Menu de navegação (responsivo)
-│   │   ├── home.css            # Estilo específico da home
-│   │   ├── pages/               # Estilo das páginas de curso
+│   │   ├── base.css            
+│   │   ├── menu.css            
+│   │   ├── home.css            
+│   │   ├── pages/              
 │   │   │   ├── cursos.css
 │   │   │   └── curso-detalhe.css
 │   │   └── usuario/
-│   │       └── usuario.css      # Estilo das páginas de conta
+│   │       └── usuario.css      
 │   ├── js/
-│   │   ├── config.js            # URL base da API do auth_service
-│   │   ├── components.js        # Chamadas à API (login, cadastro, senha...)
-│   │   ├── menu.js              # Destaque do link ativo no menu
-│   │   └── home.js              # Comportamento da home (voltar ao topo)
+│   │   ├── config.js            
+│   │   ├── components.js        
+│   │   ├── menu.js              
+│   │   └── home.js              
 │   ├── img/
-│   │   ├── banners/              # Fotos e imagens de curso
-│   │   └── icons/                 # Ícones de redes sociais e da UI
-│   └── pdf/                       # Documentação de referência (paleta de cores etc.)
+│   │   ├── banners/             
+│   │   └── icons/               
+│   └── pdf/                     
 └── services/
-    └── auth_service/              # API de autenticação (Flask)
+    └── auth_service/            
         ├── run.py
         └── app/
-            ├── routes.py           # Endpoints /api/auth/*
-            ├── service.py          # Regras de negócio (login, cadastro, senha, OTP)
+            ├── routes.py        
+            ├── service.py       
             ├── auth.py
             ├── database.py
             └── validator.py

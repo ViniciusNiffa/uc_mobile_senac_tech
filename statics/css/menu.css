@@ -1,15 +1,56 @@
-header {
+/* Topo institucional: logo + nome à esquerda, redes sociais à direita.
+   Linha fina escura em cima e linha laranja de marca embaixo, como no
+   cabeçalho de referência do Senac-RS. */
+header.topo {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	padding: var(--espaco-sm) var(--espaco-md);
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: var(--espaco-md);
+	padding: var(--espaco-sm) var(--espaco-lg);
 	background-color: var(--cor-neutra-0);
-	border-bottom: 1px solid var(--cor-neutra-200);
+	border-top: 4px solid var(--cor-menu-borda-topo);
+	border-bottom: 3px solid var(--cor-primaria-500);
+}
+
+.topo__marca {
+	display: flex;
+	align-items: center;
+	gap: var(--espaco-md);
+}
+
+.topo__titulo {
+	font-size: 22px;
+	color: var(--cor-neutra-700);
 }
 
 #logosenac {
-	height: 48px;
+	height: 75px;
 	width: auto;
+}
+
+.topo__redes {
+	display: flex;
+	gap: var(--espaco-sm);
+}
+
+.topo__redes a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	background-color: var(--cor-neutra-200);
+}
+
+.topo__redes img {
+	width: 18px;
+	height: 18px;
+}
+
+.topo__redes a:hover {
+	background-color: var(--cor-primaria-300);
 }
 
 /* Checkbox invisível que guarda o estado "menu aberto/fechado" no mobile.
@@ -34,9 +75,11 @@ label[for="bt_menu"] {
 	color: var(--cor-primaria-700);
 }
 
-/* Barra de navegação principal */
+/* Barra de navegação principal: fundo claro, texto azul institucional,
+   destaque em laranja no hover/página atual (sem "caixa" de fundo). */
 #menu {
-	background-color: var(--cor-primaria-700);
+	background-color: var(--cor-neutra-100);
+	border-bottom: 1px solid var(--cor-neutra-200);
 }
 
 #menu > ul {
@@ -44,6 +87,10 @@ label[for="bt_menu"] {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	gap: var(--espaco-xl);
+	max-width: var(--largura-conteudo);
+	margin: 0 auto;
+	padding: 0 var(--espaco-lg);
 }
 
 #menu > ul > li {
@@ -52,24 +99,24 @@ label[for="bt_menu"] {
 
 #menu a {
 	display: block;
-	padding: var(--espaco-md);
-	color: var(--cor-neutra-0); /* texto branco sobre o fundo escuro (--cor-primaria-700) */
+	padding: var(--espaco-md) 0;
+	color: var(--cor-menu-texto);
 	font-weight: bold;
 	white-space: nowrap;
 }
 
-/* Estado de hover/foco: fundo um pouco mais escuro para indicar interatividade,
-   sem depender só da cor do texto (acessível também para quem navega por teclado). */
+/* Estado de hover/foco: muda só a cor do texto para laranja, sem fundo,
+   seguindo o visual mais "clean" do cabeçalho de referência. */
 #menu a:hover,
 #menu a:focus-visible {
-	background-color: var(--cor-primaria-600);
+	color: var(--cor-primaria-600);
 	text-decoration: none;
 }
 
 /* Classe adicionada via JavaScript (statics/js/menu.js) no link da página atual,
    pra o usuário sempre saber "onde" está dentro do site. */
 #menu a.ativo {
-	background-color: var(--cor-primaria-500);
+	color: var(--cor-primaria-500);
 }
 
 /* Submenu (ex.: "Cursos" > Informática, Redes, etc).
@@ -93,13 +140,14 @@ label[for="bt_menu"] {
 }
 
 #menu li > ul a {
-	color: var(--cor-neutra-900);
+	color: var(--cor-menu-texto);
 	font-weight: normal;
 }
 
 #menu li > ul a:hover,
 #menu li > ul a:focus-visible {
 	background-color: var(--cor-primaria-100);
+	color: var(--cor-primaria-600);
 }
 
 /*
@@ -111,6 +159,12 @@ label[for="bt_menu"] {
 @media (max-width: 768px) {
 	label[for="bt_menu"] {
 		display: block;
+	}
+
+	/* Ícones de rede social somem no celular (já existem no rodapé) pra
+	   sobrar espaço pro logo e pro ícone de hambúrguer não se sobreporem. */
+	.topo__redes {
+		display: none;
 	}
 
 	#menu > ul {

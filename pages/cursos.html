@@ -8,20 +8,36 @@
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/pages/cursos.css">
 	</head>
-	<body id="topo">
-		<section>
-			<header>
-			<img src="../statics/img/banners/logo-senac.png" alt="Logo Senac" title="Senac" id="logosenac">
-			</header>
-			<input type="checkbox" id="bt_menu">
-			<label for="bt_menu">&#9776;</label>
-			<nav id="menu">
+	<body>
+		<header class="topo">
+			<a class="topo__marca" href="../index.html">
+				<img src="../statics/img/banners/logo-senac.png" alt="Logo Senac" title="Senac" id="logosenac">
+				<span class="topo__titulo">Senac Tech</span>
+			</a>
+			<div class="topo__redes">
+				<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener" title="Facebook">
+					<img src="../statics/img/icons/facebook.png" alt="Facebook">
+				</a>
+				<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener" title="Twitter">
+					<img src="../statics/img/icons/twitter.png" alt="Twitter">
+				</a>
+				<a href="https://www.linkedin.com/" target="_blank" rel="noopener" title="LinkedIn">
+					<img src="../statics/img/icons/linkedin.png" alt="LinkedIn">
+				</a>
+				<a href="https://www.youtube.com/" target="_blank" rel="noopener" title="YouTube">
+					<img src="../statics/img/icons/youtube.png" alt="YouTube">
+				</a>
+				<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener" title="Instagram">
+					<img src="../statics/img/icons/instagram.png" alt="Instagram">
+				</a>
+			</div>
+		</header>
+		<input type="checkbox" id="bt_menu">
+		<label for="bt_menu">&#9776;</label>
+		<nav id="menu">
 			<ul>
 				<li>
-				
 					<a href="../index.html">Início</a>
-					<u>
-
 				</li>
 				<li>
 					<a href="cursos.html">Cursos</a>
@@ -50,8 +66,7 @@
 			</ul>	
 			
 		</nav>
-		</section>
-		
+
 		<hr>
 
 		<section class="cursos-lista">
@@ -111,34 +126,43 @@
 			</article>
 		</section>
 
-		<a class="voltar-topo" href="#topo">Voltar ao topo</a>
+		<footer class="rodape">
+			<nav class="rodape__menu">
+				<ul>
+					<li><a href="../index.html">Início</a></li>
+					<li><a href="cursos.html">Cursos</a></li>
+					<li><a href="localizacao.html">Localização</a></li>
+					<li><a href="usuario/cadastro.html">Cadastro</a></li>
+					<li><a href="usuario/login.html">Entrar</a></li>
+				</ul>
+			</nav>
 
-		<footer>
-			<p align="center">
-			<a href="#topo">
-			<img src="../statics/img/icons/seta-topo.png" alt="seta" width="68" height="68"
-			title="Subir para o topo" >
-			</a>
-			</p>
+			<div class="rodape__divisor"></div>
 
-			<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener">
-			<img class="imgredes" src="../statics/img/icons/facebook.png" alt="Facebook" title="facebook" >
-			</a>
-			<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener">
-			<img class="imgredes" src="../statics/img/icons/instagram.png" alt="instagram"  title="instagram" >
-			</a>
-			<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener">
-			<img class="imgredes" src="../statics/img/icons/twitter.png" alt="twitter"  title="twitter" >
-			</a>
-			<a href="https://www.linkedin.com/" target="_blank" rel="noopener">
-			<img class="imgredes" src="../statics/img/icons/linkedin.png" alt="linkedin" title="linkedin" >
-			</a>
-			<a href="https://wa.me/" target="_blank" rel="noopener">
-			<img class="imgredes" src="../statics/img/icons/whatsapp.png" alt="whatsapp" title="whatsapp" >
-			</a>
-			<a href="https://www.youtube.com/" target="_blank" rel="noopener">
-			<img class="imgredes" src="../statics/img/icons/youtube.png" alt="youtube" title="youtube" >
-			</a>
+			<div class="rodape__base">
+				<div class="rodape__marca">
+					<img src="../statics/img/banners/logo-senac.png" alt="Logo Senac" id="logo-rodape">
+					<p>&copy; Todos os direitos reservados - Senac Tech</p>
+				</div>
+
+				<div class="rodape__redes">
+					<a href="https://pt-br.facebook.com/" target="_blank" rel="noopener" title="Facebook">
+						<img src="../statics/img/icons/facebook.png" alt="Facebook">
+					</a>
+					<a href="https://twitter.com/login?lang=pt" target="_blank" rel="noopener" title="Twitter">
+						<img src="../statics/img/icons/twitter.png" alt="Twitter">
+					</a>
+					<a href="https://www.linkedin.com/" target="_blank" rel="noopener" title="LinkedIn">
+						<img src="../statics/img/icons/linkedin.png" alt="LinkedIn">
+					</a>
+					<a href="https://www.youtube.com/" target="_blank" rel="noopener" title="YouTube">
+						<img src="../statics/img/icons/youtube.png" alt="YouTube">
+					</a>
+					<a href="https://www.instagram.com/?hl=pt-br" target="_blank" rel="noopener" title="Instagram">
+						<img src="../statics/img/icons/instagram.png" alt="Instagram">
+					</a>
+				</div>
+			</div>
 		</footer>
 	<script src="../statics/js/menu.js"></script>
 	</body>

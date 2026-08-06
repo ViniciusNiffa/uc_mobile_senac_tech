@@ -71,11 +71,3 @@
 	background-color: var(--cor-primaria-600);
 	text-decoration: none;
 }
-
-.voltar-topo {
-	display: block;
-	text-align: center;
-	margin: 0 auto var(--espaco-xl);
-	color: var(--cor-primaria-600);
-	font-weight: bold;
-}
