@@ -7,11 +7,10 @@ load_dotenv()
 def get_connection():
     try:
         return sqlite3.connect(
-            os.getenv("database", "catalog.db")
+            os.getenv("database")
         )
     except sqlite3.Error as e:
         print(f"[ERRO DB] {e}")
         return None
 
-def init_db():
-    
+""" def init_db(): """
