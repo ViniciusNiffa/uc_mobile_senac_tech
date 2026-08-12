@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Senac Tech - Painel Administrativo</title>
+		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
+		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
+		<link rel="stylesheet" type="text/css" href="../statics/css/usuario/usuario.css">
+		<script src="../statics/js/components.js" defer></script>
+		<style>
+			/* Estilos adicionais rápidos para o painel admin (depois podem ir para usuario.css) */
+			.admin-container {
+				max-width: 1000px;
+				margin: 40px auto;
+				padding: 20px;
+				background-color: #fff;
+				border-radius: 8px;
+				box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+			}
+			.admin-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 20px;
+			}
+			.btn-add {
+				background-color: #28a745;
+				color: white;
+				padding: 10px 15px;
+				text-decoration: none;
+				border-radius: 4px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 20px;
+			}
+			th, td {
+				padding: 12px;
+				border-bottom: 1px solid #ddd;
+				text-align: left;
+			}
+			th {
+				background-color: #f4f4f4;
+			}
+			.btn-acao {
+				padding: 5px 10px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				margin-right: 5px;
+			}
+			.btn-editar { background-color: #ffc107; }
+			.btn-excluir { background-color: #dc3545; color: white; }
+		</style>
+	</head>
+	<body>
+		<div id="header-component"></div>
+
+		<main class="admin-container">
+			<div class="admin-header">
+				<h2>Gerenciamento de Usuários</h2>
+				<div>
+					<a href="usuario/cadastro.html" class="btn-add">Adicionar Novo Usuário</a>
+					<button id="btn-logout-admin" class="btn-secundario" style="margin-left: 10px; background-color: #d9534f; color: white; border:none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Sair</button>
+				</div>
+			</div>
+
+			<div style="overflow-x: auto;">
+				<table id="tabela-usuarios">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>E-mail</th>
+							<th>Perfil</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody id="lista-usuarios">
+						<!-- Linhas da tabela serão geradas pelo JS no Dia 3 -->
+						<tr>
+							<td colspan="5" style="text-align: center;">Carregando usuários...</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</main>
+
+		<div id="footer-component"></div>
+	</body>
+</html>

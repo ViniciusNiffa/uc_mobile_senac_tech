@@ -1,31 +1,37 @@
-/* Topo institucional: logo + nome à esquerda, redes sociais à direita.
-   Linha fina escura em cima e linha laranja de marca embaixo, como no
-   cabeçalho de referência do Senac-RS. */
-header.topo {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	gap: var(--espaco-md);
-	padding: var(--espaco-sm) var(--espaco-lg);
+/* statics/css/menu.css */
+#header-component {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 	background-color: var(--cor-neutra-0);
 	border-top: 4px solid var(--cor-menu-borda-topo);
 	border-bottom: 3px solid var(--cor-primaria-500);
 }
 
+header.topo {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 50px; /* Padding generoso mas que permite os elementos irem até o canto */
+	width: 100%; /* Ocupa 100% da tela sempre */
+}
+
+.topo__esquerda {
+	display: flex;
+	align-items: center;
+	gap: 50px; /* Muito mais espaço entre a logo e as redes sociais */
+	flex: 1;
+}
+
 .topo__marca {
 	display: flex;
 	align-items: center;
-	gap: var(--espaco-md);
-}
-
-.topo__titulo {
-	font-size: 22px;
-	color: var(--cor-neutra-700);
 }
 
 #logosenac {
-	height: 75px;
+	height: 65px; /* Aumentado significativamente (era 45px) */
 	width: auto;
 }
 
@@ -38,48 +44,58 @@ header.topo {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
-	border-radius: 4px;
+	width: 38px; /* Mais quadrados e maiores */
+	height: 38px;
+	border-radius: 6px;
 	background-color: var(--cor-neutra-200);
 }
 
 .topo__redes img {
-	width: 18px;
-	height: 18px;
+	width: 20px; /* Ícone interno maior */
+	height: 20px;
 }
 
 .topo__redes a:hover {
 	background-color: var(--cor-primaria-300);
 }
 
-/* Checkbox invisível que guarda o estado "menu aberto/fechado" no mobile.
-   Ele continua no DOM (por isso o navegador permite clicar no <label>), só não
-   é exibido visualmente. */
+.topo__centro {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.topo__direita {
+	display: flex;
+	flex: 1;
+	justify-content: flex-end;
+}
+
+.btn-usuario-topo {
+	color: var(--cor-primaria-600);
+	transition: transform 0.2s;
+}
+
+.btn-usuario-topo:hover {
+	color: var(--cor-primaria-500);
+	transform: scale(1.1);
+}
+
+/* Checkbox invisível que guarda o estado "menu aberto/fechado" no mobile. */
 #bt_menu {
 	position: absolute;
 	opacity: 0;
 	pointer-events: none;
 }
 
-/* O ícone de hamburguer (☰) que abre/fecha o menu no mobile.
-   Por padrão fica escondido — só aparece na media query de telas pequenas, lá embaixo. */
+/* O ícone de hamburguer (☰) */
 label[for="bt_menu"] {
 	display: none;
-	position: absolute;
-	top: var(--espaco-sm);
-	right: var(--espaco-md);
 	font-size: 28px;
 	line-height: 1;
 	cursor: pointer;
 	color: var(--cor-primaria-700);
-}
-
-/* Barra de navegação principal: fundo claro, texto azul institucional,
-   destaque em laranja no hover/página atual (sem "caixa" de fundo). */
-#menu {
-	background-color: var(--cor-neutra-100);
-	border-bottom: 1px solid var(--cor-neutra-200);
 }
 
 #menu > ul {
@@ -87,10 +103,9 @@ label[for="bt_menu"] {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: var(--espaco-xl);
-	max-width: var(--largura-conteudo);
-	margin: 0 auto;
-	padding: 0 var(--espaco-lg);
+	gap: 40px; /* Espaço gigante entre "Início", "Cursos", etc */
+	margin: 0;
+	padding: 0;
 }
 
 #menu > ul > li {
@@ -99,28 +114,24 @@ label[for="bt_menu"] {
 
 #menu a {
 	display: block;
-	padding: var(--espaco-md) 0;
 	color: var(--cor-menu-texto);
 	font-weight: bold;
+	font-size: 18px; /* Letra muito maior */
 	white-space: nowrap;
+	padding: 15px 5px;
 }
 
-/* Estado de hover/foco: muda só a cor do texto para laranja, sem fundo,
-   seguindo o visual mais "clean" do cabeçalho de referência. */
 #menu a:hover,
 #menu a:focus-visible {
 	color: var(--cor-primaria-600);
 	text-decoration: none;
 }
 
-/* Classe adicionada via JavaScript (statics/js/menu.js) no link da página atual,
-   pra o usuário sempre saber "onde" está dentro do site. */
 #menu a.ativo {
 	color: var(--cor-primaria-500);
 }
 
-/* Submenu (ex.: "Cursos" > Informática, Redes, etc).
-   Escondido por padrão e mostrado no hover/foco do item pai. */
+/* Submenu */
 #menu li > ul {
 	list-style: none;
 	position: absolute;
@@ -132,6 +143,7 @@ label[for="bt_menu"] {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	display: none;
 	z-index: 10;
+	padding: 0;
 }
 
 #menu li:hover > ul,
@@ -142,6 +154,7 @@ label[for="bt_menu"] {
 #menu li > ul a {
 	color: var(--cor-menu-texto);
 	font-weight: normal;
+	padding: 10px 15px;
 }
 
 #menu li > ul a:hover,
@@ -150,36 +163,54 @@ label[for="bt_menu"] {
 	color: var(--cor-primaria-600);
 }
 
-/*
-	Responsivo (telas de celular/tablet estreitas)
-	-----------------------------------------------
-	Abaixo de 768px: mostra o ícone de hamburguer e transforma o menu num painel
-	vertical que só aparece quando o checkbox #bt_menu está marcado.
-*/
+/* Responsivo */
 @media (max-width: 768px) {
 	label[for="bt_menu"] {
 		display: block;
 	}
 
-	/* Ícones de rede social somem no celular (já existem no rodapé) pra
-	   sobrar espaço pro logo e pro ícone de hambúrguer não se sobreporem. */
 	.topo__redes {
 		display: none;
+	}
+
+	header.topo {
+		justify-content: space-between;
+	}
+
+	.topo__centro {
+		flex: none;
+	}
+
+	.topo__direita {
+		flex: none;
+	}
+
+	.topo__esquerda {
+		flex: none;
+	}
+
+	/* O menu vira uma lista vertical e desce para baixo do cabeçalho */
+	#menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		background-color: var(--cor-neutra-0);
+		border-bottom: 3px solid var(--cor-primaria-500);
+		box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 	}
 
 	#menu > ul {
 		flex-direction: column;
 		display: none; /* escondido até o checkbox ser marcado */
+		padding: var(--espaco-md);
+		gap: var(--espaco-md);
 	}
 
-	/* Seletor "irmão adjacente": quando o checkbox (que vem antes no HTML) está
-	   marcado, exibe o <nav id="menu"> que vem logo em seguida. */
 	#bt_menu:checked ~ #menu > ul {
 		display: flex;
 	}
 
-	/* No mobile o submenu não faz sentido "flutuar" por cima do conteúdo,
-	   então ele vira uma lista normal, recuada, dentro do próprio menu. */
 	#menu li > ul {
 		display: block;
 		position: static;

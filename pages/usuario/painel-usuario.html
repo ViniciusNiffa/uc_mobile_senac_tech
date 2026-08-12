@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Senac Tech - Meu Painel</title>
+		<link rel="stylesheet" type="text/css" href="../../statics/css/base.css">
+		<link rel="stylesheet" type="text/css" href="../../statics/css/menu.css">
+		<link rel="stylesheet" type="text/css" href="../../statics/css/usuario/usuario.css">
+		<script src="../../statics/js/components.js" defer></script>
+	</head>
+	<body>
+		<div id="header-component"></div>
+
+		<main class="usuario-container painel-area">
+			<h2>Meu Perfil</h2>
+			<div class="perfil-card">
+				<!-- Espaço para foto do perfil -->
+				<div class="foto-perfil">
+					<img src="../../statics/img/icons/user-placeholder.png" alt="Foto de Perfil" id="img-perfil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+					<input type="file" id="upload-foto" accept="image/*">
+				</div>
+
+				<form id="form-perfil" class="form-usuario" novalidate>
+					<div class="campo">
+						<label for="nome">Nome Completo</label>
+						<input type="text" id="nome" name="nome" required>
+					</div>
+
+					<div class="campo">
+						<label for="email">E-mail</label>
+						<input type="email" id="email" name="email" required>
+					</div>
+
+					<div class="campo">
+						<label for="telefone">Telefone</label>
+						<input type="tel" id="telefone" name="telefone">
+					</div>
+
+					<div class="campo">
+						<label for="senha">Nova Senha (deixe em branco para não alterar)</label>
+						<input type="password" id="senha" name="senha">
+					</div>
+
+					<p class="mensagem" id="mensagem-perfil" role="alert"></p>
+
+					<div class="acoes">
+						<button type="submit">Salvar Alterações</button>
+						<button type="button" id="btn-logout" class="btn-secundario" style="margin-top: 10px; background-color: #d9534f;">Sair (Logout)</button>
+					</div>
+				</form>
+			</div>
+		</main>
+
+		<div id="footer-component"></div>
+	</body>
+</html>
