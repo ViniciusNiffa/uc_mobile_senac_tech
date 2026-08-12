@@ -135,12 +135,15 @@ footer.rodape {
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: var(--espaco-xl);
-	padding: var(--espaco-lg) var(--espaco-md);
+	padding: 40px var(--espaco-md); /* Mais espaço vertical */
 }
 
 .rodape__menu a {
 	color: var(--cor-neutra-0);
 	font-weight: bold;
+	font-size: 16px; /* Fonte levemente maior */
+	text-transform: uppercase; /* Dá uma cara mais profissional */
+	letter-spacing: 1px;
 }
 
 .rodape__menu a:hover,
@@ -150,8 +153,10 @@ footer.rodape {
 }
 
 .rodape__divisor {
-	height: 14px;
-	background-color: var(--cor-footer-divisor);
+	height: 1px; /* Linha fina, moderna e elegante em vez de bloco grosso */
+	max-width: var(--largura-conteudo);
+	margin: 0 auto;
+	background-color: rgba(255, 255, 255, 0.15); /* Divisor sutil */
 }
 
 .rodape__base {
@@ -159,10 +164,10 @@ footer.rodape {
 	align-items: center;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	gap: var(--espaco-md);
+	gap: var(--espaco-xl);
 	max-width: var(--largura-conteudo);
 	margin: 0 auto;
-	padding: var(--espaco-lg) var(--espaco-md);
+	padding: 40px var(--espaco-md); /* Mais respiro na base */
 }
 
 .rodape__marca {
@@ -174,14 +179,14 @@ footer.rodape {
 /* Logo original é colorido sobre fundo claro; invertemos pra branco pra
    funcionar sobre o azul-marinho do rodapé. */
 #logo-rodape {
-	height: 40px;
+	height: 65px; /* Bem maior para dar destaque */
 	width: auto;
 	filter: brightness(0) invert(1);
 }
 
 .rodape__marca p {
 	margin: 0;
-	font-size: 13px;
+	font-size: 15px; /* Fonte maior para melhor leitura */
 	color: var(--cor-neutra-200);
 }
 

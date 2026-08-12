@@ -1,40 +1,136 @@
-section {
-	max-width: var(--largura-conteudo);
-	margin: 0 auto;
-	padding: var(--espaco-xl) var(--espaco-md);
+/* statics/css/home.css */
+main {
+	width: 100%;
 }
 
-/* Cada "par" (#primeiropar e #segundopar) é um bloco com imagem de um lado e
-   texto do outro. Usamos flexbox em vez de float, que era a técnica antiga e
-   dava problema de sobreposição com o texto. */
-#primeiropar,
-#segundopar {
-	display: flex;
-	flex-wrap: wrap; /* empilha em telas estreitas */
-	align-items: flex-start;
-	gap: var(--espaco-lg);
+.hero {
+	background-color: var(--cor-footer-fundo);
+	color: white;
+	padding: 80px 0;
+	text-align: center;
 	margin-bottom: var(--espaco-xl);
 }
 
-#primeiropar h3 {
-	/* título ocupa a largura toda antes do texto/imagem começarem */
-	flex-basis: 100%;
+.hero h1 {
+	font-size: 42px;
+	margin-bottom: 20px;
+	color: white;
 }
 
-#foto1senac,
-#foto2senac {
-	flex: 1 1 320px; /* cresce/encolhe, mas nunca fica menor que 320px */
-	border-radius: 8px;
+.hero p {
+	font-size: 18px;
+	max-width: 700px;
+	margin: 0 auto;
+	color: var(--cor-neutra-200);
 }
 
-/* No primeiro par a imagem fica entre dois parágrafos; nos dois casos o texto
-   ocupa o espaço restante ao lado da imagem. */
-#primeiropar p,
-#segundopar p {
-	flex: 2 1 400px; /* o texto ocupa mais espaço que a imagem quando cabe lado a lado */
+.sobre-senac {
+	display: flex;
+	align-items: center;
+	gap: 40px;
+	margin-bottom: 60px;
 }
 
-#pt1,
-#pt2 {
-	flex-basis: 100%; /* os dois parágrafos do segundo par ficam abaixo da imagem */
+.sobre__texto {
+	flex: 1;
+}
+
+.sobre__texto h2 {
+	font-size: 32px;
+	color: var(--cor-primaria-700);
+	margin-bottom: 20px;
+}
+
+.sobre__imagem {
+	flex: 1;
+}
+
+.sobre__imagem img {
+	border-radius: 12px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+	width: 100%;
+}
+
+.programas-destaque {
+	background-color: var(--cor-neutra-100);
+	padding: 60px 0;
+	margin-bottom: 60px;
+}
+
+.titulo-centralizado {
+	text-align: center;
+	font-size: 32px;
+	color: var(--cor-primaria-700);
+	margin-bottom: 40px;
+}
+
+.programas__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+}
+
+.card-programa {
+	background: white;
+	padding: 40px 30px;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+	text-align: center;
+	transition: transform 0.2s;
+}
+
+.card-programa:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-programa h3 {
+	font-size: 22px;
+	color: var(--cor-menu-borda-topo);
+	margin-bottom: 15px;
+}
+
+.banner-alunos {
+	display: flex;
+	align-items: center;
+	gap: 40px;
+	background-color: var(--cor-neutra-0);
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+	margin-bottom: 60px;
+}
+
+.banner-imagem {
+	flex: 1;
+}
+
+.banner-imagem img {
+	border-radius: 12px;
+	width: 100%;
+}
+
+.banner-texto {
+	flex: 1;
+}
+
+.banner-texto h2 {
+	font-size: 32px;
+	color: var(--cor-primaria-700);
+	margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+	.sobre-senac, .banner-alunos {
+		flex-direction: column;
+	}
+	.banner-imagem {
+		order: -1;
+	}
+	.hero h1 {
+		font-size: 32px;
+	}
+	.hero {
+		padding: 40px 20px;
+	}
 }
