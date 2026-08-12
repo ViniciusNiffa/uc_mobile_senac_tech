@@ -3,7 +3,7 @@ from .database import get_connection
 def get_user_by_id(user_id):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT id, nome, email, cpf, telefone, tipo FROM usuarios WHERE id = %s", (user_id,))
+    cursor.execute("SELECT id, nome, sobrenome, email, cpf, telefone, tipo FROM usuarios WHERE id = %s", (user_id,))
     user = cursor.fetchone()
     cursor.close()
     conn.close()
