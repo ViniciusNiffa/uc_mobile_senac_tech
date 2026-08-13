@@ -1,54 +1,61 @@
+from pathlib import Path
 import os
 import sqlite3
 from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_connection_user():
-    try:
-        return sqlite3.connect(
-            os.getenv("database")
-        )
-    except sqlite3.Error as e:
-        print(f"[ERRO DB] {e}")
-        return None
+BASE_DIR = Path(__file__).resolve().parent.parent
+DB_PATH = os.getenv("USER_DB_PATH", str(BASE_DIR / "data" / "users.db"))
+
+
+def get_connection():
+    Path(DB_PATH).parent.mkdir(parents=True, exist_ok=True)
+
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")
+
+    return conn
 
 def init_db():
-    conn = get_connection_user()
+    conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute(""" 
-    CREATE TABLE IF NOT EXISTS user (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    sobrenome TEXT NOT NULL,
-    telefone TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL UNIQUE,
-    senha TEXT NOT NULL,
-    data_nasc NOT NULL DATE,
-    cpf TEXT NOT NULL UNIQUE,
-    is_admin INTEGER NOT NULL DEFAULT 0,
-    resete_code TEXT,
-    reset_code_expira TEXT,
-    endereco_id FOREIGN KEY
-    )
-     """)
-    
-    conn.commit()
+    try:        
+        cursor.execute(""" 
+        CREATE TABLE IF NOT EXISTS perfis (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        sobrenome TEXT NOT NULL,
+        telefone TEXT NOT NULL UNIQUE,
+        data_nasc TEXT NOT NULL,
+        foto_perfil TEXT NOT NULL,
+        criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        
+        conn.commit()
 
-    conn = get_connection_user()
+        
+        cursor.execute(""" 
+        CREATE TABLE IF NOT EXISTS enderecos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        perfil_id NOT NULL
+        estado TEXT NOT NULL,
+        cidade TEXT NOT NULL,
+        bairro TEXT NOT NULL,
+        rua TEXT NOT NULL,
+        numero TEXT NOT NULL,
+        complemento TEXT
 
-    cursor.execute(""" 
-    CREATE TABLE IF NOT EXISTS endereco (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    estado TEXT NOT NULL,
-    cidade TEXT NOT NULL,
-    bairro TEXT NOT NULL,
-    rua TEXT NOT NULL,
-    numero TEXT NOT NULL,
-    complemento TEXT    
-    )
-    """)
+        FOREIGN KEY (perfil_id)
+            REFERENCES perfis(id)
+        )
+        """)
 
-    conn.commit()
-    cursor.close()
+        conn.commit()
+    finally:
+        cursor.close()
+        conn.close()
