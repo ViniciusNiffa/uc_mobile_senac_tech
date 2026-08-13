@@ -1,12 +1,13 @@
 /* statics/css/menu.css */
+
 #header-component {
 	position: sticky;
 	top: 0;
 	z-index: 1000;
-	box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 	background-color: var(--cor-neutra-0);
-	border-top: 4px solid var(--cor-menu-borda-topo);
-	border-bottom: 3px solid var(--cor-primaria-500);
+	border-top: 3px solid var(--cor-menu-borda-topo);
+	border-bottom: 2px solid var(--cor-primaria-500);
+	box-shadow: var(--sombra-md);
 }
 
 header.topo {
@@ -14,157 +15,208 @@ header.topo {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 20px 50px; /* Padding generoso mas que permite os elementos irem até o canto */
-	width: 100%; /* Ocupa 100% da tela sempre */
+	padding: 14px 40px;
+	width: 100%;
+	gap: var(--espaco-lg);
 }
 
+/* ── Esquerda: logo + redes ── */
 .topo__esquerda {
 	display: flex;
 	align-items: center;
-	gap: 50px; /* Muito mais espaço entre a logo e as redes sociais */
+	gap: 32px;
 	flex: 1;
 }
 
 .topo__marca {
 	display: flex;
 	align-items: center;
+	flex-shrink: 0;
 }
 
 #logosenac {
-	height: 65px; /* Aumentado significativamente (era 45px) */
+	height: 56px;
 	width: auto;
+	transition: opacity var(--transicao);
+}
+
+#logosenac:hover {
+	opacity: 0.85;
 }
 
 .topo__redes {
 	display: flex;
-	gap: var(--espaco-sm);
+	gap: 6px;
 }
 
 .topo__redes a {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 38px; /* Mais quadrados e maiores */
-	height: 38px;
-	border-radius: 6px;
-	background-color: var(--cor-neutra-200);
+	width: 34px;
+	height: 34px;
+	border-radius: var(--raio-sm);
+	background-color: var(--cor-neutra-100);
+	border: 1px solid var(--cor-neutra-200);
+	transition: background-color var(--transicao), transform var(--transicao);
 }
 
 .topo__redes img {
-	width: 20px; /* Ícone interno maior */
-	height: 20px;
+	width: 16px;
+	height: 16px;
 }
 
 .topo__redes a:hover {
-	background-color: var(--cor-primaria-300);
+	background-color: var(--cor-primaria-100);
+	border-color: var(--cor-primaria-300);
+	transform: translateY(-1px);
 }
 
+/* ── Centro: navegação ── */
 .topo__centro {
-	flex: 1;
+	flex: 2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.topo__direita {
-	display: flex;
-	flex: 1;
-	justify-content: flex-end;
-}
-
-.btn-usuario-topo {
-	color: var(--cor-primaria-600);
-	transition: transform 0.2s;
-}
-
-.btn-usuario-topo:hover {
-	color: var(--cor-primaria-500);
-	transform: scale(1.1);
-}
-
-/* Checkbox invisível que guarda o estado "menu aberto/fechado" no mobile. */
+/* Checkbox invisível — controla abertura do menu mobile via CSS puro */
 #bt_menu {
 	position: absolute;
 	opacity: 0;
 	pointer-events: none;
 }
 
-/* O ícone de hamburguer (☰) */
+/* Ícone hamburguer */
 label[for="bt_menu"] {
 	display: none;
-	font-size: 28px;
+	font-size: 26px;
 	line-height: 1;
 	cursor: pointer;
-	color: var(--cor-primaria-700);
+	color: var(--cor-menu-borda-topo);
+	padding: 4px;
+	border-radius: var(--raio-sm);
+	transition: background-color var(--transicao);
 }
 
+label[for="bt_menu"]:hover {
+	background-color: var(--cor-neutra-100);
+}
+
+/* ── Nav principal ── */
 #menu > ul {
 	list-style: none;
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 40px; /* Espaço gigante entre "Início", "Cursos", etc */
+	gap: 8px;
 	margin: 0;
 	padding: 0;
 }
 
 #menu > ul > li {
-	position: relative; /* referência para o submenu de "Cursos" se posicionar dentro */
+	position: relative;
 }
 
 #menu a {
 	display: block;
-	color: var(--cor-menu-texto);
-	font-weight: bold;
-	font-size: 18px; /* Letra muito maior */
+	color: var(--cor-menu-borda-topo);
+	font-weight: 600;
+	font-size: 0.95rem;
 	white-space: nowrap;
-	padding: 15px 5px;
+	padding: 8px 14px;
+	border-radius: var(--raio-sm);
+	transition: background-color var(--transicao), color var(--transicao);
 }
 
-#menu a:hover,
-#menu a:focus-visible {
+#menu > ul > li > a:hover,
+#menu > ul > li > a:focus-visible {
+	background-color: var(--cor-neutra-100);
 	color: var(--cor-primaria-600);
 	text-decoration: none;
 }
 
 #menu a.ativo {
-	color: var(--cor-primaria-500);
+	color: var(--cor-primaria-600);
+	background-color: var(--cor-primaria-100);
 }
 
-/* Submenu */
+/* ── Submenu dropdown ── */
 #menu li > ul {
 	list-style: none;
 	position: absolute;
-	top: 100%;
+	top: calc(100% + 6px);
 	left: 0;
-	min-width: 220px;
+	min-width: 230px;
 	background-color: var(--cor-neutra-0);
 	border: 1px solid var(--cor-neutra-200);
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	display: none;
-	z-index: 10;
-	padding: 0;
+	border-radius: var(--raio-md);
+	box-shadow: var(--sombra-lg);
+	padding: 6px;
+	/* Animação via opacity + transform em vez de display:none/block abrupto */
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-6px);
+	transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
 #menu li:hover > ul,
 #menu li:focus-within > ul {
-	display: block;
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
 }
 
 #menu li > ul a {
-	color: var(--cor-menu-texto);
-	font-weight: normal;
-	padding: 10px 15px;
+	color: var(--cor-neutra-700);
+	font-weight: 500;
+	font-size: 0.9rem;
+	padding: 9px 14px;
+	border-radius: var(--raio-sm);
 }
 
 #menu li > ul a:hover,
 #menu li > ul a:focus-visible {
 	background-color: var(--cor-primaria-100);
-	color: var(--cor-primaria-600);
+	color: var(--cor-primaria-700);
+	text-decoration: none;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
+/* ── Direita: ícone de usuário ── */
+.topo__direita {
+	display: flex;
+	flex: 1;
+	justify-content: flex-end;
+}
+
+.topo__usuario {
+	display: flex;
+	align-items: center;
+}
+
+.btn-usuario-topo {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--cor-menu-borda-topo);
+	font-weight: 600;
+	font-size: 0.9rem;
+	padding: 8px 4px;
+	transition: color var(--transicao);
+	white-space: nowrap;
+}
+
+.btn-usuario-topo:hover {
+	color: var(--cor-primaria-600);
+	text-decoration: none;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 900px) {
+	header.topo {
+		padding: 12px 20px;
+	}
+
 	label[for="bt_menu"] {
 		display: block;
 	}
@@ -173,49 +225,65 @@ label[for="bt_menu"] {
 		display: none;
 	}
 
-	header.topo {
-		justify-content: space-between;
+	.topo__esquerda {
+		flex: none;
 	}
 
 	.topo__centro {
 		flex: none;
+		order: 3;
+		width: 100%;
 	}
 
 	.topo__direita {
 		flex: none;
 	}
 
-	.topo__esquerda {
-		flex: none;
+	header.topo {
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 
-	/* O menu vira uma lista vertical e desce para baixo do cabeçalho */
+	/* Menu desce abaixo do header no mobile */
 	#menu {
 		position: absolute;
 		top: 100%;
 		left: 0;
 		width: 100%;
 		background-color: var(--cor-neutra-0);
-		border-bottom: 3px solid var(--cor-primaria-500);
-		box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+		border-bottom: 2px solid var(--cor-primaria-500);
+		box-shadow: var(--sombra-lg);
+		z-index: 999;
 	}
 
 	#menu > ul {
 		flex-direction: column;
-		display: none; /* escondido até o checkbox ser marcado */
+		display: none;
 		padding: var(--espaco-md);
-		gap: var(--espaco-md);
+		gap: 4px;
 	}
 
 	#bt_menu:checked ~ #menu > ul {
 		display: flex;
 	}
 
+	/* Submenu vira estático no mobile */
 	#menu li > ul {
-		display: block;
+		opacity: 1;
+		pointer-events: auto;
+		transform: none;
 		position: static;
 		box-shadow: none;
 		border: none;
-		padding-left: var(--espaco-md);
+		border-radius: 0;
+		background-color: var(--cor-neutra-100);
+		padding: 4px 0 4px var(--espaco-md);
+		margin-top: 4px;
+		display: none;
+	}
+
+	#menu li:hover > ul,
+	#menu li:focus-within > ul {
+		display: block;
 	}
 }

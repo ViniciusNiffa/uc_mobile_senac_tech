@@ -3,32 +3,117 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Senac Tech - Onde Estamos</title>
-
-		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
+		<title>Senac Tech - Localização</title>
+		<meta name="description" content="Encontre a unidade Senac Tech em Porto Alegre. Endereço, telefone e mapa de localização.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
+		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
+		<style>
+			.localizacao-wrapper {
+				max-width: var(--largura-conteudo);
+				margin: 0 auto;
+				padding: 48px var(--espaco-lg);
+				display: flex;
+				gap: 48px;
+				align-items: flex-start;
+			}
+
+			.localizacao-mapa {
+				flex: 2;
+				border-radius: var(--raio-md);
+				overflow: hidden;
+				box-shadow: var(--sombra-md);
+				line-height: 0;
+			}
+
+			.localizacao-mapa iframe {
+				width: 100%;
+				height: 400px;
+				border: none;
+				display: block;
+			}
+
+			.localizacao-info {
+				flex: 1;
+				min-width: 200px;
+			}
+
+			.localizacao-info h2 {
+				font-size: 1.3rem;
+				color: var(--cor-menu-borda-topo);
+				margin-bottom: var(--espaco-lg);
+			}
+
+			.info-linha {
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+				margin-bottom: var(--espaco-lg);
+			}
+
+			.info-linha strong {
+				font-size: 0.78rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.8px;
+				color: var(--cor-neutra-500);
+			}
+
+			.info-linha span {
+				font-size: 0.95rem;
+				color: var(--cor-neutra-900);
+			}
+
+			@media (max-width: 700px) {
+				.localizacao-wrapper {
+					flex-direction: column;
+					padding: var(--espaco-xl) var(--espaco-md);
+				}
+				.localizacao-mapa iframe {
+					height: 280px;
+				}
+			}
+		</style>
 		<script src="../statics/js/components.js" defer></script>
 	</head>
 	<body>
 		<div id="header-component"></div>
-		<hr>
-		<p>
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.7917769435962!2d-51.22108158420672!3d-30.042831038163296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951978567e901f85%3A0x419bba8824e42f95!2sAv.%20Ven%C3%A2ncio%20Aires%2C%2093%20-%20Cidade%20Baixa%2C%20Porto%20Alegre%20-%20RS%2C%2090040-191!5e0!3m2!1spt-BR!2sbr!4v1590938323463!5m2!1spt-BR!2sbr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-		</p>
-		<br>
-		<p>
-		ENDEREÇO - VENÂNCIO AIRES 93, CIDADE BAIXA		
-		</p>
-		<br>
-		<p>
-		CONTATO - (51) 3288-7750
-		</p>
+
+		<main>
+			<div class="localizacao-wrapper">
+				<div class="localizacao-mapa">
+					<iframe
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.7917769435962!2d-51.22108158420672!3d-30.042831038163296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951978567e901f85%3A0x419bba8824e42f95!2sAv.%20Ven%C3%A2ncio%20Aires%2C%2093%20-%20Cidade%20Baixa%2C%20Porto%20Alegre%20-%20RS%2C%2090040-191!5e0!3m2!1spt-BR!2sbr!4v1590938323463!5m2!1spt-BR!2sbr"
+						allowfullscreen=""
+						loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade"
+						title="Localização Senac Tech no Google Maps">
+					</iframe>
+				</div>
+
+				<div class="localizacao-info">
+					<h2>Onde Estamos</h2>
+
+					<div class="info-linha">
+						<strong>Endereço</strong>
+						<span>Av. Venâncio Aires, 93<br>Cidade Baixa — Porto Alegre, RS</span>
+					</div>
+
+					<div class="info-linha">
+						<strong>Telefone</strong>
+						<span>(51) 3288-7750</span>
+					</div>
+
+					<div class="info-linha">
+						<strong>Horário de atendimento</strong>
+						<span>Segunda a sexta, das 8h às 22h</span>
+					</div>
+				</div>
+			</div>
+		</main>
 
 		<div id="footer-component"></div>
-	<script src="../statics/js/menu.js"></script>
-
-		
+		<script src="../statics/js/menu.js"></script>
 	</body>
-
-
 </html>

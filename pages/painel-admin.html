@@ -4,90 +4,128 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Senac Tech - Painel Administrativo</title>
+		<meta name="description" content="Painel de administração do Senac Tech — gerenciamento de usuários.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
-		<link rel="stylesheet" type="text/css" href="../statics/css/usuario/usuario.css">
+		<link rel="stylesheet" type="text/css" href="../statics/css/admin/admin.css">
 		<script src="../statics/js/components.js" defer></script>
-		<style>
-			/* Estilos adicionais rápidos para o painel admin (depois podem ir para usuario.css) */
-			.admin-container {
-				max-width: 1000px;
-				margin: 40px auto;
-				padding: 20px;
-				background-color: #fff;
-				border-radius: 8px;
-				box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-			}
-			.admin-header {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 20px;
-			}
-			.btn-add {
-				background-color: #28a745;
-				color: white;
-				padding: 10px 15px;
-				text-decoration: none;
-				border-radius: 4px;
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				margin-top: 20px;
-			}
-			th, td {
-				padding: 12px;
-				border-bottom: 1px solid #ddd;
-				text-align: left;
-			}
-			th {
-				background-color: #f4f4f4;
-			}
-			.btn-acao {
-				padding: 5px 10px;
-				border: none;
-				border-radius: 4px;
-				cursor: pointer;
-				margin-right: 5px;
-			}
-			.btn-editar { background-color: #ffc107; }
-			.btn-excluir { background-color: #dc3545; color: white; }
-		</style>
 	</head>
 	<body>
 		<div id="header-component"></div>
 
 		<main class="admin-container">
 			<div class="admin-header">
-				<h2>Gerenciamento de Usuários</h2>
-				<div>
-					<a href="usuario/cadastro.html" class="btn-add">Adicionar Novo Usuário</a>
-					<button id="btn-logout-admin" class="btn-secundario" style="margin-left: 10px; background-color: #d9534f; color: white; border:none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Sair</button>
+				<h2>Painel Administrativo</h2>
+				<div class="admin-header__acoes">
+					<a href="usuario/cadastro.html" class="btn-add" id="btn-novo-usuario">
+						+ Novo Usuário
+					</a>
+					<button id="btn-logout-admin" class="btn-admin-sair">Sair</button>
 				</div>
 			</div>
 
-			<div style="overflow-x: auto;">
-				<table id="tabela-usuarios">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Nome</th>
-							<th>E-mail</th>
-							<th>Perfil</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody id="lista-usuarios">
-						<!-- Linhas da tabela serão geradas pelo JS no Dia 3 -->
-						<tr>
-							<td colspan="5" style="text-align: center;">Carregando usuários...</td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="admin-card">
+				<div class="admin-table-wrapper">
+					<table id="tabela-usuarios">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nome</th>
+								<th>E-mail</th>
+								<th>Perfil</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody id="lista-usuarios">
+							<tr>
+								<td colspan="5">
+									<div class="tabela-vazia">
+										<p>Carregando usuários...</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</main>
 
 		<div id="footer-component"></div>
+
+		<script src="../statics/js/config.js"></script>
+		<script src="../statics/js/api.js"></script>
+		<script src="../statics/js/auth-guard.js"></script>
+		<script src="../statics/js/menu.js"></script>
+		<script>
+			// Painel Admin — listagem de usuários via user_service
+			document.addEventListener('DOMContentLoaded', async () => {
+				const tbody   = document.getElementById('lista-usuarios');
+				const badge   = document.getElementById('badge-total');
+				const btnSair = document.getElementById('btn-logout-admin');
+
+				// Logout
+				if (btnSair) {
+					btnSair.addEventListener('click', () => API.logout('../index.html'));
+				}
+
+				// Busca usuários no user_service
+				try {
+					const res = await fetch(`${APP_CONFIG.USER_URL}/users`, {
+						headers: { 'Authorization': `Bearer ${localStorage.getItem('senac_token')}` }
+					});
+
+					if (!res.ok) throw new Error(`HTTP ${res.status}`);
+					const usuarios = await res.json();
+
+					if (!Array.isArray(usuarios) || usuarios.length === 0) {
+						tbody.innerHTML = `<tr><td colspan="5"><div class="tabela-vazia"><p>Nenhum usuário encontrado.</p></div></td></tr>`;
+						badge.textContent = '0';
+						return;
+					}
+
+					badge.textContent = usuarios.length;
+					tbody.innerHTML = usuarios.map(u => `
+						<tr>
+							<td class="td-id">#${u.id}</td>
+							<td><strong>${escHtml(u.nome || u.primeiro_nome || '—')}</strong></td>
+							<td>${escHtml(u.email || '—')}</td>
+							<td>
+								<span class="badge-role badge-role--${u.role === 'admin' ? 'admin' : 'user'}">
+									${u.role === 'admin' ? 'Admin' : 'Aluno'}
+								</span>
+							</td>
+							<td>
+								<div class="acoes-tabela">
+									<button class="btn-acao btn-editar" onclick="editarUsuario(${u.id})">Editar</button>
+									<button class="btn-acao btn-excluir" onclick="excluirUsuario(${u.id})">Excluir</button>
+								</div>
+							</td>
+						</tr>
+					`).join('');
+				} catch (err) {
+					console.error('Erro ao carregar usuários:', err);
+					tbody.innerHTML = `<tr><td colspan="5"><div class="tabela-vazia"><p>Não foi possível carregar os usuários. Verifique se o serviço está rodando.</p></div></td></tr>`;
+					badge.textContent = '!';
+				}
+			});
+
+			// Escapa HTML para evitar XSS na tabela
+			function escHtml(str) {
+				return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+			}
+
+			function editarUsuario(id) {
+				// TODO: abrir modal ou redirecionar para página de edição
+				alert(`Editar usuário #${id} — funcionalidade em desenvolvimento.`);
+			}
+
+			function excluirUsuario(id) {
+				if (confirm(`Deseja excluir o usuário #${id}?`)) {
+					alert('Funcionalidade de exclusão em desenvolvimento.');
+				}
+			}
+		</script>
 	</body>
 </html>

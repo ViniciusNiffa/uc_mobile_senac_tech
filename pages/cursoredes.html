@@ -3,7 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Senac Tech - Curso Técnico em Redes de Computadores</title>
+		<title>Senac Tech - Técnico em Redes de Computadores</title>
+		<meta name="description" content="Conheça o curso Técnico em Redes de Computadores do Senac Tech: carga horária, grade curricular, pré-requisitos e como se inscrever.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/pages/curso-detalhe.css">
@@ -11,64 +14,114 @@
 	</head>
 	<body>
 		<div id="header-component"></div>
-		<hr>		
-		<section>
-		<div class="headimage">
-		<img src="../statics/img/banners/curso-redes-alt.png" alt="Logo Senac"title="Curso de Informática">
-		</div>
+
+		<!-- Hero do curso -->
+		<section class="curso-hero">
+			<div class="curso-hero__inner container">
+				<div class="curso-hero__texto">
+					<h1>Redes de Computadores</h1>
+					<p>Prepare-se para implementar e manter infraestruturas de redes, segurança e serviços em ambientes corporativos e autônomos. Uma das áreas de TI mais promissoras do mercado.</p>
+				</div>
+				<div class="curso-hero__imagem">
+					<img src="../statics/img/banners/curso-redes.png" alt="Curso Técnico em Redes de Computadores">
+				</div>
+			</div>
 		</section>
-		<hr>
-		<article>
-		<h2 id="p1">Curso Técnico em Redes de Computadores</h2>
-		<hr>
-		<!-- Texto do parágrafo justificado -->
-		<p>				
-		Pesquisas apontam que as profissões de TI mais promissoras da atualidade estão relacionadas com o desenvolvimento de softwares e aplicativos para dispositivos móveis, com a segurança e a infraestrutura de redes e com os projetos em User Experience (U.E). Todas elas necessitam de um profissional da área de redes conectando a infraestrutura e disponibilizando os softwares desenvolvidos.
-		</p>
-		<p>				
-		O Técnico em Redes de Computadores tem seu perfil profissional que implementa e mantem a infraestrutura, os equipamentos de acesso, os sistemas operacionais e os serviços de redes de computadores, aplicando normas de segurança em rede e padrões técnicos, de acordo com normas de qualidade, de saúde e de segurança do trabalho e na preservação ambiental.
-		</p>
-		<p>			
-		O profissional, atua em instituições públicas, privadas e do terceiro setor que demanda redes de computadores ou na prestação autônoma de serviços, com ênfase no ambiente de redes de computadores, capacitando assim, o profissional para acompanhar projetos de rede, implementação, gerencia e administração nos serviços específicos de rede, tanto na parte física quanto na parte lógica, tentando sempre manter a segurança dos dados e da rede de computadores.
-		</p>
-		<p>		
-		O trabalho autônomo também é uma alternativa de mercado, pois empresas de pequeno porte, que não podem manter profissionais em tempo integral, contratam prestadores de serviços para implementação, suporte e administração.
-		</p>
-		<p>		
-		Este curso, é ideal para as pessoas que estejam cursando o ensino médio, a partir do 2º ano, a idade mínima exigida de 15 anos. A equipe docente é composta?por?profissionais com experiência na área de TI e formação superior. Após o término deste curso, o certificado do?Técnico em Redes de Computadores,?estará disponível e com validade nacional. Desenvolva serviços de manutenção preventiva e reativa, dando suporte a tomada de decisões estratégicas e táticas associadas a redes!
-		</p>
-		</article>
-		<br>
-		<table align="center" border="2">
-			<thead>
-				<tr>
-					<td colspan="2" align="center">Informações</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td align="center">Carga Horária</td>
-					<td align="center">1000 Horas</td>
-				</tr>
-				<tr>
-					<td>Área de Atuação</td>
-					<td>Informática</td>
-				</tr>
-				<tr>
-					<td>Turnos</td>
-					<td>Manhã e noite (Consultar turmas disponíveis)</td>
-				</tr>
-				<tr>
-					<td>Pré-requisitos</td>
-					<td>Maiores de 15 anos, 2º ano do Ensino-médio</td>		
-				</tr>				
-			</tbody>
-		</table>
+
+
+
+		<!-- Conteúdo principal -->
+		<main class="container">
+			<div class="curso-conteudo">
+				<!-- Coluna principal -->
+				<div class="curso-corpo">
+					<section class="secao-texto">
+						<h2>Sobre o Curso</h2>
+						<p>Pesquisas apontam que as profissões de TI mais promissoras da atualidade estão relacionadas com o desenvolvimento de softwares e aplicativos para dispositivos móveis, com a segurança e a infraestrutura de redes e com os projetos em User Experience. Todas elas necessitam de um profissional da área de redes conectando a infraestrutura e disponibilizando os softwares desenvolvidos.</p>
+						<p>O Técnico em Redes de Computadores implementa e mantém a infraestrutura, os equipamentos de acesso, os sistemas operacionais e os serviços de redes de computadores, aplicando normas de segurança em rede e padrões técnicos.</p>
+						<p>O trabalho autônomo também é uma alternativa de mercado, pois empresas de pequeno porte que não podem manter profissionais em tempo integral contratam prestadores de serviços para implementação, suporte e administração.</p>
+					</section>
+
+					<!-- Grade curricular com acordeão CSS puro (checkbox + max-height) -->
+					<section class="secao-texto">
+						<h2>Grade Curricular</h2>
+						<div class="grade-curricular">
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo1">
+								<label class="disciplina__titulo" for="modulo1">Módulo 1 — Fundamentos de Redes</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Introdução às redes de computadores</li>
+										<li>Modelo OSI e TCP/IP</li>
+										<li>Cabeamento estruturado</li>
+										<li>Endereçamento IP e sub-redes</li>
+										<li>Segurança da informação básica</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo2">
+								<label class="disciplina__titulo" for="modulo2">Módulo 2 — Infraestrutura e Serviços</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Sistemas operacionais de rede (Linux e Windows Server)</li>
+										<li>DNS, DHCP e Proxy</li>
+										<li>Roteamento e switching</li>
+										<li>Redes sem fio (Wi-Fi)</li>
+										<li>Virtualização de servidores</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo3">
+								<label class="disciplina__titulo" for="modulo3">Módulo 3 — Segurança e Gerenciamento</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Firewall e controle de acesso</li>
+										<li>VPN e criptografia</li>
+										<li>Monitoramento de redes (Nagios, Zabbix)</li>
+										<li>Backup e recuperação de dados</li>
+										<li>Gerenciamento de projetos de rede</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</section>
+				</div>
+
+				<!-- Sidebar: card de inscrição -->
+				<aside class="sidebar-inscricao">
+					<div class="card-inscricao">
+						<h3>Informações para Inscrição</h3>
+						<div class="card-inscricao__info">
+							<div class="card-info-linha">
+								<span>Duração</span>
+								<span>1.000 horas</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Modalidade</span>
+								<span>Presencial</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Turnos</span>
+								<span>Manhã / Noite</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Pré-requisito</span>
+								<span>2º ano EM (+15 anos)</span>
+							</div>
+						</div>
+						<a href="localizacao.html" class="btn-inscricao">Ver Localização</a>
+					</div>
+				</aside>
+			</div>
+		</main>
+
 		<div id="footer-component"></div>
-	<script src="../statics/js/menu.js"></script>
-
-	
+		<script src="../statics/js/menu.js"></script>
 	</body>
-
-
 </html>

@@ -4,6 +4,9 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Senac Tech - Entrar</title>
+		<meta name="description" content="Acesse sua conta Senac Tech para acompanhar seus cursos e informações.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../../statics/css/usuario/usuario.css">
@@ -11,40 +14,41 @@
 	<body>
 		<div id="header-component"></div>
 
-		<hr>
-
 		<main class="usuario-container">
 			<h2>Entrar</h2>
+			<p class="descricao">Acesse sua conta Senac Tech</p>
+
 			<form id="form-login" class="form-usuario" novalidate>
 				<div class="campo">
 					<label for="email">E-mail</label>
-					<input type="email" id="email" name="email" placeholder="nome@dominio.com" required>
+					<input type="email" id="email" name="email" placeholder="nome@dominio.com" required autocomplete="email">
 				</div>
 
 				<div class="campo">
 					<label for="senha">Senha</label>
-					<input type="password" id="senha" name="senha" required>
+					<input type="password" id="senha" name="senha" required autocomplete="current-password">
 				</div>
 
 				<p class="mensagem" id="mensagem-login" role="alert"></p>
 
 				<div class="acoes">
-					<button type="submit">Entrar</button>
+					<button type="submit" id="btn-entrar">Entrar</button>
 				</div>
 
 				<div class="links-auxiliares">
 					<a href="recuperar-senha.html">Esqueci minha senha</a>
-					<a href="cadastro.html">Ainda não tenho conta</a>
+					<a href="cadastro.html">Cadastrar-se</a>
 				</div>
 			</form>
 		</main>
 
-		<script src="../../statics/js/config.js"></script>
-		<script src="../../statics/js/components.js"></script>
-
-		<hr>
 		<div id="footer-component"></div>
-	<script src="../../statics/js/menu.js"></script>
 
+		<script src="../../statics/js/config.js"></script>
+		<script src="../../statics/js/api.js"></script>
+		<script src="../../statics/js/auth-guard.js"></script>
+		<script src="../../statics/js/valida-login.js"></script>
+		<script src="../../statics/js/components.js"></script>
+		<script src="../../statics/js/menu.js"></script>
 	</body>
 </html>

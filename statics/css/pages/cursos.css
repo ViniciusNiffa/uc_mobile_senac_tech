@@ -1,73 +1,158 @@
-/*
-	Lista de cursos (pages/cursos.html)
-	-----------------------------------
-	O site antigo listava os cursos em uma <table> (imagem numa célula, texto na
-	outra) só para conseguir o layout lado a lado — isso não é dado tabular de
-	verdade e quebra em telas estreitas. Aqui o mesmo conteúdo vira uma grade de
-	cards, mantendo a paleta e o espaçamento definidos em base.css.
-*/
+/* statics/css/pages/cursos.css */
+
+/* ─────────────────────────────────────────────
+   CABEÇALHO DA PÁGINA DE CURSOS
+   ───────────────────────────────────────────── */
+.cursos-header {
+	background: linear-gradient(135deg, #2c2a5c 0%, #0d2f5c 100%);
+	padding: 56px 0;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+}
+
+.cursos-header::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, transparent, var(--cor-primaria-500), transparent);
+}
+
+.cursos-header h1 {
+	color: white;
+	font-size: 2.2rem;
+	margin-bottom: var(--espaco-sm);
+}
+
+.cursos-header p {
+	color: rgba(255, 255, 255, 0.70);
+	font-size: 1rem;
+	max-width: 540px;
+	margin: 0 auto;
+}
+
+/* ─────────────────────────────────────────────
+   LISTAGEM DE CURSOS
+   ───────────────────────────────────────────── */
 .cursos-lista {
 	max-width: var(--largura-conteudo);
 	margin: 0 auto;
-	padding: var(--espaco-xl) var(--espaco-md);
+	padding: 56px var(--espaco-lg);
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
 	gap: var(--espaco-lg);
 }
 
+/* ─────────────────────────────────────────────
+   CARD DE CURSO
+   ───────────────────────────────────────────── */
 .curso-card {
 	display: flex;
-	flex-direction: column;
 	background-color: var(--cor-neutra-0);
 	border: 1px solid var(--cor-neutra-200);
-	border-radius: 8px;
+	border-radius: var(--raio-lg);
 	overflow: hidden;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: var(--sombra-sm);
+	transition: transform var(--transicao), box-shadow var(--transicao);
 }
 
-.curso-card:hover,
-.curso-card:focus-within {
+.curso-card:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+	box-shadow: var(--sombra-lg);
+}
+
+.curso-card__imagem {
+	flex-shrink: 0;
+	width: 200px;
+	overflow: hidden;
+	display: block;
 }
 
 .curso-card__imagem img {
 	width: 100%;
-	height: 180px;
+	height: 100%;
 	object-fit: cover;
+	transition: transform 0.4s ease;
+}
+
+.curso-card:hover .curso-card__imagem img {
+	transform: scale(1.05);
 }
 
 .curso-card__conteudo {
+	padding: var(--espaco-lg);
 	display: flex;
 	flex-direction: column;
-	flex: 1;
-	padding: var(--espaco-md);
+	justify-content: space-between;
+	gap: var(--espaco-sm);
 }
 
 .curso-card__conteudo h3 {
-	color: var(--cor-primaria-700);
+	font-size: 1.05rem;
+	color: var(--cor-menu-borda-topo);
+	margin-bottom: var(--espaco-sm);
 }
 
 .curso-card__conteudo p {
 	color: var(--cor-neutra-700);
-	font-size: 14px;
-	flex: 1;
+	font-size: 0.88rem;
+	line-height: 1.65;
+	margin-bottom: 0;
+
+	/* Limita em 3 linhas com reticências */
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .curso-card__link {
-	align-self: flex-start;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
 	margin-top: var(--espaco-md);
-	padding: var(--espaco-sm) var(--espaco-md);
-	background-color: var(--cor-primaria-500);
-	color: var(--cor-neutra-0);
-	border-radius: 4px;
-	font-weight: bold;
-	font-size: 14px;
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--cor-primaria-600);
+	transition: gap var(--transicao), color var(--transicao);
 }
 
-.curso-card__link:hover,
-.curso-card__link:focus-visible {
-	background-color: var(--cor-primaria-600);
+.curso-card__link::after {
+	content: '→';
+	transition: transform var(--transicao);
+}
+
+.curso-card:hover .curso-card__link::after {
+	transform: translateX(4px);
+}
+
+.curso-card__link:hover {
+	color: var(--cor-primaria-700);
 	text-decoration: none;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVO
+   ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+	.cursos-lista {
+		grid-template-columns: 1fr;
+		padding: var(--espaco-xl) var(--espaco-md);
+	}
+
+	.curso-card {
+		flex-direction: column;
+	}
+
+	.curso-card__imagem {
+		width: 100%;
+		height: 180px;
+	}
+
+	.cursos-header h1 {
+		font-size: 1.7rem;
+	}
 }
