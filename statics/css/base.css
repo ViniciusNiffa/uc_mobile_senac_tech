@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
 	/* Laranja de marca do Senac, em 5 tons (do mais escuro ao mais claro) */
 	--cor-primaria-700: #8f4d1a;
@@ -12,36 +14,47 @@
 	--cor-neutra-500: #8a8a8a; /* texto auxiliar / ícones */
 	--cor-neutra-200: #e0e0e0; /* bordas e divisórias */
 	--cor-neutra-100: #f7f7f7; /* fundo de seções/cards */
-	--cor-neutra-0: #ffffff; /* branco puro */
+	--cor-neutra-0: #ffffff;   /* branco puro */
 
-	/* Cores de feedback (usadas hoje só como referência para telas de formulário) */
+	/* Cores de feedback */
 	--cor-sucesso: #2e8b57;
 	--cor-erro: #c0392b;
 	--cor-info: #2b6cc0;
 	--cor-atencao: #d9a017;
 
-	/* Cores do cabeçalho institucional (topo branco + barra de navegação) */
-	--cor-menu-borda-topo: #2c2a5c; /* linha fina no topo da página */
-	--cor-menu-texto: #1d4e89; /* azul dos links da barra de navegação */
+	/* Cores do cabeçalho institucional */
+	--cor-menu-borda-topo: #2c2a5c;
+	--cor-menu-texto: #1d4e89;
 
-	/* Cores do rodapé institucional (fundo azul-marinho) */
+	/* Cores do rodapé institucional */
 	--cor-footer-fundo: #0d2f5c;
-	--cor-footer-divisor: #17427a; /* faixa mais clara que separa o menu do bloco de marca/redes */
+	--cor-footer-divisor: #17427a;
 
-	/* Escala de espaçamento: usar sempre uma dessas variáveis em vez de números soltos */
+	/* Escala de espaçamento */
 	--espaco-xs: 4px;
 	--espaco-sm: 8px;
 	--espaco-md: 16px;
 	--espaco-lg: 24px;
 	--espaco-xl: 40px;
 
-	/* Largura máxima do conteúdo, para o texto não esticar até a borda em telas grandes */
+	/* Largura máxima do conteúdo */
 	--largura-conteudo: 1100px;
+
+	/* Sombras reutilizáveis */
+	--sombra-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+	--sombra-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+	--sombra-lg: 0 10px 30px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.06);
+	--sombra-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+
+	/* Bordas arredondadas padrão */
+	--raio-sm: 6px;
+	--raio-md: 10px;
+	--raio-lg: 16px;
+
+	/* Transição padrão */
+	--transicao: 0.2s ease;
 }
 
-/* Reset básico: navegadores aplicam margin/padding diferentes por padrão,
-   então zeramos tudo e definimos box-sizing para bordas/padding não somarem
-   à largura declarada de um elemento (facilita calcular layout). */
 *,
 *::before,
 *::after {
@@ -51,34 +64,46 @@
 }
 
 html {
-	/* Permite rolagem suave quando usamos links âncora (ex.: "voltar ao topo") */
 	scroll-behavior: smooth;
 }
 
 body {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	line-height: 1.5;
+	font-family: 'Inter', Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	line-height: 1.6;
 	color: var(--cor-neutra-900);
 	background-color: var(--cor-neutra-0);
+	-webkit-font-smoothing: antialiased;
+	/* Footer sempre no fundo, mesmo em páginas com pouco conteúdo */
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
-/* Hierarquia de títulos, seguindo a escala definida no documento de referência */
+/* O conteúdo principal cresce para empurrar o footer para baixo */
+main {
+	flex: 1;
+	width: 100%;
+}
+
 h1 {
-	font-size: 28px;
-	font-weight: bold;
+	font-size: 2rem;
+	font-weight: 800;
+	line-height: 1.2;
 	margin-bottom: var(--espaco-md);
 }
 
 h2 {
-	font-size: 22px;
-	font-weight: bold;
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1.3;
 	margin-bottom: var(--espaco-sm);
 }
 
 h3 {
-	font-size: 17px;
-	font-weight: bold;
+	font-size: 1.1rem;
+	font-weight: 600;
+	line-height: 1.4;
 	margin-bottom: var(--espaco-sm);
 }
 
@@ -86,42 +111,35 @@ p {
 	margin-bottom: var(--espaco-md);
 }
 
-/* Links: cor de marca, sem sublinhado por padrão (fica mais "botão"), sublinha só no hover
-   para indicar que é clicável sem poluir o texto o tempo todo. */
 a {
 	color: var(--cor-primaria-600);
 	text-decoration: none;
+	transition: color var(--transicao);
 }
 
 a:hover,
 a:focus-visible {
+	color: var(--cor-primaria-700);
 	text-decoration: underline;
 }
 
-/* Imagens nunca devem ultrapassar a largura do elemento pai — evita quebrar o
-   layout em telas pequenas quando alguém esquece de redimensionar a imagem. */
 img {
 	max-width: 100%;
 	height: auto;
 	display: block;
 }
 
-/* Container central usado para limitar a largura do conteúdo e centralizar na página */
+/* Container central */
 .container {
 	width: 100%;
 	max-width: var(--largura-conteudo);
 	margin: 0 auto;
-	padding: 0 var(--espaco-md);
+	padding: 0 var(--espaco-lg);
 }
 
-/*
-	Rodapé (footer)
-	---------------
-	Fica em base.css (e não em home.css) porque o <footer> se repete em várias
-	páginas do site, não só na home. Estrutura em 3 blocos empilhados: menu
-	(espelha a navegação principal), uma faixa divisória mais clara, e a base
-	com marca/copyright de um lado e redes sociais do outro.
-*/
+/* ─────────────────────────────────────────────
+   RODAPÉ (footer)
+   ───────────────────────────────────────────── */
 footer.rodape {
 	background-color: var(--cor-footer-fundo);
 	color: var(--cor-neutra-0);
@@ -135,15 +153,16 @@ footer.rodape {
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: var(--espaco-xl);
-	padding: 40px var(--espaco-md); /* Mais espaço vertical */
+	padding: 36px var(--espaco-md);
 }
 
 .rodape__menu a {
-	color: var(--cor-neutra-0);
-	font-weight: bold;
-	font-size: 16px; /* Fonte levemente maior */
-	text-transform: uppercase; /* Dá uma cara mais profissional */
-	letter-spacing: 1px;
+	color: rgba(255, 255, 255, 0.85);
+	font-weight: 600;
+	font-size: 0.9rem;
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	transition: color var(--transicao);
 }
 
 .rodape__menu a:hover,
@@ -153,10 +172,10 @@ footer.rodape {
 }
 
 .rodape__divisor {
-	height: 1px; /* Linha fina, moderna e elegante em vez de bloco grosso */
+	height: 1px;
 	max-width: var(--largura-conteudo);
 	margin: 0 auto;
-	background-color: rgba(255, 255, 255, 0.15); /* Divisor sutil */
+	background-color: rgba(255, 255, 255, 0.12);
 }
 
 .rodape__base {
@@ -167,7 +186,7 @@ footer.rodape {
 	gap: var(--espaco-xl);
 	max-width: var(--largura-conteudo);
 	margin: 0 auto;
-	padding: 40px var(--espaco-md); /* Mais respiro na base */
+	padding: 36px var(--espaco-lg);
 }
 
 .rodape__marca {
@@ -176,18 +195,17 @@ footer.rodape {
 	gap: var(--espaco-md);
 }
 
-/* Logo original é colorido sobre fundo claro; invertemos pra branco pra
-   funcionar sobre o azul-marinho do rodapé. */
 #logo-rodape {
-	height: 65px; /* Bem maior para dar destaque */
+	height: 52px;
 	width: auto;
 	filter: brightness(0) invert(1);
+	opacity: 0.9;
 }
 
 .rodape__marca p {
 	margin: 0;
-	font-size: 15px; /* Fonte maior para melhor leitura */
-	color: var(--cor-neutra-200);
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.55);
 }
 
 .rodape__redes {
@@ -195,32 +213,36 @@ footer.rodape {
 	gap: var(--espaco-sm);
 }
 
-/* Ícones de redes sociais (+ "voltar ao topo") em selos brancos arredondados,
-   do mesmo tamanho, sem depender de filtro de cor — o ícone original já
-   contrasta bem sobre fundo branco. */
 .rodape__redes a {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 36px;
 	height: 36px;
-	border-radius: 6px;
-	background-color: var(--cor-neutra-0);
-	transition: background-color 0.2s ease;
+	border-radius: var(--raio-sm);
+	background-color: rgba(255, 255, 255, 0.10);
+	transition: background-color var(--transicao), transform var(--transicao);
+	border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .rodape__redes img {
-	width: 18px;
-	height: 18px;
+	width: 17px;
+	height: 17px;
+	filter: brightness(0) invert(1);
 }
 
 .rodape__redes a:hover {
-	background-color: var(--cor-primaria-300);
+	background-color: var(--cor-primaria-500);
+	transform: translateY(-2px);
 }
 
 @media (max-width: 600px) {
 	.rodape__base {
 		flex-direction: column;
 		text-align: center;
+	}
+
+	.rodape__marca {
+		flex-direction: column;
 	}
 }

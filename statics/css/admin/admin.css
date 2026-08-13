@@ -1,0 +1,281 @@
+/* statics/css/admin/admin.css */
+/* Painel administrativo — estilos independentes da area de usuario */
+
+/* ─────────────────────────────────────────────
+   LAYOUT DO PAINEL
+   ───────────────────────────────────────────── */
+body:has(.admin-container) {
+	background-color: var(--cor-neutra-100);
+}
+
+.admin-container {
+	max-width: 1080px;
+	margin: 40px auto;
+	padding: 0 var(--espaco-lg);
+}
+
+/* ─────────────────────────────────────────────
+   HEADER DO PAINEL
+   ───────────────────────────────────────────── */
+.admin-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--espaco-xl);
+	flex-wrap: wrap;
+	gap: var(--espaco-md);
+}
+
+.admin-header h2 {
+	font-size: 1.5rem;
+	color: var(--cor-menu-borda-topo);
+	margin-bottom: 0;
+}
+
+.admin-header__acoes {
+	display: flex;
+	gap: var(--espaco-sm);
+	flex-wrap: wrap;
+}
+
+/* ─────────────────────────────────────────────
+   BOTÕES DO ADMIN
+   ───────────────────────────────────────────── */
+.btn-add {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 9px 20px;
+	background-color: var(--cor-sucesso);
+	color: white;
+	border-radius: var(--raio-sm);
+	font-weight: 600;
+	font-size: 0.9rem;
+	border: none;
+	cursor: pointer;
+	transition: background-color var(--transicao), transform var(--transicao);
+	text-decoration: none;
+}
+
+.btn-add:hover {
+	background-color: #266b47;
+	transform: translateY(-1px);
+	color: white;
+	text-decoration: none;
+}
+
+.btn-admin-sair {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 9px 20px;
+	background-color: transparent;
+	color: var(--cor-erro);
+	border: 1.5px solid var(--cor-erro);
+	border-radius: var(--raio-sm);
+	font-weight: 600;
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: background-color var(--transicao);
+	font-family: inherit;
+}
+
+.btn-admin-sair:hover {
+	background-color: #fef2f2;
+}
+
+/* ─────────────────────────────────────────────
+   CARD WRAPPER DA TABELA
+   ───────────────────────────────────────────── */
+.admin-card {
+	background-color: var(--cor-neutra-0);
+	border: 1px solid var(--cor-neutra-200);
+	border-radius: var(--raio-lg);
+	box-shadow: var(--sombra-md);
+	overflow: hidden;
+}
+
+.admin-card__header {
+	padding: var(--espaco-lg) var(--espaco-xl);
+	border-bottom: 1px solid var(--cor-neutra-200);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--espaco-md);
+	flex-wrap: wrap;
+}
+
+.admin-card__titulo {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--cor-neutra-700);
+	margin: 0;
+}
+
+/* Badge de contagem */
+.badge-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px 10px;
+	background-color: var(--cor-primaria-100);
+	color: var(--cor-primaria-700);
+	border-radius: 20px;
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────
+   TABELA
+   ───────────────────────────────────────────── */
+.admin-table-wrapper {
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+
+thead tr {
+	background-color: var(--cor-neutra-100);
+	border-bottom: 2px solid var(--cor-neutra-200);
+}
+
+th {
+	padding: 13px var(--espaco-lg);
+	text-align: left;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: var(--cor-neutra-500);
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+tbody tr {
+	border-bottom: 1px solid var(--cor-neutra-200);
+	transition: background-color var(--transicao);
+}
+
+tbody tr:last-child {
+	border-bottom: none;
+}
+
+tbody tr:hover {
+	background-color: var(--cor-neutra-100);
+}
+
+td {
+	padding: 14px var(--espaco-lg);
+	color: var(--cor-neutra-700);
+	vertical-align: middle;
+}
+
+td strong {
+	color: var(--cor-neutra-900);
+	font-weight: 600;
+}
+
+/* ── Célula de ID ── */
+.td-id {
+	font-family: monospace;
+	font-size: 0.85rem;
+	color: var(--cor-neutra-500);
+}
+
+/* ── Badges de role/status ── */
+.badge-role {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 20px;
+	font-size: 0.76rem;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+}
+
+.badge-role--admin {
+	background-color: rgba(44, 42, 92, 0.1);
+	color: var(--cor-menu-borda-topo);
+}
+
+.badge-role--user {
+	background-color: var(--cor-neutra-100);
+	color: var(--cor-neutra-700);
+	border: 1px solid var(--cor-neutra-200);
+}
+
+/* ── Botões de ação na tabela ── */
+.acoes-tabela {
+	display: flex;
+	gap: 6px;
+	flex-wrap: nowrap;
+}
+
+.btn-acao {
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 12px;
+	border: 1.5px solid;
+	border-radius: var(--raio-sm);
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color var(--transicao), transform var(--transicao);
+	white-space: nowrap;
+}
+
+.btn-acao:hover {
+	transform: translateY(-1px);
+}
+
+.btn-editar {
+	color: #92400e;
+	background-color: #fffbeb;
+	border-color: #fcd34d;
+}
+
+.btn-editar:hover {
+	background-color: #fef3c7;
+}
+
+.btn-excluir {
+	color: var(--cor-erro);
+	background-color: #fef2f2;
+	border-color: #fca5a5;
+}
+
+.btn-excluir:hover {
+	background-color: #fee2e2;
+}
+
+/* ─────────────────────────────────────────────
+   ESTADO VAZIO / CARREGANDO
+   ───────────────────────────────────────────── */
+.tabela-vazia {
+	text-align: center;
+	padding: 48px var(--espaco-xl);
+	color: var(--cor-neutra-500);
+}
+
+.tabela-vazia p {
+	margin: 0;
+	font-size: 0.95rem;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVO
+   ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+	.admin-container {
+		margin: var(--espaco-lg) 0;
+		padding: 0 var(--espaco-md);
+	}
+
+	.admin-header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}

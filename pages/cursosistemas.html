@@ -3,7 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Senac Tech - Curso Técnico em Desenvolvimento de Sistemas</title>
+		<title>Senac Tech - Técnico em Desenvolvimento de Sistemas</title>
+		<meta name="description" content="Conheça o curso Técnico em Desenvolvimento de Sistemas do Senac Tech: carga horária, grade curricular, pré-requisitos e como se inscrever.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/pages/curso-detalhe.css">
@@ -11,54 +14,109 @@
 	</head>
 	<body>
 		<div id="header-component"></div>
-		<hr>
-		<section>
-		<div class="headimage">
-		<img src="../statics/img/banners/curso-sistemas-alt.png" alt="Logo Senac"title="Curso de Informática">
-		</div>
+
+		<!-- Hero do curso -->
+		<section class="curso-hero">
+			<div class="curso-hero__inner container">
+				<div class="curso-hero__texto">
+					<h1>Desenvolvimento de Sistemas</h1>
+					<p>Integre dados e transforme em informações relevantes. Desenvolva sistemas completos (Full Stack) e atenda a uma das maiores demandas do mercado global.</p>
+				</div>
+				<div class="curso-hero__imagem">
+					<img src="../statics/img/banners/curso-sistemas.png" alt="Curso Técnico em Desenvolvimento de Sistemas">
+				</div>
+			</div>
 		</section>
-		<article>
-		<hr>
-		<h2 id="p1">Curso Técnico em Desenvolvimento de Sistemas</h2>
-		<hr>
-		<!-- Texto do parágrafo justificado -->
-		<p>		
-		O sistema de informação cria milhares de dados todos os dias, o profissional que integra esses dados e transforma em informações relevantes para empresas, está em grande ascensão. O Técnico em Desenvolvimento de Sistema – Bilíngue surge para suprir uma demanda de mercado, desenvolve sistemas completos e com a habilidade conversacional em língua inglesa. O grande crescimento na área da tecnologia de informação, são as necessidades de atuação a nível global, formando as unidades curriculares e as habilitações intermediarias, como: assistente de banco de dados e assistente de desenvolvimento de sistemas (full stack). Este curso, é ideal para as pessoas que estejam cursando a partir do 2º ano do ensino médio e a idade mínima exigida de 15 anos completos. A equipe docente é composta?por?profissionais com experiência na área e formação superior. Após concluir este curso, o certificado de Técnico em Desenvolvimento de Sistemas, estará disponível e com validade nacional. Faça o curso Técnico em Desenvolvimento de Sistemas – Bilíngue, aumente suas possibilidades de atuar em grandes organizações multinacionais e esteja apto a ser um profissional altamente qualificado!
-		</p>	
-		</article>
-		<br>
-		<section>
-		<table>
-			<thead>
-				<tr>
-					<td colspan="2">Informações</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td >Carga Horária</td>
-					<td >1216 Horas</td>
-				</tr>
-				<tr>
-					<td>Área de Atuação</td>
-					<td>Informática</td>
-				</tr>
-				<tr>
-					<td>Turnos</td>
-					<td>Noite (Consultar turmas disponíveis)</td>
-				</tr>
-				<tr>
-					<td>Pré-requisitos</td>
-					<td>Maiores de 15 anos, 2º ano do Ensino-médio</td>		
-				</tr>				
-			</tbody>
-		</table>
-		</section>
+
+		<!-- Conteúdo principal -->
+		<main class="container">
+			<div class="curso-conteudo">
+				<!-- Coluna principal -->
+				<div class="curso-corpo">
+					<section class="secao-texto">
+						<h2>Sobre o Curso</h2>
+						<p>O sistema de informação cria milhares de dados todos os dias. O profissional que integra esses dados e transforma em informações relevantes para empresas está em grande ascensão.</p>
+						<p>O Técnico em Desenvolvimento de Sistemas surge para suprir essa demanda de mercado, desenvolvendo sistemas completos e com habilidade conversacional em língua inglesa (no modelo bilíngue). O grande crescimento na área exige a capacidade de atuação em nível global.</p>
+						<p>Aumente suas possibilidades de atuar em grandes organizações multinacionais e esteja apto a ser um profissional altamente qualificado com atuações como assistente de banco de dados e assistente de desenvolvimento full stack.</p>
+					</section>
+
+					<!-- Grade curricular com acordeão CSS puro -->
+					<section class="secao-texto">
+						<h2>Grade Curricular</h2>
+						<div class="grade-curricular">
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo1">
+								<label class="disciplina__titulo" for="modulo1">Módulo 1 — Lógica e Banco de Dados</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Lógica de programação e algoritmos</li>
+										<li>Modelagem de banco de dados</li>
+										<li>Linguagem SQL</li>
+										<li>Introdução a sistemas de informação</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo2">
+								<label class="disciplina__titulo" for="modulo2">Módulo 2 — Desenvolvimento Web (Front-end)</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>HTML5, CSS3 e interfaces responsivas</li>
+										<li>Lógica com JavaScript</li>
+										<li>Frameworks front-end modernos (ex: React, Angular)</li>
+										<li>Design de interfaces (UI/UX)</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo3">
+								<label class="disciplina__titulo" for="modulo3">Módulo 3 — Desenvolvimento Back-end e Integração</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Linguagem de servidor (ex: Java, Python, C#)</li>
+										<li>Criação de APIs RESTful</li>
+										<li>Arquitetura de microsserviços</li>
+										<li>Projeto integrador full-stack</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</section>
+				</div>
+
+				<!-- Sidebar: card de inscrição -->
+				<aside class="sidebar-inscricao">
+					<div class="card-inscricao">
+						<h3>Informações para Inscrição</h3>
+						<div class="card-inscricao__info">
+							<div class="card-info-linha">
+								<span>Área</span>
+								<span>Informática</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Duração</span>
+								<span>1.216 horas</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Turnos</span>
+								<span>Noite</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Pré-requisito</span>
+								<span>2º ano EM (+15 anos)</span>
+							</div>
+						</div>
+						<a href="localizacao.html" class="btn-inscricao">Ver Localização</a>
+					</div>
+				</aside>
+			</div>
+		</main>
+
 		<div id="footer-component"></div>
-	<script src="../statics/js/menu.js"></script>
-
-	
+		<script src="../statics/js/menu.js"></script>
 	</body>
-
-
 </html>

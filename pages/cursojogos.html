@@ -3,7 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Senac Tech - Curso de Programação de Jogos Digitais</title>
+		<title>Senac Tech - Técnico em Programação de Jogos Digitais</title>
+		<meta name="description" content="Conheça o curso Técnico em Programação de Jogos Digitais do Senac Tech: carga horária, grade curricular, pré-requisitos e como se inscrever.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/pages/curso-detalhe.css">
@@ -11,53 +14,109 @@
 	</head>
 	<body>
 		<div id="header-component"></div>
-		<hr>
-		<section>
-		<div class="headimage">
-		<img src="../statics/img/banners/curso-jogos-alt.png" alt="Logo Senac" align="center" title="Curso de Informática">
-		</div>
+
+		<!-- Hero do curso -->
+		<section class="curso-hero">
+			<div class="curso-hero__inner container">
+				<div class="curso-hero__texto">
+					<h1>Programação de Jogos Digitais</h1>
+					<p>Projete, desenvolva e gerencie jogos digitais com toda a perspectiva do mundo digital, integrando equipes e dominando a multiplataforma.</p>
+				</div>
+				<div class="curso-hero__imagem">
+					<img src="../statics/img/banners/curso-jogos.png" alt="Curso Técnico em Programação de Jogos Digitais">
+				</div>
+			</div>
 		</section>
-		<article>
-		</p>
-		<hr>
-		<h2 id="p1">Curso Técnico em Programação de Jogos Digitais</h2>
-		<hr>
-		<!-- Texto do parágrafo justificado -->
-		<p>		
-		A perspectiva da internet ampliou ainda mais o mercado de desenvolvimento de jogos digitais, que passaram a ser produzidos na perspectiva de multiplataformas, ou seja, o mesmo jogo é produzido e distribuído para computadores, tablets, celulares e consoles, usando a internet como meio de transmissão de dados. Esse cenário tem demandado pessoas qualificadas para integrar equipes de desenvolvimento, compostas por profissionais de diferentes áreas, o Técnico em Programação de Jogos Digitais realiza o planejamento do processo de produção do jogo digital e incorporação dos elementos multimídia à plataforma de desenvolvimento, sendo responsável pela programação e integração desses elementos. Realiza testes, manutenção e melhorias no jogo digital, adotando normas técnicas, de qualidade, de saúde, de segurança do trabalho e preservação ambiental no desempenho de sua função, trabalha em equipe, estabelece relações interpessoais construtivas e compreende o contexto em que está inserido, demonstrando capacidade propositiva e criativa. Atua em organizações públicas e privadas de qualquer segmento, tais como da área do comércio, de serviços, da indústria, de consultoria, de ensino e pesquisa, por meio da prestação de serviços autônomos, temporários ou contrato efetivo. Este curso, é ideal para as pessoas que estejam cursando o ensino médio, a partir do 2º ano, a idade mínima exigida de 15 anos. A equipe docente é composta?por?profissionais com experiência na área de TI e formação superior, após o término deste curso, o certificado do Técnico em Programação de Jogos Digitais,?estará disponível e com validade nacional. Projete, desenvolva e gerencie jogos digitais com toda a perspectiva do mundo digital!
-		</p>
-		</article>
-		<br>
-		<table>
-			<thead>
-				<tr>
-					<td colspan="2">Informações</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Carga Horária</td>
-					<td>1000 Horas</td>
-				</tr>
-				<tr>
-					<td>Área de Atuação</td>
-					<td>Informática</td>
-				</tr>
-				<tr>
-					<td>Turnos</td>
-					<td>Manhã e noite (Consultar turmas disponíveis)</td>
-				</tr>
-				<tr>
-					<td>Pré-requisitos</td>
-					<td>Maiores de 15 anos, 2º ano do Ensino-médio</td>		
-				</tr>				
-			</tbody>
-		</table>
+
+		<!-- Conteúdo principal -->
+		<main class="container">
+			<div class="curso-conteudo">
+				<!-- Coluna principal -->
+				<div class="curso-corpo">
+					<section class="secao-texto">
+						<h2>Sobre o Curso</h2>
+						<p>A perspectiva da internet ampliou ainda mais o mercado de desenvolvimento de jogos digitais, que passaram a ser produzidos na perspectiva de multiplataformas, ou seja, o mesmo jogo é produzido e distribuído para computadores, tablets, celulares e consoles, usando a internet como meio de transmissão.</p>
+						<p>Esse cenário tem demandado pessoas qualificadas para integrar equipes de desenvolvimento. O Técnico em Programação de Jogos Digitais realiza o planejamento do processo de produção do jogo digital e incorporação dos elementos multimídia à plataforma de desenvolvimento, sendo responsável pela programação e integração desses elementos.</p>
+						<p>Realiza testes, manutenção e melhorias no jogo, trabalha em equipe e demonstra capacidade propositiva e criativa, podendo atuar em organizações públicas e privadas, ou por meio de prestação de serviços autônomos.</p>
+					</section>
+
+					<!-- Grade curricular com acordeão CSS puro -->
+					<section class="secao-texto">
+						<h2>Grade Curricular</h2>
+						<div class="grade-curricular">
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo1">
+								<label class="disciplina__titulo" for="modulo1">Módulo 1 — Fundamentos e Design</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Lógica de programação</li>
+										<li>História e evolução dos jogos</li>
+										<li>Game Design e roteirização</li>
+										<li>Criação de arte 2D</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo2">
+								<label class="disciplina__titulo" for="modulo2">Módulo 2 — Desenvolvimento e Motores</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Programação orientada a objetos</li>
+										<li>Motores de jogos (Unity / Unreal)</li>
+										<li>Modelagem e animação 3D</li>
+										<li>Interface e usabilidade (UI/UX)</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo3">
+								<label class="disciplina__titulo" for="modulo3">Módulo 3 — Publicação e Mercado</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Inteligência artificial para jogos</li>
+										<li>Testes e otimização</li>
+										<li>Empreendedorismo e monetização</li>
+										<li>Projeto final e publicação</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</section>
+				</div>
+
+				<!-- Sidebar: card de inscrição -->
+				<aside class="sidebar-inscricao">
+					<div class="card-inscricao">
+						<h3>Informações para Inscrição</h3>
+						<div class="card-inscricao__info">
+							<div class="card-info-linha">
+								<span>Área</span>
+								<span>Informática</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Duração</span>
+								<span>1.000 horas</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Turnos</span>
+								<span>Manhã / Noite</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Pré-requisito</span>
+								<span>2º ano EM (+15 anos)</span>
+							</div>
+						</div>
+						<a href="localizacao.html" class="btn-inscricao">Ver Localização</a>
+					</div>
+				</aside>
+			</div>
+		</main>
+
 		<div id="footer-component"></div>
-	<script src="../statics/js/menu.js"></script>
-
-	
+		<script src="../statics/js/menu.js"></script>
 	</body>
-
-
 </html>

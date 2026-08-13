@@ -1,0 +1,321 @@
+/* statics/css/pages/curso-detalhe.css */
+/* Estilos para as páginas de detalhe de cada curso individual. */
+
+/* ─────────────────────────────────────────────
+   HERO DO CURSO
+   ───────────────────────────────────────────── */
+.curso-hero {
+	background: linear-gradient(135deg, #2c2a5c 0%, #0d2f5c 100%);
+	padding: 64px 0;
+	position: relative;
+	overflow: hidden;
+}
+
+
+.curso-hero__inner {
+	display: flex;
+	align-items: center;
+	gap: 56px;
+}
+
+.curso-hero__texto {
+	flex: 1;
+}
+
+
+.curso-hero h1 {
+	color: white;
+	font-size: 2.2rem;
+	margin-bottom: var(--espaco-md);
+}
+
+.curso-hero p {
+	color: rgba(255, 255, 255, 0.75);
+	font-size: 1rem;
+	line-height: 1.7;
+	max-width: 540px;
+}
+
+.curso-hero__imagem {
+	flex: 0 0 340px;
+}
+
+.curso-hero__imagem img {
+	border-radius: var(--raio-lg);
+	box-shadow: var(--sombra-xl);
+	width: 100%;
+	object-fit: cover;
+}
+
+/* ─────────────────────────────────────────────
+   BARRA DE INFORMAÇÕES RÁPIDAS
+   ───────────────────────────────────────────── */
+.curso-info-bar {
+	background-color: var(--cor-neutra-0);
+	border-bottom: 1px solid var(--cor-neutra-200);
+	box-shadow: var(--sombra-sm);
+}
+
+.curso-info-bar__inner {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	gap: var(--espaco-md);
+	padding: var(--espaco-lg) 0;
+}
+
+.info-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	text-align: center;
+}
+
+.info-item__label {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	color: var(--cor-neutra-500);
+}
+
+.info-item__valor {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--cor-menu-borda-topo);
+}
+
+/* ─────────────────────────────────────────────
+   CONTEÚDO PRINCIPAL DO CURSO
+   ───────────────────────────────────────────── */
+.curso-conteudo {
+	display: grid;
+	grid-template-columns: 1fr 320px;
+	gap: 40px;
+	padding: 56px 0;
+	align-items: start;
+}
+
+/* ─────────────────────────────────────────────
+   SEÇÃO DE CONTEÚDO (grade curricular, sobre)
+   ───────────────────────────────────────────── */
+.secao-texto {
+	margin-bottom: 48px;
+}
+
+.secao-texto h2 {
+	font-size: 1.4rem;
+	color: var(--cor-menu-borda-topo);
+	margin-bottom: var(--espaco-lg);
+	padding-bottom: var(--espaco-md);
+	border-bottom: 1px solid var(--cor-neutra-200);
+}
+
+.secao-texto p {
+	color: var(--cor-neutra-700);
+	line-height: 1.8;
+}
+
+/* ── Grade curricular (acordeão CSS puro com :checked) ── */
+.grade-curricular {
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-sm);
+}
+
+.disciplina {
+	border: 1px solid var(--cor-neutra-200);
+	border-radius: var(--raio-md);
+	overflow: hidden;
+}
+
+/* Input checkbox que controla o acordeão */
+.disciplina input[type="checkbox"] {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.disciplina__titulo {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 14px var(--espaco-lg);
+	background-color: var(--cor-neutra-0);
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 0.95rem;
+	color: var(--cor-menu-borda-topo);
+	user-select: none;
+	transition: background-color var(--transicao);
+}
+
+.disciplina__titulo:hover {
+	background-color: var(--cor-neutra-100);
+}
+
+/* Ícone de seta — rotaciona via CSS puro quando o checkbox está marcado */
+.disciplina__titulo::after {
+	content: '▾';
+	font-size: 1.1rem;
+	color: var(--cor-primaria-500);
+	transition: transform var(--transicao);
+}
+
+.disciplina input[type="checkbox"]:checked ~ .disciplina__titulo::after {
+	transform: rotate(180deg);
+}
+
+.disciplina__corpo {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
+}
+
+.disciplina input[type="checkbox"]:checked ~ .disciplina__corpo {
+	max-height: 400px;
+}
+
+.disciplina__lista {
+	list-style: none;
+	padding: var(--espaco-md) var(--espaco-lg) var(--espaco-lg);
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-sm);
+	border-top: 1px solid var(--cor-neutra-200);
+	background-color: var(--cor-neutra-100);
+}
+
+.disciplina__lista li {
+	font-size: 0.9rem;
+	color: var(--cor-neutra-700);
+	padding-left: var(--espaco-md);
+	position: relative;
+}
+
+.disciplina__lista li::before {
+	content: '•';
+	position: absolute;
+	left: 0;
+	color: var(--cor-primaria-500);
+	font-weight: bold;
+}
+
+/* ─────────────────────────────────────────────
+   SIDEBAR — CARD DE INSCRIÇÃO
+   ───────────────────────────────────────────── */
+.sidebar-inscricao {
+	position: sticky;
+	top: 100px;
+}
+
+.card-inscricao {
+	background-color: var(--cor-neutra-0);
+	border: 1px solid var(--cor-neutra-200);
+	border-radius: var(--raio-lg);
+	padding: var(--espaco-xl);
+	box-shadow: var(--sombra-lg);
+}
+
+.card-inscricao h3 {
+	font-size: 1.1rem;
+	color: var(--cor-menu-borda-topo);
+	margin-bottom: var(--espaco-lg);
+	text-align: center;
+}
+
+.card-inscricao__info {
+	display: flex;
+	flex-direction: column;
+	gap: var(--espaco-sm);
+	margin-bottom: var(--espaco-lg);
+	padding-bottom: var(--espaco-lg);
+	border-bottom: 1px solid var(--cor-neutra-200);
+}
+
+.card-info-linha {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.9rem;
+}
+
+.card-info-linha span:first-child {
+	color: var(--cor-neutra-500);
+}
+
+.card-info-linha span:last-child {
+	font-weight: 600;
+	color: var(--cor-neutra-900);
+}
+
+.btn-inscricao {
+	display: block;
+	width: 100%;
+	padding: 14px;
+	background-color: var(--cor-primaria-500);
+	color: white;
+	border: none;
+	border-radius: var(--raio-md);
+	font-family: inherit;
+	font-size: 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	text-align: center;
+	transition: background-color var(--transicao), transform var(--transicao), box-shadow var(--transicao);
+	box-shadow: 0 4px 14px rgba(219, 122, 41, 0.35);
+	text-decoration: none;
+}
+
+.btn-inscricao:hover {
+	background-color: var(--cor-primaria-600);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px rgba(219, 122, 41, 0.45);
+	color: white;
+	text-decoration: none;
+}
+
+.card-inscricao__nota {
+	margin-top: var(--espaco-md);
+	font-size: 0.8rem;
+	color: var(--cor-neutra-500);
+	text-align: center;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVO
+   ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+	.curso-hero__inner {
+		flex-direction: column;
+	}
+
+	.curso-hero__imagem {
+		flex: none;
+		width: 100%;
+		max-width: 400px;
+	}
+
+	.curso-conteudo {
+		grid-template-columns: 1fr;
+	}
+
+	.sidebar-inscricao {
+		position: static;
+	}
+
+	.curso-hero h1 {
+		font-size: 1.7rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.curso-info-bar__inner {
+		gap: var(--espaco-lg);
+		padding: var(--espaco-md);
+	}
+
+	.curso-hero {
+		padding: 48px 0;
+	}
+}

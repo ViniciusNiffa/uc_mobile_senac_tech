@@ -3,7 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Senac Tech - Curso Técnico em Administração</title>
+		<title>Senac Tech - Técnico em Administração</title>
+		<meta name="description" content="Conheça o curso Técnico em Administração do Senac Tech: carga horária, grade curricular, pré-requisitos e como se inscrever.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/pages/curso-detalhe.css">
@@ -11,54 +14,109 @@
 	</head>
 	<body>
 		<div id="header-component"></div>
-		<hr>
-		<section>
-		<div class="headimage">
-		<img src="../statics/img/banners/curso-administracao-alt.png" alt="Logo Senac" align="center" title="Curso de Informática">
-		</div>
+
+		<!-- Hero do curso -->
+		<section class="curso-hero">
+			<div class="curso-hero__inner container">
+				<div class="curso-hero__texto">
+					<h1>Administração</h1>
+					<p>Prepare-se para atuar na gestão de pessoas, logística, finanças e marketing, interagindo ativamente na evolução organizacional das empresas.</p>
+				</div>
+				<div class="curso-hero__imagem">
+					<img src="../statics/img/banners/curso-administracao.png" alt="Curso Técnico em Administração">
+				</div>
+			</div>
 		</section>
-		
-		
-		<article>
-		<hr>
-		<h2 id="p1">Curso Técnico em Administração</h2>
-		<hr>
-		<!-- Texto do parágrafo justificado -->
-		<p>		
-		As organizações buscam profissionais aptos para executar atividades em diversas áreas, os processos criados exigem pessoas que tenham conhecimentos técnicos e que desempenhem funções abrangentes relacionadas a gestão de pessoas, operações logísticas, gestão de materiais e patrimônio, marketing, vendas e finanças. A administração é o eixo de estudos que prepara você para trabalhar de forma proativa, com bom relacionamento interpessoal e interagindo com diferentes tipos de equipes. O profissional Técnico em Administração do Senac, estará pronto para atuar em organizações públicas, através de concursos, e privado em variados segmentos, com habilidades e competências que focam para o mercado de trabalho. Este curso, é ideal para as pessoas que estejam cursando o ensino médio, a partir do 2º ano, a equipe docente é composta?por?profissionais com experiência na área e formação superior. Após o término deste curso, o certificado doTécnico em Administração, estará disponível, com validade nacional e poderá obter a Carteira de Identidade Profissional junto ao Conselho Regional de Administração. Administre seus estudos e seja um profissional completo com o Senac!
-		</p>
-		</article>
-		<br>
-		<table>
-			<thead>
-				<tr>
-					<td colspan="2">Informações</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Carga Horária</td>
-					<td>1000 Horas</td>
-				</tr>
-				<tr>
-					<td>Área de Atuação</td>
-					<td>Gestão</td>
-				</tr>
-				<tr>
-					<td>Turnos</td>
-					<td>Noite (Consultar turmas disponíveis)</td>
-				</tr>
-				<tr>
-					<td>Pré-requisitos</td>
-					<td>Maiores de 15 anos, 2º ano do Ensino-médio</td>		
-				</tr>				
-			</tbody>
-		</table>
+
+		<!-- Conteúdo principal -->
+		<main class="container">
+			<div class="curso-conteudo">
+				<!-- Coluna principal -->
+				<div class="curso-corpo">
+					<section class="secao-texto">
+						<h2>Sobre o Curso</h2>
+						<p>As organizações buscam profissionais aptos para executar atividades em diversas áreas. Os processos criados exigem pessoas que tenham conhecimentos técnicos e que desempenhem funções abrangentes relacionadas a gestão de pessoas, operações logísticas, gestão de materiais e patrimônio, marketing, vendas e finanças.</p>
+						<p>A administração é o eixo de estudos que prepara você para trabalhar de forma proativa, com bom relacionamento interpessoal e interagindo com diferentes tipos de equipes. O profissional Técnico em Administração estará pronto para atuar em organizações públicas (via concursos) e na iniciativa privada em variados segmentos.</p>
+						<p>Ao finalizar, o certificado de Técnico em Administração tem validade nacional e permite obter a Carteira de Identidade Profissional junto ao Conselho Regional de Administração (CRA).</p>
+					</section>
+
+					<!-- Grade curricular com acordeão CSS puro -->
+					<section class="secao-texto">
+						<h2>Grade Curricular</h2>
+						<div class="grade-curricular">
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo1">
+								<label class="disciplina__titulo" for="modulo1">Módulo 1 — Rotinas Administrativas</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Fundamentos de administração</li>
+										<li>Rotinas de departamento pessoal</li>
+										<li>Matemática financeira básica</li>
+										<li>Comunicação empresarial</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo2">
+								<label class="disciplina__titulo" for="modulo2">Módulo 2 — Logística e Finanças</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Gestão de materiais e patrimônio</li>
+										<li>Processos logísticos empresariais</li>
+										<li>Contabilidade básica e faturamento</li>
+										<li>Gestão financeira e orçamentária</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="disciplina">
+								<input type="checkbox" id="modulo3">
+								<label class="disciplina__titulo" for="modulo3">Módulo 3 — Marketing e Empreendedorismo</label>
+								<div class="disciplina__corpo">
+									<ul class="disciplina__lista">
+										<li>Estratégias de marketing e vendas</li>
+										<li>Comportamento do consumidor</li>
+										<li>Empreendedorismo e inovação</li>
+										<li>Elaboração de plano de negócios</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</section>
+				</div>
+
+				<!-- Sidebar: card de inscrição -->
+				<aside class="sidebar-inscricao">
+					<div class="card-inscricao">
+						<h3>Informações para Inscrição</h3>
+						<div class="card-inscricao__info">
+							<div class="card-info-linha">
+								<span>Área</span>
+								<span>Gestão</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Duração</span>
+								<span>1.000 horas</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Turnos</span>
+								<span>Noite</span>
+							</div>
+							<div class="card-info-linha">
+								<span>Pré-requisito</span>
+								<span>2º ano EM (+15 anos)</span>
+							</div>
+						</div>
+						<a href="localizacao.html" class="btn-inscricao">Ver Localização</a>
+					</div>
+				</aside>
+			</div>
+		</main>
+
 		<div id="footer-component"></div>
-	<script src="../statics/js/menu.js"></script>
-
-	
+		<script src="../statics/js/menu.js"></script>
 	</body>
-
-
 </html>
