@@ -1,6 +1,6 @@
 from .database import get_connection
 from .validator import validate_email, validate_password, hash_password, check_password, validate_cpf, validate_phone
-from mysql.connector import IntegrityError
+from sqlite3 import IntegrityError
 import jwt
 import datetime
 import os

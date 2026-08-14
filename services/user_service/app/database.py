@@ -25,12 +25,12 @@ def init_db():
     try:        
         cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS perfis (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         nome TEXT NOT NULL,
         sobrenome TEXT NOT NULL,
         telefone TEXT NOT NULL UNIQUE,
         data_nasc TEXT NOT NULL,
-        foto_perfil TEXT NOT NULL,
+        foto_perfil TEXT,
         criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
@@ -42,16 +42,18 @@ def init_db():
         cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS enderecos (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        perfil_id NOT NULL
+        perfil_id INTEGER NOT NULL,
+        cep TEXT NOT NULL,
         estado TEXT NOT NULL,
         cidade TEXT NOT NULL,
         bairro TEXT NOT NULL,
         rua TEXT NOT NULL,
         numero TEXT NOT NULL,
-        complemento TEXT
+        complemento TEXT,
 
         FOREIGN KEY (perfil_id)
             REFERENCES perfis(id)
+            ON DELETE CASCADE
         )
         """)
 
