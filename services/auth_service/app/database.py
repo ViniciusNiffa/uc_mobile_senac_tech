@@ -21,11 +21,11 @@ def init_db():
     CREATE TABLE IF NOT EXISTS contas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT NOT NULL UNIQUE COLLATE NOCASE,
-    senha TEXT NOT NULL,
-    data_nasc TEXT NOT NULL,
-    cpf TEXT NOT NULL UNIQUE,
-    is_admin INTEGER NOT NULL DEFAULT 0
-    )
+    senha_hash TEXT NOT NULL,
+    is_admin INTEGER NOT NULL DEFAULT 0,
+    ativo INTEGER NOT NULL DEFAULT 1,
+    criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
      """)
     
     conn.commit()
@@ -35,15 +35,15 @@ def init_db():
     cursor.execute(""" 
     CREATE TABLE IF NOT EXISTS refresh_tokens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    conta_id NOT NULL,
+    conta_id INTEGER NOT NULL,
     token_hash TEXT NOT NULL UNIQUE,
     expira_em TEXT NOT NULL,
-    expirado_em TEXT NOT NULL,
+    expirado_em TEXT,
                    
     FOREIGN KEY (conta_id)
         REFERENCES contas(id)
         ON DELETE CASCADE
-    )
+    );
     """)
 
     conn.commit()
