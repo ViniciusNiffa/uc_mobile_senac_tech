@@ -25,14 +25,15 @@ def init_db():
     try:        
         cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS perfis (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY ,
         nome TEXT NOT NULL,
         sobrenome TEXT NOT NULL,
+        usuario TEXT NOT NULL UNIQUE,
         celular TEXT NOT NULL UNIQUE,
         data_nasc TEXT NOT NULL,
         cpf TEXT NOT NULL UNIQUE,
         rg TEXT NOT NULL UNIQUE,
-        observacao TEXT NOU NULL UNIQUE,
+        observacao TEXT,
         foto_perfil TEXT,
         criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP

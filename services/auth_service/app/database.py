@@ -6,11 +6,12 @@ load_dotenv()
 
 def get_connection():
     try:
-        return sqlite3.connect(
-            os.getenv("database")
-        )
-    except sqlite3.Error as e:
-        print(f"[ERRO DB] {e}")
+        conn = sqlite3.connect(os.getenv("database"))
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
+        return conn
+    except sqlite3.Error as error:
+        print(f"[ERRO DB] {error}")
         return None
 
 def init_db():
@@ -30,8 +31,6 @@ def init_db():
     
     conn.commit()
 
-    conn = get_connection()
-
     cursor.execute(""" 
     CREATE TABLE IF NOT EXISTS refresh_tokens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,3 +47,4 @@ def init_db():
 
     conn.commit()
     cursor.close()
+    conn.close()

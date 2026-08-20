@@ -2,7 +2,7 @@ import time
 from functools import wraps
 from collections import defaultdict
 from flask import Blueprint, request, jsonify
-from .service import (register_user, login_user, refresh_access_token,
+from .service import (register_user, login_user, logout_user, refresh_access_token,
                       request_password_reset, verify_reset_code, reset_password,
                       login_with_google, verificar_otp_email, reenviar_otp_verificacao)
 
@@ -55,7 +55,7 @@ def google_login():
 @main.route('/refresh', methods=['POST'])
 @rate_limit(max_calls=20, window=60)
 def refresh():
-    data = request.json
+    data = request.get_json() or {}
     token = data.get('refresh_token')
     response, status = refresh_access_token(token)
     return jsonify(response), status

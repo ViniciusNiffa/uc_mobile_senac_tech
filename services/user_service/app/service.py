@@ -6,7 +6,7 @@ def get_user_by_id(perfil_id):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT id, nome, sobrenome, telefone, data_nasc, foto_perfil
+        SELECT id, nome, sobrenome, celular, data_nasc, foto_perfil
         FROM perfis
         WHERE id = ?
     """, (perfil_id,))
@@ -32,7 +32,7 @@ def create_user_profile(conta_id, data):
                 data_nasc,
                 observacao
             )
-            VALUES (?,?,?,?,?,?,?,?)
+            VALUES (?,?,?,?,?,?,?,?,?)
         """, (
             conta_id,
             data["nome"],
@@ -56,7 +56,7 @@ def create_user_profile(conta_id, data):
                 numero,
                 complemento
             ) 
-            VALUES (?,?,?,?,?,?,?)            
+            VALUES (?,?,?,?,?,?,?,?)
         """, (
             conta_id,
             data.get("cep"),
@@ -84,10 +84,10 @@ def update_user(perfil_id, data):
     cursor = conn.cursor()
     query = """
         UPDATE perfis
-        SET nome = ?, telefone = ?, atualizado_em = CURRENT_TIMESTAMP
+        SET nome = ?, celular = ?, atualizado_em = CURRENT_TIMESTAMP
         WHERE id = ?
     """
-    cursor.execute(query, (data['nome'], data['telefone'], perfil_id))
+    cursor.execute(query, (data['nome'], data['celular'], perfil_id))
     conn.commit()
     success = cursor.rowcount > 0
     cursor.close()

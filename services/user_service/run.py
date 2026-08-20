@@ -1,5 +1,7 @@
 import os
 from dotenv import load_dotenv
+from app.database import init_db
+
 load_dotenv()
 
 from flask import Flask
@@ -19,4 +21,5 @@ app.register_blueprint(main, url_prefix='/api')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 if __name__ == "__main__":
+    init_db()
     app.run(host='127.0.0.1', port=5003, debug=True)

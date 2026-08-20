@@ -1,6 +1,7 @@
 from .database import get_connection
 from .validator import validate_email, validate_password, hash_password, check_password, validate_cpf, validate_phone
 from sqlite3 import IntegrityError
+import hashlib
 import jwt
 import datetime
 import os
@@ -9,6 +10,10 @@ import logging
 import requests
 import threading
 
+USER_SERVICE_URL = os.environ.get(
+    "USER_SERVICE_URL",
+    "http://127.0.0.1:5003/api/users"
+)
 NOTIFICATION_URL = os.environ.get("NOTIFICATION_URL", "http://127.0.0.1:5007/api/notificar/email")
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 
@@ -72,11 +77,11 @@ def _gerar_otp(usuario_id):
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "UPDATE email_verifications SET usado = 1 WHERE usuario_id = %s AND usado = 0",
+            "UPDATE email_verifications SET usado = 1 WHERE usuario_id = ? AND usado = 0",
             (usuario_id,)
         )
         cursor.execute(
-            "INSERT INTO email_verifications (usuario_id, token, expiracao) VALUES (%s, %s, %s)",
+            "INSERT INTO email_verifications (usuario_id, token, expiracao) VALUES (?, ?, ?)",
             (usuario_id, codigo_hash, expiracao)
         )
         conn.commit()
@@ -101,7 +106,7 @@ def verificar_otp_email(usuario_id, codigo):
         SELECT ev.id, ev.token, ev.tentativas, u.email, u.nome
         FROM email_verifications ev
         JOIN usuarios u ON ev.usuario_id = u.id
-        WHERE ev.usuario_id = %s AND ev.usado = 0 AND ev.expiracao > NOW()
+        WHERE ev.usuario_id = ? AND ev.usado = 0 AND ev.expiracao > NOW()
         ORDER BY ev.id DESC LIMIT 1
     """, (usuario_id,))
     otp = cursor.fetchone()
@@ -112,7 +117,7 @@ def verificar_otp_email(usuario_id, codigo):
         return {"message": "Código inválido ou expirado. Solicite um novo."}, 400
 
     if otp['tentativas'] >= 5:
-        cursor.execute("UPDATE email_verifications SET usado = 1 WHERE id = %s", (otp['id'],))
+        cursor.execute("UPDATE email_verifications SET usado = 1 WHERE id = ?", (otp['id'],))
         conn.commit()
         cursor.close()
         conn.close()
@@ -120,7 +125,7 @@ def verificar_otp_email(usuario_id, codigo):
 
     if not check_password(str(codigo), otp['token']):
         cursor.execute(
-            "UPDATE email_verifications SET tentativas = tentativas + 1 WHERE id = %s",
+            "UPDATE email_verifications SET tentativas = tentativas + 1 WHERE id = ?",
             (otp['id'],)
         )
         conn.commit()
@@ -131,8 +136,8 @@ def verificar_otp_email(usuario_id, codigo):
     email_usuario = otp['email']
     nome_usuario  = otp['nome']
     try:
-        cursor.execute("UPDATE email_verifications SET usado = 1 WHERE id = %s", (otp['id'],))
-        cursor.execute("UPDATE usuarios SET email_verificado = 1 WHERE id = %s", (usuario_id,))
+        cursor.execute("UPDATE email_verifications SET usado = 1 WHERE id = ?", (otp['id'],))
+        cursor.execute("UPDATE usuarios SET email_verificado = 1 WHERE id = ?", (usuario_id,))
         conn.commit()
     except Exception as e:
         conn.rollback()
@@ -156,7 +161,7 @@ def reenviar_otp_verificacao(usuario_id):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
-        "SELECT email, nome, email_verificado FROM usuarios WHERE id = %s AND ativo = 1",
+        "SELECT email, nome, email_verificado FROM usuarios WHERE id = ? AND ativo = 1",
         (usuario_id,)
     )
     user = cursor.fetchone()
@@ -190,7 +195,7 @@ def _emitir_tokens(user):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO refresh_tokens (usuario_id, token, expiracao) VALUES (%s, %s, %s)",
+        "INSERT INTO refresh_tokens (usuario_id, token, expiracao) VALUES (?, ?, ?)",
         (user["id"], refresh_token, refresh_exp)
     )
     conn.commit()
@@ -232,7 +237,7 @@ def login_with_google(token_google):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
-        "SELECT id, nome, email, tipo, ativo FROM usuarios WHERE google_id = %s OR email = %s LIMIT 1",
+        "SELECT id, nome, email, tipo, ativo FROM usuarios WHERE google_id = ? OR email = ? LIMIT 1",
         (google_sub, email)
     )
     user = cursor.fetchone()
@@ -240,7 +245,7 @@ def login_with_google(token_google):
     try:
         if not user:
             cursor.execute(
-                "INSERT INTO usuarios (nome, email, tipo, provider, google_id) VALUES (%s, %s, 'cliente', 'google', %s)",
+                "INSERT INTO usuarios (nome, email, tipo, provider, google_id) VALUES (?, ?, 'cliente', 'google', ?)",
                 (nome, email, google_sub)
             )
             conn.commit()
@@ -251,7 +256,7 @@ def login_with_google(token_google):
             return {"message": "Conta desativada."}, 403
         else:
             # vincula o google_id a uma conta que já existia por e-mail
-            cursor.execute("UPDATE usuarios SET google_id = %s WHERE id = %s AND google_id IS NULL", (google_sub, user['id']))
+            cursor.execute("UPDATE usuarios SET google_id = ? WHERE id = ? AND google_id IS NULL", (google_sub, user['id']))
             conn.commit()
     except Exception as e:
         conn.rollback()
@@ -268,7 +273,7 @@ def register_user(data):
     email = data.get('email')
     senha = data.get('senha')
     cpf = data.get('cpf')
-    telefone = data.get('telefone') # Adicionado para consistência com o frontend
+    celular = data.get('celular') # Adicionado para consistência com o frontend
 
     email_valid, msg = validate_email(email)
     if not email_valid:
@@ -279,7 +284,7 @@ def register_user(data):
     cpf_valid, msg = validate_cpf(cpf)
     if not cpf_valid:
         return None, msg
-    phone_valid, msg = validate_phone(telefone)
+    phone_valid, msg = validate_phone(celular)
     if not phone_valid:
         return None, msg
 
@@ -291,12 +296,46 @@ def register_user(data):
     try:
         hashed_password = hash_password(senha)
         cursor.execute(
-            "INSERT INTO usuarios (nome, email, senha_hash, cpf, telefone) VALUES (%s, %s, %s, %s, %s)",
-            (nome, email, hashed_password, cpf, telefone)
+            "INSERT INTO contas (email, senha_hash) VALUES (?, ?)",
+            (email, hashed_password)
         )
-        conn.commit()
         user_id = cursor.lastrowid
+        dados_perfil = {
+            "conta_id": user_id,
+            "nome": data.get("nome"),
+            "sobrenome": data.get("sobrenome"),
+            "usuario": data.get("usuario"),
+            "cpf": data.get("cpf"),
+            "rg": data.get("rg"),
+            "celular": data.get("celular"),
+            "data_nasc": data.get("data_nasc"),
+            "observacao": data.get("observacao"),
+            "cep": data.get("cep"),
+            "estado": data.get("estado"),
+            "cidade": data.get("cidade"),
+            "bairro": data.get("bairro"),
+            "rua": data.get("rua"),
+            "numero": data.get("numero"),
+            "complemento": data.get("complemento")
+        }
+
+        resposta = requests.post(
+            USER_SERVICE_URL,
+            json=dados_perfil,
+            timeout=5
+        )
+
+        if resposta.status_code != 201:
+            conn.rollback()
+            return None, "A conta não pôde ser criada porque houve um erro ao criar o perfil."
+
+        conn.commit()
+
         logger.info(f"Novo usuário registrado: {email} (ID: {user_id})")
+
+    except requests.RequestException:
+        conn.rollback()
+        return None, "O serviço de usuários está indisponível."
     except IntegrityError as e:
         conn.rollback()
         if "email" in str(e):
@@ -311,98 +350,250 @@ def register_user(data):
         cursor.close()
         conn.close()
 
-    try:
-        codigo = _gerar_otp(user_id)
-        _enviar_template_email(email, "verificar_email", {"nome": nome, "codigo": codigo})
-    except Exception as e:
-        logger.error(f"Erro ao enviar OTP de verificação: {e}")
     return user_id, None
 
 def login_user(data):
-    email = data.get("email")
-    senha = data.get("senha")
+    data = data or {}
+
+    email = data.get("email", "").strip().lower()
+    senha = data.get("senha", "")
+
+    if not email or not senha:
+        return {"message": "E-mail e senha são obrigatórios."}, 400
 
     conn = get_connection()
-    if not conn:
-        return {"message": "Erro de conexão com o banco de dados"}, 500
-        
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT id, nome, email, senha_hash, tipo, ativo, email_verificado FROM usuarios WHERE email=%s", (email,))
-    user = cursor.fetchone()
-    cursor.close()
-    conn.close()
 
-    if not user or not check_password(senha, user["senha_hash"]):
-        logger.warning(f"Tentativa de login falhou para: {email}")
-        return {"message": "E-mail ou senha inválidos"}, 401
+    if conn is None:
+        return {"message": "Erro de conexão com o banco de dados."}, 500
 
-    if user.get('ativo') == 0:
-        return {"message": "Conta desativada."}, 403
-
-    if not user.get('email_verificado'):
-        logger.info(f"Login bloqueado — e-mail não verificado: {email}")
-        return {"pendente": True, "usuario_id": user["id"], "message": "E-mail ainda não verificado."}, 403
-
-    access_payload = {
-        "id": user["id"],
-        "email": user["email"],
-        "nome": user["nome"],
-        "tipo": user["tipo"],
-        "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-    }
-    access_token = jwt.encode(access_payload, SECRET_KEY, algorithm="HS256")
-
-    refresh_token = secrets.token_urlsafe(64)
-    refresh_exp = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=30)
-
-    conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO refresh_tokens (usuario_id, token, expiracao) VALUES (%s, %s, %s)",
-        (user["id"], refresh_token, refresh_exp)
-    )
-    conn.commit()
-    cursor.close()
-    conn.close()
 
-    logger.info(f"Login realizado: {email}")
-    return {
-        "success": True,
-        "access_token": access_token,
-        "refresh_token": refresh_token,
-        "user_id": user["id"],
-        "tipo": user["tipo"],
-        "message": "Login bem-sucedido"
-    }, 200
+    try:
+        cursor.execute("""
+            SELECT id, email, senha_hash, is_admin, ativo
+            FROM contas
+            WHERE email = ?
+        """, (email,))
+
+        user = cursor.fetchone()
+
+        if not user or not check_password(senha, user["senha_hash"]):
+            logger.warning(f"Tentativa de login falhou para: {email}")
+            return {"message": "E-mail ou senha inválidos."}, 401
+
+        if user["ativo"] == 0:
+            return {"message": "Conta desativada."}, 403
+
+        role = "admin" if user["is_admin"] == 1 else "user"
+
+        access_payload = {
+            "id": user["id"],
+            "email": user["email"],
+            "role": role,
+            "exp": datetime.datetime.now(
+                datetime.timezone.utc
+            ) + datetime.timedelta(hours=1)
+        }
+
+        access_token = jwt.encode(
+            access_payload,
+            SECRET_KEY,
+            algorithm="HS256"
+        )
+
+        refresh_token = secrets.token_urlsafe(64)
+
+        token_hash = hashlib.sha256(
+            refresh_token.encode("utf-8")
+        ).hexdigest()
+
+        refresh_exp = (
+            datetime.datetime.now(datetime.timezone.utc)
+            + datetime.timedelta(days=30)
+        ).isoformat()
+
+        cursor.execute("""
+            INSERT INTO refresh_tokens (
+                conta_id,
+                token_hash,
+                expira_em
+            )
+            VALUES (?, ?, ?)
+        """, (
+            user["id"],
+            token_hash,
+            refresh_exp
+        ))
+
+        conn.commit()
+
+        logger.info(f"Login realizado: {email}")
+
+        return {
+            "success": True,
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "user": {
+                "id": user["id"],
+                "email": user["email"],
+                "role": role
+            },
+            "message": "Login bem-sucedido"
+        }, 200
+
+    except Exception as error:
+        conn.rollback()
+        logger.error(f"Erro durante o login: {error}")
+        return {"message": "Erro interno durante o login."}, 500
+
+    finally:
+        cursor.close()
+        conn.close()
 
 def refresh_access_token(token_cliente):
+    if not token_cliente:
+        return {"message": "Refresh token não informado."}, 400
+
+    token_hash = hashlib.sha256(
+        token_cliente.encode("utf-8")
+    ).hexdigest()
+
     conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    # A validade é conferida na própria query (expiracao > NOW()): quem não
-    # casar não volta linha nenhuma e cai no 401 logo abaixo.
-    cursor.execute(
-        "SELECT r.*, u.email, u.tipo, u.nome FROM refresh_tokens r JOIN usuarios u ON r.usuario_id = u.id WHERE r.token = %s AND r.expiracao > NOW()",
-        (token_cliente,)
-    )
-    refresh_data = cursor.fetchone()
 
-    if not refresh_data:
-        logger.warning("Tentativa de refresh com token inválido ou expirado.")
-        return {"message": "Sessão expirada. Faça login novamente."}, 401
+    if conn is None:
+        return {"message": "Erro de conexão com o banco de dados."}, 500
 
-    # Só o access token é renovado — o refresh continua o mesmo até vencer
-    new_access_payload = {
-        "id": refresh_data["usuario_id"],
-        "email": refresh_data["email"],
-        "nome": refresh_data["nome"],
-        "tipo": refresh_data["tipo"],
-        "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-    }
-    new_access_token = jwt.encode(new_access_payload, SECRET_KEY, algorithm="HS256")
-    
-    cursor.close()
-    conn.close()
-    return {"success": True, "access_token": new_access_token}, 200
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT
+                r.id,
+                r.conta_id,
+                r.expira_em,
+                r.expirado_em,
+                c.email,
+                c.is_admin,
+                c.ativo
+            FROM refresh_tokens r
+            JOIN contas c ON c.id = r.conta_id
+            WHERE r.token_hash = ?
+        """, (token_hash,))
+
+        refresh_data = cursor.fetchone()
+
+        if not refresh_data:
+            return {
+                "message": "Refresh token inválido."
+            }, 401
+
+        if refresh_data["expirado_em"] is not None:
+            return {
+                "message": "Refresh token revogado."
+            }, 401
+
+        expira_em = datetime.datetime.fromisoformat(
+            refresh_data["expira_em"]
+        )
+
+        agora = datetime.datetime.now(datetime.timezone.utc)
+
+        if expira_em <= agora:
+            return {
+                "message": "Sessão expirada. Faça login novamente."
+            }, 401
+
+        if refresh_data["ativo"] == 0:
+            return {
+                "message": "Conta desativada."
+            }, 403
+
+        role = (
+            "admin"
+            if refresh_data["is_admin"] == 1
+            else "user"
+        )
+
+        access_payload = {
+            "id": refresh_data["conta_id"],
+            "email": refresh_data["email"],
+            "role": role,
+            "exp": agora + datetime.timedelta(hours=1)
+        }
+
+        novo_access_token = jwt.encode(
+            access_payload,
+            SECRET_KEY,
+            algorithm="HS256"
+        )
+
+        return {
+            "success": True,
+            "access_token": novo_access_token
+        }, 200
+
+    except Exception as error:
+        logger.error(f"Erro ao renovar token: {error}")
+        return {
+            "message": "Erro interno ao renovar token."
+        }, 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+def logout_user(token_cliente):
+    if not token_cliente:
+        return {
+            "message": "Refresh token não informado."
+        }, 400
+
+    token_hash = hashlib.sha256(
+        token_cliente.encode("utf-8")
+    ).hexdigest()
+
+    conn = get_connection()
+
+    if conn is None:
+        return {
+            "message": "Erro de conexão com o banco de dados."
+        }, 500
+
+    cursor = conn.cursor()
+
+    try:
+        agora = datetime.datetime.now(
+            datetime.timezone.utc
+        ).isoformat()
+
+        cursor.execute("""
+            UPDATE refresh_tokens
+            SET expirado_em = ?
+            WHERE token_hash = ?
+              AND expirado_em IS NULL
+        """, (
+            agora,
+            token_hash
+        ))
+
+        conn.commit()
+
+        return {
+            "success": True,
+            "message": "Logout realizado com sucesso."
+        }, 200
+
+    except Exception as error:
+        conn.rollback()
+        logger.error(f"Erro durante o logout: {error}")
+
+        return {
+            "message": "Erro interno durante o logout."
+        }, 500
+
+    finally:
+        cursor.close()
+        conn.close()
 
 def request_password_reset(email):
     """Gera um código de 6 dígitos, guarda só o HASH dele e manda por e-mail.
@@ -411,7 +602,7 @@ def request_password_reset(email):
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT id, nome FROM usuarios WHERE email = %s AND ativo = 1", (email,))
+    cursor.execute("SELECT id, nome FROM usuarios WHERE email = ? AND ativo = 1", (email,))
     user = cursor.fetchone()
 
     if not user:
@@ -425,9 +616,9 @@ def request_password_reset(email):
 
     try:
         # Invalida códigos anteriores ainda válidos desse usuário
-        cursor.execute("UPDATE password_resets SET usado = 1 WHERE usuario_id = %s AND usado = 0", (user['id'],))
+        cursor.execute("UPDATE password_resets SET usado = 1 WHERE usuario_id = ? AND usado = 0", (user['id'],))
         cursor.execute(
-            "INSERT INTO password_resets (usuario_id, token, expiracao, usado, tentativas) VALUES (%s, %s, %s, 0, 0)",
+            "INSERT INTO password_resets (usuario_id, token, expiracao, usado, tentativas) VALUES (?, ?, ?, 0, 0)",
             (user['id'], codigo_hash, expiracao)
         )
         conn.commit()
@@ -458,7 +649,7 @@ def verify_reset_code(email, codigo):
         SELECT pr.id, pr.token, pr.tentativas
         FROM password_resets pr
         JOIN usuarios u ON pr.usuario_id = u.id
-        WHERE u.email = %s AND pr.usado = 0 AND pr.expiracao > NOW()
+        WHERE u.email = ? AND pr.usado = 0 AND pr.expiracao > NOW()
         ORDER BY pr.id DESC LIMIT 1
     """, (email,))
     reset_data = cursor.fetchone()
@@ -469,14 +660,14 @@ def verify_reset_code(email, codigo):
         return {"message": "Código inválido ou expirado. Solicite um novo."}, 400
 
     if reset_data['tentativas'] >= 5:
-        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = %s", (reset_data['id'],))
+        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = ?", (reset_data['id'],))
         conn.commit()
         cursor.close()
         conn.close()
         return {"message": "Muitas tentativas erradas. Solicite um novo código."}, 429
 
     if not check_password(str(codigo), reset_data['token']):
-        cursor.execute("UPDATE password_resets SET tentativas = tentativas + 1 WHERE id = %s", (reset_data['id'],))
+        cursor.execute("UPDATE password_resets SET tentativas = tentativas + 1 WHERE id = ?", (reset_data['id'],))
         conn.commit()
         cursor.close()
         conn.close()
@@ -504,7 +695,7 @@ def reset_password(email, codigo, nova_senha):
         SELECT pr.id, pr.token, pr.tentativas, pr.usuario_id
         FROM password_resets pr
         JOIN usuarios u ON pr.usuario_id = u.id
-        WHERE u.email = %s AND pr.usado = 0 AND pr.expiracao > NOW()
+        WHERE u.email = ? AND pr.usado = 0 AND pr.expiracao > NOW()
         ORDER BY pr.id DESC LIMIT 1
     """, (email,))
     reset_data = cursor.fetchone()
@@ -516,7 +707,7 @@ def reset_password(email, codigo, nova_senha):
 
     # 5 erros queimam o código: sem isso dá pra varrer os 10⁶ códigos na força bruta
     if reset_data['tentativas'] >= 5:
-        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = %s", (reset_data['id'],))
+        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = ?", (reset_data['id'],))
         conn.commit()
         cursor.close()
         conn.close()
@@ -524,7 +715,7 @@ def reset_password(email, codigo, nova_senha):
 
     # O banco guarda só o hash do código, então a conferência é a mesma da senha
     if not check_password(str(codigo), reset_data['token']):
-        cursor.execute("UPDATE password_resets SET tentativas = tentativas + 1 WHERE id = %s", (reset_data['id'],))
+        cursor.execute("UPDATE password_resets SET tentativas = tentativas + 1 WHERE id = ?", (reset_data['id'],))
         conn.commit()
         cursor.close()
         conn.close()
@@ -532,8 +723,8 @@ def reset_password(email, codigo, nova_senha):
 
     try:
         hashed_pw = hash_password(nova_senha)
-        cursor.execute("UPDATE usuarios SET senha_hash = %s WHERE id = %s", (hashed_pw, reset_data['usuario_id']))
-        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = %s", (reset_data['id'],))
+        cursor.execute("UPDATE usuarios SET senha_hash = ? WHERE id = ?", (hashed_pw, reset_data['usuario_id']))
+        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = ?", (reset_data['id'],))
         conn.commit()
         return {"success": True, "message": "Senha atualizada! Já pode entrar com a nova senha."}, 200
     except Exception as e:

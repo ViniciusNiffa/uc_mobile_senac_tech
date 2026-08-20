@@ -1,4 +1,5 @@
 import os
+from app.database import init_db
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -17,4 +18,5 @@ app.register_blueprint(main, url_prefix="/api/auth")
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 if __name__ == "__main__":
+    init_db()
     app.run(host='127.0.0.1', port=5000, debug=True)

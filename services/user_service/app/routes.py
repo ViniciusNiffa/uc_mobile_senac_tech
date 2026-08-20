@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .service import (get_user_by_id, update_user, get_user_addresses, add_address,
+from .service import (create_user_profile, get_user_by_id, update_user, get_user_addresses, add_address,
                      delete_address, get_user_favorites, add_favorite, remove_favorite)
 from .notificacao_service import (listar_notificacoes, contar_nao_lidas,
                                   marcar_lida, marcar_todas_lidas)
@@ -11,6 +11,25 @@ main = Blueprint('main', __name__)
 def _eh_dono(user_id):
     """True se o id da URL é o mesmo do usuário autenticado (anti-IDOR)."""
     return user_id == request.user.get('id')
+
+@main.route('/users', methods=['POST'])
+def create_profile():
+    data = request.get_json() or {}
+    conta_id = data.get("conta_id")
+
+    if not conta_id:
+        return jsonify({"error": "conta_id é obrigatório"}), 400
+    
+    if create_user_profile(conta_id, data):
+        return jsonify({
+            "success": True,
+            "id": conta_id
+        }), 201
+    
+    return jsonify({
+        "error": "Não foi possível criar o perfil"
+    }), 400
+
 
 @main.route('/users/<int:user_id>', methods=['GET'])
 @token_required
