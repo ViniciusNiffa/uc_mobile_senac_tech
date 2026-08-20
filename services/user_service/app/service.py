@@ -6,7 +6,19 @@ def get_user_by_id(perfil_id):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT id, nome, sobrenome, celular, data_nasc, foto_perfil
+        SELECT
+            id,
+            nome,
+            sobrenome,
+            usuario,
+            celular,
+            data_nasc,
+            cpf,
+            rg,
+            observacao,
+            foto_perfil,
+            criado_em,
+            atualizado_em
         FROM perfis
         WHERE id = ?
     """, (perfil_id,))
@@ -80,19 +92,60 @@ def create_user_profile(conta_id, data):
         conn.close()
 
 def update_user(perfil_id, data):
-    conn = get_connection()
-    cursor = conn.cursor()
-    query = """
+    data = data or {}
+
+    campos_permitidos = {
+        "nome": "nome",
+        "sobrenome": "sobrenome",
+        "usuario": "usuario",
+        "celular": "celular",
+        "data_nasc": "data_nasc",
+        "cpf": "cpf",
+        "rg": "rg",
+        "observacao": "observacao"
+    }
+
+    atualizacoes = []
+    valores = []
+
+    for campo, coluna in campos_permitidos.items():
+        if campo in data:
+            atualizacoes.append(f"{coluna} = ?")
+            valores.append(data[campo])
+
+    if not atualizacoes:
+        return False
+
+    atualizacoes.append(
+        "atualizado_em = CURRENT_TIMESTAMP"
+    )
+
+    valores.append(perfil_id)
+
+    query = f"""
         UPDATE perfis
-        SET nome = ?, celular = ?, atualizado_em = CURRENT_TIMESTAMP
+        SET {", ".join(atualizacoes)}
         WHERE id = ?
     """
-    cursor.execute(query, (data['nome'], data['celular'], perfil_id))
-    conn.commit()
-    success = cursor.rowcount > 0
-    cursor.close()
-    conn.close()
-    return success
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(query, valores)
+        conn.commit()
+
+        return cursor.rowcount > 0
+
+    except sqlite3.IntegrityError as error:
+        conn.rollback()
+        print(f"Erro ao atualizar perfil: {error}")
+
+        return False
+
+    finally:
+        cursor.close()
+        conn.close()
 
 
 def update_profile_photo(perfil_id, photo_path):

@@ -4,7 +4,8 @@ from collections import defaultdict
 from flask import Blueprint, request, jsonify
 from .service import (register_user, login_user, logout_user, refresh_access_token,
                       request_password_reset, verify_reset_code, reset_password,
-                      login_with_google, verificar_otp_email, reenviar_otp_verificacao)
+                      login_with_google, verificar_otp_email, reenviar_otp_verificacao, get_account_by_email)
+from .auth import token_required
 
 main = Blueprint('main', __name__)
 
@@ -60,6 +61,16 @@ def refresh():
     response, status = refresh_access_token(token)
     return jsonify(response), status
 
+@main.route("/logout", methods=["POST"])
+@rate_limit(max_calls=20, window=60)
+def logout():
+    data = request.get_json() or {}
+    token = data.get("refresh_token")
+
+    response, status = logout_user(token)
+
+    return jsonify(response), status
+
 @main.route('/forgot-password', methods=['POST'])
 @rate_limit(max_calls=5, window=300)
 def forgot():
@@ -94,3 +105,32 @@ def resend_otp():
     data = request.json or {}
     response, status = reenviar_otp_verificacao(data.get('usuario_id'))
     return jsonify(response), status
+
+@main.route("/accounts/search", methods=["GET"])
+@token_required
+def search_account():
+    email = request.args.get("email", "").strip().lower()
+
+    if not email:
+        return jsonify({
+            "error": "Email é obrigatório."
+        }), 400
+
+    usuario_logado = request.user
+
+    if (
+        usuario_logado.get("role") != "admin"
+        and usuario_logado.get("email", "").lower() != email
+    ):
+        return jsonify({
+            "error": "Acesso negado."
+        }), 403
+
+    account = get_account_by_email(email)
+
+    if not account:
+        return jsonify({
+            "error": "Conta não encontrada."
+        }), 404
+
+    return jsonify(account), 200

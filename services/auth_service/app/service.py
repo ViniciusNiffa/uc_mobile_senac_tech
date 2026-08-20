@@ -734,3 +734,37 @@ def reset_password(email, codigo, nova_senha):
     finally:
         cursor.close()
         conn.close()
+
+def get_account_by_email(email):
+    email = email.strip().lower()
+
+    conn = get_connection()
+
+    if conn is None:
+        return None
+
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT id, email, is_admin, ativo, criado_em
+            FROM contas
+            WHERE email = ?
+        """, (email,))
+
+        account = cursor.fetchone()
+
+        if not account:
+            return None
+
+        return {
+            "id": account["id"],
+            "email": account["email"],
+            "role": "admin" if account["is_admin"] == 1 else "user",
+            "ativo": bool(account["ativo"]),
+            "criado_em": account["criado_em"]
+        }
+
+    finally:
+        cursor.close()
+        conn.close()

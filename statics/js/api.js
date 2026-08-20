@@ -9,72 +9,73 @@ const API = {
 
     async register(userData) {
         try {
-            // TODO: substituir mock pelo fetch real quando o back-end estiver rodando:
-            // const res = await fetch(`${APP_CONFIG.AUTH_URL}/register`, {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(userData)
-            // });
-            // return await res.json();
-
-            console.log('[Mock] Cadastro:', userData);
-            await new Promise(r => setTimeout(r, 700));
-            return { success: true, message: 'Cadastro realizado!', id: 99 };
-        } catch (err) {
-            console.error('Erro ao cadastrar:', err);
-            return { success: false, message: 'Erro de conexão com o servidor.' };
+            const response = await fetch(
+                `${APP_CONFIG.AUTH_URL}/register`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                }
+            );
+    
+            return await response.json();
+    
+        } catch (error) {
+            console.error('Erro ao cadastrar:', error);
+    
+            return {
+                success: false,
+                message: 'Erro de conexão com o servidor.'
+            };
         }
     },
 
     async login(email, password) {
         try {
-            // TODO: substituir mock pelo fetch real:
-            // const res = await fetch(`${APP_CONFIG.AUTH_URL}/login`, {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ email, password })
-            // });
-            // const data = await res.json();
-            // if (data.access_token) {
-            //     localStorage.setItem('senac_token', data.access_token);
-            //     localStorage.setItem('senac_refresh', data.refresh_token || '');
-            //     localStorage.setItem('senac_user', JSON.stringify(data.user));
-            // }
-            // return data;
-
-            console.log('[Mock] Login:', email);
-            await new Promise(r => setTimeout(r, 700));
-
-            if (email === 'admin@senac.br' && password === 'admin123') {
-                const user = { id: 1, role: 'admin', nome: 'Administrador' };
-                localStorage.setItem('senac_token', 'mock_admin_token');
-                localStorage.setItem('senac_user', JSON.stringify(user));
-                return { success: true, user };
-            } else if (email && password.length >= 6) {
-                const user = { id: 2, role: 'user', nome: email.split('@')[0] };
-                localStorage.setItem('senac_token', 'mock_user_token');
-                localStorage.setItem('senac_user', JSON.stringify(user));
-                return { success: true, user };
+            const response = await fetch(
+                `${APP_CONFIG.AUTH_URL}/login`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        senha: password
+                    })
+                }
+            );
+    
+            const data = await response.json();
+    
+            if (data.success && data.access_token) {
+                localStorage.setItem(
+                    'senac_token',
+                    data.access_token
+                );
+    
+                localStorage.setItem(
+                    'senac_refresh',
+                    data.refresh_token || ''
+                );
+    
+                localStorage.setItem(
+                    'senac_user',
+                    JSON.stringify(data.user)
+                );
             }
-            return { success: false, message: 'E-mail ou senha inválidos.' };
-        } catch (err) {
-            console.error('Erro ao fazer login:', err);
-            return { success: false, message: 'Erro de conexão com o servidor.' };
-        }
-    },
-
-    // Verificação de e-mail (OTP pós-cadastro)
-    async verifyEmail(usuarioId, codigo) {
-        try {
-            const res = await fetch(`${APP_CONFIG.AUTH_URL}/verify-email`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ usuario_id: usuarioId, codigo })
-            });
-            return await res.json();
-        } catch (err) {
-            console.error('Erro ao verificar e-mail:', err);
-            return { success: false, message: 'Erro de conexão.' };
+    
+            return data;
+    
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+    
+            return {
+                success: false,
+                message: 'Erro de conexão com o servidor.'
+            };
         }
     },
 

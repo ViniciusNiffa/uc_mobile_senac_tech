@@ -44,7 +44,7 @@ def profile(user_id):
 def update_profile(user_id):
     if not _eh_dono(user_id):
         return jsonify({"error": "Acesso negado"}), 403
-    data = request.json
+    data = request.get_json() or {}
     if update_user(user_id, data):
         return jsonify({"message": "Perfil atualizado"}), 200
     return jsonify({"error": "Falha ao atualizar"}), 400

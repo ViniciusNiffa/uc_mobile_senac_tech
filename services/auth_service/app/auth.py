@@ -9,18 +9,30 @@ if not SECRET_KEY:
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        auth_header = request.headers.get("Authorization")
-        if not auth_header:
-            return jsonify({"error": "Token ausente"}), 401
+        auth_header = request.headers.get("Authorization", "")
+        partes = auth_header.split()
+
+        if len(partes) != 2 or partes[0].lower() != "bearer":
+            return jsonify({
+                "error": "Token ausente ou cabeçalho inválido"
+            }), 401
+
+        token = partes[1]
+
         try:
-            token = auth_header.split(" ")[1]
-            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            # As rotas leem daqui (request.user["id"]) em vez de confiar
-            # em id que venha no corpo ou na URL.
+            payload = jwt.decode(
+                token,
+                SECRET_KEY,
+                algorithms=["HS256"]
+            )
             request.user = payload
+
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token expirado"}), 401
+
         except jwt.InvalidTokenError:
             return jsonify({"error": "Token inválido"}), 401
+
         return f(*args, **kwargs)
+
     return decorated

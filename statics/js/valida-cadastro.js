@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cidade: document.getElementById('cidade').value.trim(),
             estado: document.getElementById('estado').value,
             cep: document.getElementById('cep').value.trim(),
-            complemento: document.getElementById('complemento').value.trim(),
+            complemento: document.getElementById('complemento')?.value.trim() || '',
+            observacao: document.getElementById('obs')?.value.trim() || '',
             cpf: document.getElementById('cpf').value.trim(),
             rg: document.getElementById('rg').value.trim(),
             data_nasc: document.getElementById('data_nasc').value,
@@ -35,18 +36,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validação Frontend
         const camposObrigatorios = {
-            nome: 'Nome', sobrenome: 'Sobrenome', endereco: 'Endereço', numero: 'Número',
-            bairro: 'Bairro', cidade: 'Cidade', estado: 'Estado', cpf: 'CPF', rg: 'RG',
-            dataNascimento: 'Data de Nascimento', celular: 'Celular', email: 'E-mail',
-            usuario: 'Usuário', senha: 'Senha'
+            nome: 'Nome',
+            sobrenome: 'Sobrenome',
+            rua: 'Rua',
+            numero: 'Número',
+            bairro: 'Bairro',
+            cidade: 'Cidade',
+            estado: 'Estado',
+            cep: 'CEP',
+            cpf: 'CPF',
+            rg: 'RG',
+            data_nasc: 'Data de Nascimento',
+            celular: 'Celular',
+            email: 'E-mail',
+            usuario: 'Usuário',
+            senha: 'Senha'
         };
 
         for (let key in camposObrigatorios) {
             if (!userData[key]) {
                 exibirMensagem(`Por favor, preencha o campo ${camposObrigatorios[key]}.`, 'erro');
                 // Foca no primeiro campo vazio
-                const inputId = key === 'dataNascimento' ? 'data-nascimento' : key;
-                document.getElementById(inputId).focus();
+                document.getElementById(key)?.focus();
                 return;
             }
         }
@@ -73,9 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Salva o ID retornado para a tela de verificação de e-mail usar
             if (response.id) sessionStorage.setItem('senac_verificar_id', response.id);
 
-            exibirMensagem('Cadastro realizado! Redirecionando para verificar o e-mail...', 'sucesso');
+            exibirMensagem('Cadastro realizado! Redirecionando para o login...', 'sucesso');
+
             setTimeout(() => {
-                window.location.href = 'verificar-email.html';
+                window.location.href = 'login.html';
             }, 1500);
         } else {
             exibirMensagem(response.message, 'erro');
