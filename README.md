@@ -21,7 +21,6 @@
 │       ├── perfil.html
 │       ├── recuperar-senha.html
 │       ├── resetar-senha.html
-│       ├── verificar-email.html
 │       └── sucesso.html
 ├── statics/
 │   ├── css/

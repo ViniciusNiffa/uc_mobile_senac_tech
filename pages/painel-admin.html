@@ -10,7 +10,6 @@
 		<link rel="stylesheet" type="text/css" href="../statics/css/base.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="../statics/css/admin/admin.css">
-		<script src="../statics/js/components.js" defer></script>
 	</head>
 	<body>
 		<div id="header-component"></div>
@@ -36,8 +35,8 @@
 							<tr>
 								<th>ID</th>
 								<th>Nome</th>
-								<th>E-mail</th>
-								<th>Perfil</th>
+								<th>Usuário</th>
+								<th>Celular</th>
 								<th>Ações</th>
 							</tr>
 						</thead>
@@ -60,6 +59,7 @@
 		<script src="../statics/js/config.js"></script>
 		<script src="../statics/js/api.js"></script>
 		<script src="../statics/js/auth-guard.js"></script>
+		<script src="../statics/js/components.js"></script>
 		<script src="../statics/js/menu.js"></script>
 		<script>
 			// Painel Admin — listagem de usuários via user_service
@@ -75,20 +75,39 @@
 
 				// Busca usuários no user_service
 				try {
-					const res = await fetch(`${APP_CONFIG.USER_URL}/users`, {
-						headers: { 'Authorization': `Bearer ${localStorage.getItem('senac_token')}` }
-					});
+					const token = localStorage.getItem('senac_token');
 
-					if (!res.ok) {
-						const erro = await res.json().catch(() => ({}));
+				const [resPerfis, resContas] = await Promise.all([
+					fetch(`${APP_CONFIG.USER_URL}/users`, {
+						headers: {
+							Authorization: `Bearer ${token}`
+						}
+					}),
 
-						throw new Error(
-							erro.error ||
-							erro.message ||
-							`Erro HTTP ${res.status}`
-						);
-					}
-					const usuarios = await res.json();
+					fetch(`${APP_CONFIG.AUTH_URL}/accounts`, {
+						headers: {
+							Authorization: `Bearer ${token}`
+						}
+					})
+				]);
+
+				if (!resPerfis.ok || !resContas.ok) {
+					throw new Error(
+						'Não foi possível carregar os usuários.'
+					);
+				}
+
+				const perfis = await resPerfis.json();
+				const contas = await resContas.json();
+
+				const contasPorId = new Map(
+					contas.map(conta => [conta.id, conta])
+				);
+
+				const usuarios = perfis.map(perfil => ({
+					...perfil,
+					...(contasPorId.get(perfil.id) || {})
+				}));
 
 					if (!Array.isArray(usuarios) || usuarios.length === 0) {
 						tbody.innerHTML = `<tr><td colspan="5"><div class="tabela-vazia"><p>Nenhum usuário encontrado.</p></div></td></tr>`;
@@ -98,23 +117,19 @@
 
 					badge.textContent = usuarios.length;
 					tbody.innerHTML = usuarios.map(u => `
-						<tr>
-							<td class="td-id">#${u.id}</td>
-							<td><strong>${escHtml(u.nome || u.primeiro_nome || '—')}</strong></td>
-							<td>${escHtml(u.email || '—')}</td>
-							<td>
-								<span class="badge-role badge-role--${u.role === 'admin' ? 'admin' : 'user'}">
-									${u.role === 'admin' ? 'Admin' : 'Aluno'}
-								</span>
-							</td>
-							<td>
-								<div class="acoes-tabela">
-									<a class="btn-acao btn-editar" href="editar-usuario.html?id=${u.id}">Editar</a>
-									<button class="btn-acao btn-excluir" onclick="excluirUsuario(${u.id})">Excluir</button>
-								</div>
-							</td>
-						</tr>
-					`).join('');
+					<tr>
+						<td class="td-id">#${u.id}</td>
+						<td><strong>${escHtml(u.nome || '—')} ${escHtml(u.sobrenome || '')}</strong></td>
+						<td>${escHtml(u.usuario || '—')}</td>
+						<td>${escHtml(u.celular || '—')}</td>
+						<td>
+							<div class="acoes-tabela">
+								<a class="btn-acao btn-editar" href="editar-usuario.html?id=${u.id}">Editar</a>
+								<button class="btn-acao btn-excluir" onclick="excluirUsuario(${u.id})">Excluir</button>
+							</div>
+						</td>
+					</tr>
+				`).join('');
 				} catch (err) {
 					console.error('Erro ao carregar usuários:', err);
 					tbody.innerHTML = `

@@ -4,7 +4,7 @@ from collections import defaultdict
 from flask import Blueprint, request, jsonify
 from .service import (register_user, login_user, logout_user, refresh_access_token,
                       request_password_reset, verify_reset_code, reset_password,
-                      login_with_google, verificar_otp_email, reenviar_otp_verificacao, get_account_by_email, delete_account)
+                      login_with_google, get_account_by_email, delete_account)
 from .auth import token_required
 
 main = Blueprint('main', __name__)
@@ -90,20 +90,6 @@ def verify_code():
 def reset():
     data = request.json
     response, status = reset_password(data.get('email'), data.get('codigo'), data.get('senha'))
-    return jsonify(response), status
-
-@main.route('/verify-email', methods=['POST'])
-@rate_limit(max_calls=10, window=300)
-def verify_email():
-    data = request.json or {}
-    response, status = verificar_otp_email(data.get('usuario_id'), data.get('codigo'))
-    return jsonify(response), status
-
-@main.route('/resend-otp', methods=['POST'])
-@rate_limit(max_calls=3, window=300)
-def resend_otp():
-    data = request.json or {}
-    response, status = reenviar_otp_verificacao(data.get('usuario_id'))
     return jsonify(response), status
 
 @main.route("/accounts/search", methods=["GET"])

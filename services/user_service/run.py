@@ -1,9 +1,8 @@
 import os
 from dotenv import load_dotenv
-from app.database import init_db
-
 load_dotenv()
 
+from app.database import init_db
 from flask import Flask
 from flask_cors import CORS
 from app.routes import main

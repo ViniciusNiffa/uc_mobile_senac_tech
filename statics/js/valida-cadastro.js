@@ -81,10 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSubmit.textContent = btnOriginalText;
 
         if (response.success) {
-            // Salva o ID retornado para a tela de verificação de e-mail usar
-            if (response.id) sessionStorage.setItem('senac_verificar_id', response.id);
-
-            exibirMensagem('Cadastro realizado! Redirecionando para o login...', 'sucesso');
+            exibirMensagem('Cadastro realizado com sucesso! Redirecionando para o login...', 'sucesso');
 
             setTimeout(() => {
                 window.location.href = 'login.html';

@@ -79,21 +79,6 @@ const API = {
         }
     },
 
-    // Reenviar OTP de verificação
-    async resendOtp(usuarioId) {
-        try {
-            const res = await fetch(`${APP_CONFIG.AUTH_URL}/resend-otp`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ usuario_id: usuarioId })
-            });
-            return await res.json();
-        } catch (err) {
-            console.error('Erro ao reenviar OTP:', err);
-            return { success: false, message: 'Erro de conexão.' };
-        }
-    },
-
     // Solicitar código de reset de senha
     async forgotPassword(email) {
         try {

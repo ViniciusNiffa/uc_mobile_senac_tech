@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
         const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
         setVal('nome', perfil.nome || `${perfil.primeiro_nome || ''} ${perfil.sobrenome || ''}`.trim());
-        setVal('email', perfil.email);
+        setVal('email', user.email);
         setVal('telefone', perfil.celular || perfil.telefone || '');
     }
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (!arquivo) return;
 
-            if (arquivo.size > 1024 * 1024) {
+            if (arquivo.size > 5 * 1024 * 1024) {
                 exibirMensagem(
                     'A foto deve ter no máximo 5 MB.',
                     'erro'
@@ -107,7 +107,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const dados = {
                 nome:     document.getElementById('nome')?.value.trim(),
-                email:    document.getElementById('email')?.value.trim(),
                 telefone: document.getElementById('telefone')?.value.trim(),
             };
 
