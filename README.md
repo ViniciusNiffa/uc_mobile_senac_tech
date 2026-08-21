@@ -19,7 +19,6 @@
 │       ├── cadastro.html
 │       ├── login.html
 │       ├── perfil.html
-│       ├── recuperar-senha.html
 │       ├── resetar-senha.html
 │       └── sucesso.html
 ├── statics/

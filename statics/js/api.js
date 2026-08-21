@@ -79,28 +79,13 @@ const API = {
         }
     },
 
-    // Solicitar código de reset de senha
-    async forgotPassword(email) {
-        try {
-            const res = await fetch(`${APP_CONFIG.AUTH_URL}/forgot-password`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-            return await res.json();
-        } catch (err) {
-            console.error('Erro ao solicitar reset:', err);
-            return { success: false, message: 'Erro de conexão.' };
-        }
-    },
-
-    // Redefinir senha com código OTP
-    async resetPassword(email, codigo, senha) {
+    // Redefinir senha diretamente pelo e-mail (sem código, sem e-mail enviado)
+    async resetPassword(email, senha) {
         try {
             const res = await fetch(`${APP_CONFIG.AUTH_URL}/reset-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, codigo, senha })
+                body: JSON.stringify({ email, senha })
             });
             return await res.json();
         } catch (err) {

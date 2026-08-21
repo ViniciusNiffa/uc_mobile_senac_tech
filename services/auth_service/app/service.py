@@ -1,6 +1,5 @@
 from .database import get_connection
 from .validator import validate_email, validate_password, hash_password, check_password, validate_cpf, validate_phone
-from .gmail_service import send_password_reset_email
 from sqlite3 import IntegrityError
 import hashlib
 import jwt
@@ -38,24 +37,6 @@ def _token_servico():
         "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1)
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-
-
-def _enviar_codigo_email(email, nome, codigo):
-    try:
-        send_password_reset_email(
-            email,
-            nome,
-            codigo
-        )
-
-        logger.info(
-            f"E-mail de recuperação enviado para {email}"
-        )
-
-    except Exception as error:
-        logger.error(
-            f"Falha ao enviar código por e-mail: {error}"
-        )
 
 
 def _enviar_template_email(email, tipo, dados):
@@ -486,129 +467,13 @@ def logout_user(token_cliente):
         cursor.close()
         conn.close()
 
-def request_password_reset(email):
-    resposta = {
-        "success": True,
-        "message": "Se o e-mail estiver cadastrado, enviamos um código."
-    }
-
+def reset_password(email, nova_senha):
+    """Redefine a senha diretamente pelo e-mail informado — sem código, sem e-mail
+    enviado. Fluxo simplificado a pedido: sem infraestrutura de e-mail neste projeto."""
     email = (email or "").strip().lower()
 
-    conn = get_connection()
-    if conn is None:
-        return resposta, 200
-
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute("""
-            SELECT id, email
-            FROM contas
-            WHERE email = ? AND ativo = 1
-        """, (email,))
-
-        conta = cursor.fetchone()
-
-        if not conta:
-            return resposta, 200
-
-        codigo = f"{secrets.randbelow(1000000):06d}"
-        codigo_hash = hash_password(codigo)
-
-        expira_em = (
-            datetime.datetime.now(datetime.timezone.utc)
-            + datetime.timedelta(minutes=15)
-        ).isoformat()
-
-        cursor.execute("""
-            UPDATE password_resets
-            SET usado = 1
-            WHERE conta_id = ? AND usado = 0
-        """, (conta["id"],))
-
-        cursor.execute("""
-            INSERT INTO password_resets (
-                conta_id,
-                codigo_hash,
-                expira_em
-            )
-            VALUES (?, ?, ?)
-        """, (
-            conta["id"],
-            codigo_hash,
-            expira_em
-        ))
-
-        conn.commit()
-
-    except Exception as error:
-        conn.rollback()
-        logger.error(f"Erro ao gerar código de recuperação: {error}")
-        return resposta, 200
-
-    finally:
-        cursor.close()
-        conn.close()
-
-    _enviar_codigo_email(
-        conta["email"],
-        "Usuário",
-        codigo
-    )
-
-    logger.info(f"Código de recuperação gerado para {email}")
-    return resposta, 200
-
-def verify_reset_code(email, codigo):
-    """Confere o código SEM trocar a senha nem consumi-lo (etapa dedicada do fluxo
-    profissional: e-mail → código → nova senha). Conta tentativas contra brute force,
-    mas mantém o código válido pro passo final (reset_password)."""
-    if not email or not codigo:
-        return {"message": "E-mail e código são obrigatórios."}, 400
-
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT pr.id, pr.token, pr.tentativas
-        FROM password_resets pr
-        JOIN usuarios u ON pr.usuario_id = u.id
-        WHERE u.email = ? AND pr.usado = 0 AND pr.expiracao > NOW()
-        ORDER BY pr.id DESC LIMIT 1
-    """, (email,))
-    reset_data = cursor.fetchone()
-
-    if not reset_data:
-        cursor.close()
-        conn.close()
-        return {"message": "Código inválido ou expirado. Solicite um novo."}, 400
-
-    if reset_data['tentativas'] >= 5:
-        cursor.execute("UPDATE password_resets SET usado = 1 WHERE id = ?", (reset_data['id'],))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return {"message": "Muitas tentativas erradas. Solicite um novo código."}, 429
-
-    if not check_password(str(codigo), reset_data['token']):
-        cursor.execute("UPDATE password_resets SET tentativas = tentativas + 1 WHERE id = ?", (reset_data['id'],))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return {"message": "Código incorreto."}, 400
-
-    cursor.close()
-    conn.close()
-    return {"success": True, "message": "Código verificado."}, 200
-
-
-def reset_password(email, codigo, nova_senha):
-    email = (email or "").strip().lower()
-    codigo = str(codigo or "").strip()
-
-    if not email or len(codigo) != 6 or not codigo.isdigit():
-        return {
-            "message": "E-mail e código de 6 dígitos são obrigatórios."
-        }, 400
+    if not email:
+        return {"message": "E-mail é obrigatório."}, 400
 
     valid, msg = validate_password(nova_senha)
     if not valid:
@@ -622,75 +487,15 @@ def reset_password(email, codigo, nova_senha):
 
     try:
         cursor.execute("""
-            SELECT
-                pr.id,
-                pr.conta_id,
-                pr.codigo_hash,
-                pr.expira_em,
-                pr.tentativas
-            FROM password_resets pr
-            JOIN contas c ON c.id = pr.conta_id
-            WHERE c.email = ?
-              AND c.ativo = 1
-              AND pr.usado = 0
-            ORDER BY pr.id DESC
-            LIMIT 1
+            SELECT id, ativo
+            FROM contas
+            WHERE email = ?
         """, (email,))
 
-        reset_data = cursor.fetchone()
+        conta = cursor.fetchone()
 
-        if not reset_data:
-            return {
-                "message": "Código inválido ou expirado."
-            }, 400
-
-        if reset_data["tentativas"] >= 5:
-            cursor.execute("""
-                UPDATE password_resets
-                SET usado = 1
-                WHERE id = ?
-            """, (reset_data["id"],))
-            conn.commit()
-
-            return {
-                "message": "Muitas tentativas erradas. Solicite outro código."
-            }, 429
-
-        expira_em = datetime.datetime.fromisoformat(
-            reset_data["expira_em"]
-        )
-
-        if expira_em.tzinfo is None:
-            expira_em = expira_em.replace(
-                tzinfo=datetime.timezone.utc
-            )
-
-        agora = datetime.datetime.now(datetime.timezone.utc)
-
-        if expira_em <= agora:
-            cursor.execute("""
-                UPDATE password_resets
-                SET usado = 1
-                WHERE id = ?
-            """, (reset_data["id"],))
-            conn.commit()
-
-            return {
-                "message": "Código inválido ou expirado."
-            }, 400
-
-        if not check_password(
-            codigo,
-            reset_data["codigo_hash"]
-        ):
-            cursor.execute("""
-                UPDATE password_resets
-                SET tentativas = tentativas + 1
-                WHERE id = ?
-            """, (reset_data["id"],))
-            conn.commit()
-
-            return {"message": "Código incorreto."}, 400
+        if not conta or conta["ativo"] == 0:
+            return {"message": "E-mail não encontrado."}, 404
 
         nova_senha_hash = hash_password(nova_senha)
 
@@ -700,27 +505,24 @@ def reset_password(email, codigo, nova_senha):
             WHERE id = ?
         """, (
             nova_senha_hash,
-            reset_data["conta_id"]
+            conta["id"]
         ))
 
-        cursor.execute("""
-            UPDATE password_resets
-            SET usado = 1
-            WHERE id = ?
-        """, (reset_data["id"],))
-
         # Encerra as sessões antigas depois da troca de senha.
+        agora = datetime.datetime.now(datetime.timezone.utc).isoformat()
         cursor.execute("""
             UPDATE refresh_tokens
             SET expirado_em = ?
             WHERE conta_id = ?
               AND expirado_em IS NULL
         """, (
-            agora.isoformat(),
-            reset_data["conta_id"]
+            agora,
+            conta["id"]
         ))
 
         conn.commit()
+
+        logger.info(f"Senha redefinida para {email}")
 
         return {
             "success": True,
@@ -832,6 +634,43 @@ def delete_account(account_id, authorization_header):
         return {
             "error": str(error)
         }, 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+def get_all_accounts():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT
+                id,
+                email,
+                is_admin,
+                ativo,
+                criado_em
+            FROM contas
+            ORDER BY id
+        """)
+
+        accounts = cursor.fetchall()
+
+        return [
+            {
+                "id": account["id"],
+                "email": account["email"],
+                "role": (
+                    "admin"
+                    if account["is_admin"] == 1
+                    else "user"
+                ),
+                "ativo": bool(account["ativo"]),
+                "criado_em": account["criado_em"]
+            }
+            for account in accounts
+        ]
 
     finally:
         cursor.close()

@@ -1,18 +1,11 @@
 // statics/js/valida-resetar-senha.js
-// Lógica da página resetar-senha.html — valida código OTP e define nova senha.
+// Lógica da página resetar-senha.html — redefine a senha direto pelo e-mail (sem código/e-mail).
 
 document.addEventListener('DOMContentLoaded', () => {
     const form   = document.getElementById('form-resetar-senha');
     const msgBox = document.getElementById('mensagem-resetar');
 
     if (!form) return;
-
-    // Pré-preenche o e-mail se a página anterior gravou em sessionStorage
-    const emailSalvo = sessionStorage.getItem('senac_reset_email');
-    const inputEmail = document.getElementById('email');
-    if (emailSalvo && inputEmail) {
-        inputEmail.value = emailSalvo;
-    }
 
     function exibirMensagem(texto, tipo) {
         msgBox.textContent = texto;
@@ -23,11 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         exibirMensagem('', '');
 
-        const email  = document.getElementById('email').value.trim();
-        const codigo = document.getElementById('codigo').value.trim();
-        const senha  = document.getElementById('senha').value;
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('senha').value;
 
-        if (!email || !codigo || !senha) {
+        if (!email || !senha) {
             exibirMensagem('Preencha todos os campos.', 'erro');
             return;
         }
@@ -41,17 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.disabled = true;
         btn.textContent = 'Redefinindo...';
 
-        const res = await API.resetPassword(email, codigo, senha);
+        const res = await API.resetPassword(email, senha);
 
         btn.disabled = false;
         btn.textContent = 'Redefinir senha';
 
         if (res.success) {
-            sessionStorage.removeItem('senac_reset_email');
             exibirMensagem('Senha redefinida com sucesso! Redirecionando para o login...', 'sucesso');
             setTimeout(() => { window.location.href = 'login.html'; }, 1800);
         } else {
-            exibirMensagem(res.message || 'Código inválido ou expirado. Solicite um novo código.', 'erro');
+            exibirMensagem(res.message || 'Não foi possível redefinir a senha.', 'erro');
         }
     });
 });

@@ -3,8 +3,8 @@ from functools import wraps
 from collections import defaultdict
 from flask import Blueprint, request, jsonify
 from .service import (register_user, login_user, logout_user, refresh_access_token,
-                      request_password_reset, verify_reset_code, reset_password,
-                      login_with_google, get_account_by_email, delete_account)
+                      reset_password, login_with_google, get_account_by_email,
+                      get_all_accounts, delete_account)
 from .auth import token_required
 
 main = Blueprint('main', __name__)
@@ -71,26 +71,22 @@ def logout():
 
     return jsonify(response), status
 
-@main.route('/forgot-password', methods=['POST'])
-@rate_limit(max_calls=5, window=300)
-def forgot():
-    email = request.json.get('email')
-    response, status = request_password_reset(email)
-    return jsonify(response), status
-
-@main.route('/verify-reset-code', methods=['POST'])
-@rate_limit(max_calls=10, window=300)
-def verify_code():
-    data = request.json or {}
-    response, status = verify_reset_code(data.get('email'), data.get('codigo'))
-    return jsonify(response), status
-
 @main.route('/reset-password', methods=['POST'])
 @rate_limit(max_calls=10, window=300)
 def reset():
-    data = request.json
-    response, status = reset_password(data.get('email'), data.get('codigo'), data.get('senha'))
+    data = request.json or {}
+    response, status = reset_password(data.get('email'), data.get('senha'))
     return jsonify(response), status
+
+@main.route("/accounts", methods=["GET"])
+@token_required
+def list_accounts():
+    if request.user.get("role") != "admin":
+        return jsonify({
+            "error": "Acesso permitido somente para administradores."
+        }), 403
+
+    return jsonify(get_all_accounts()), 200
 
 @main.route("/accounts/search", methods=["GET"])
 @token_required
