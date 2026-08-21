@@ -1,16 +1,40 @@
-from flask import Blueprint, request, jsonify
+from flask import ( Blueprint, request, jsonify, send_from_directory )
 from .service import (create_user_profile, get_user_by_id, update_user, get_user_addresses, add_address,
-                     delete_address, get_user_favorites, add_favorite, remove_favorite)
+                     delete_address, get_user_favorites, add_favorite, remove_favorite, get_all_users, delete_user_profile, update_profile_photo)
 from .notificacao_service import (listar_notificacoes, contar_nao_lidas,
                                   marcar_lida, marcar_todas_lidas)
 from .auth import token_required
+from pathlib import Path
+from uuid import uuid4
+
 
 main = Blueprint('main', __name__)
 
+UPLOAD_DIR = (
+    Path(__file__).resolve().parent.parent
+    / "uploads"
+)
+
+EXTENSOES_PERMITIDAS = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp"
+}
 
 def _eh_dono(user_id):
-    """True se o id da URL é o mesmo do usuário autenticado (anti-IDOR)."""
-    return user_id == request.user.get('id')
+    return (
+        user_id == request.user.get("id")
+        or request.user.get("role") == "admin"
+    )
+
+@main.route('/users', methods=['GET'])
+@token_required
+def list_users():
+    if request.user.get("role") != "admin":
+        return jsonify({"error": "Acesso permitido somente para administradores"}), 403
+
+    return jsonify(get_all_users()), 200
 
 @main.route('/users', methods=['POST'])
 def create_profile():
@@ -48,6 +72,30 @@ def update_profile(user_id):
     if update_user(user_id, data):
         return jsonify({"message": "Perfil atualizado"}), 200
     return jsonify({"error": "Falha ao atualizar"}), 400
+
+@main.route('/users/<int:user_id>', methods=['DELETE'])
+@token_required
+def delete_profile(user_id):
+    usuario_logado = request.user
+
+    if usuario_logado.get("role") != "admin":
+        return jsonify({
+            "error": "Apenas administradores podem excluir usuários."
+        }), 403
+
+    if usuario_logado.get("id") == user_id:
+        return jsonify({
+            "error": "O administrador não pode excluir a própria conta."
+        }), 400
+
+    if delete_user_profile(user_id):
+        return jsonify({
+            "message": "Perfil excluído com sucesso."
+        }), 200
+
+    return jsonify({
+        "error": "Perfil não encontrado."
+    }), 404
 
 @main.route('/users/<int:user_id>/addresses', methods=['GET'])
 @token_required
@@ -123,3 +171,73 @@ def read_notif(notif_id):
 def read_all_notifs():
     marcar_todas_lidas(request.user.get('id'))
     return jsonify({"success": True}), 200
+
+@main.route(
+    '/users/<int:user_id>/photo',
+    methods=['POST']
+)
+@token_required
+def upload_profile_photo(user_id):
+    if not _eh_dono(user_id):
+        return jsonify({
+            "error": "Acesso negado."
+        }), 403
+
+    arquivo = request.files.get("foto")
+
+    if not arquivo or not arquivo.filename:
+        return jsonify({
+            "error": "Nenhuma foto foi enviada."
+        }), 400
+
+    extensao = Path(arquivo.filename).suffix.lower()
+
+    if extensao not in EXTENSOES_PERMITIDAS:
+        return jsonify({
+            "error": "Use uma imagem JPG, PNG ou WEBP."
+        }), 400
+
+    UPLOAD_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    nome_arquivo = (
+        f"perfil_{user_id}_{uuid4().hex}"
+        f"{extensao}"
+    )
+
+    caminho = UPLOAD_DIR / nome_arquivo
+    arquivo.save(caminho)
+
+    if not update_profile_photo(
+        user_id,
+        nome_arquivo
+    ):
+        caminho.unlink(missing_ok=True)
+
+        return jsonify({
+            "error": "Não foi possível salvar a foto."
+        }), 500
+
+    foto_url = (
+        f"{request.host_url.rstrip('/')}"
+        f"/api/uploads/{nome_arquivo}"
+    )
+
+    return jsonify({
+        "message": "Foto atualizada com sucesso.",
+        "foto_perfil": nome_arquivo,
+        "foto_url": foto_url
+    }), 200
+
+
+@main.route(
+    '/uploads/<path:nome_arquivo>',
+    methods=['GET']
+)
+def serve_profile_photo(nome_arquivo):
+    return send_from_directory(
+        UPLOAD_DIR,
+        nome_arquivo
+    )

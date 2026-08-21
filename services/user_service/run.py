@@ -16,7 +16,7 @@ if not SECRET_KEY:
     raise ValueError("ERRO CRÍTICO: SECRET_KEY não configurada no User Service.")
 
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # teto de 1 MB por request
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # teto de 1 MB por request
 app.register_blueprint(main, url_prefix='/api')
 CORS(app, resources={r"/*": {"origins": "*"}})
 

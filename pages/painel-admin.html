@@ -17,9 +17,12 @@
 
 		<main class="admin-container">
 			<div class="admin-header">
-				<h2>Painel Administrativo</h2>
+				<h2>
+    				Painel Administrativo
+    				<span id="badge-total">0</span>
+				</h2>
 				<div class="admin-header__acoes">
-					<a href="usuario/cadastro.html" class="btn-add" id="btn-novo-usuario">
+					<a href="usuario/cadastro.html?admin=1" class="btn-add" id="btn-novo-usuario">
 						+ Novo Usuário
 					</a>
 					<button id="btn-logout-admin" class="btn-admin-sair">Sair</button>
@@ -76,7 +79,15 @@
 						headers: { 'Authorization': `Bearer ${localStorage.getItem('senac_token')}` }
 					});
 
-					if (!res.ok) throw new Error(`HTTP ${res.status}`);
+					if (!res.ok) {
+						const erro = await res.json().catch(() => ({}));
+
+						throw new Error(
+							erro.error ||
+							erro.message ||
+							`Erro HTTP ${res.status}`
+						);
+					}
 					const usuarios = await res.json();
 
 					if (!Array.isArray(usuarios) || usuarios.length === 0) {
@@ -98,7 +109,7 @@
 							</td>
 							<td>
 								<div class="acoes-tabela">
-									<button class="btn-acao btn-editar" onclick="editarUsuario(${u.id})">Editar</button>
+									<a class="btn-acao btn-editar" href="editar-usuario.html?id=${u.id}">Editar</a>
 									<button class="btn-acao btn-excluir" onclick="excluirUsuario(${u.id})">Excluir</button>
 								</div>
 							</td>
@@ -106,7 +117,15 @@
 					`).join('');
 				} catch (err) {
 					console.error('Erro ao carregar usuários:', err);
-					tbody.innerHTML = `<tr><td colspan="5"><div class="tabela-vazia"><p>Não foi possível carregar os usuários. Verifique se o serviço está rodando.</p></div></td></tr>`;
+					tbody.innerHTML = `
+						<tr>
+							<td colspan="5">
+								<div class="tabela-vazia">
+									<p>${escHtml(err.message)}</p>
+								</div>
+							</td>
+						</tr>
+					`;
 					badge.textContent = '!';
 				}
 			});
@@ -116,16 +135,43 @@
 				return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 			}
 
-			function editarUsuario(id) {
-				// TODO: abrir modal ou redirecionar para página de edição
-				alert(`Editar usuário #${id} — funcionalidade em desenvolvimento.`);
-			}
 
-			function excluirUsuario(id) {
-				if (confirm(`Deseja excluir o usuário #${id}?`)) {
-					alert('Funcionalidade de exclusão em desenvolvimento.');
-				}
-			}
+async function excluirUsuario(id) {
+    const confirmou = confirm(
+        `Deseja realmente excluir o usuário #${id}?`
+    );
+
+    if (!confirmou) return;
+
+    const token = localStorage.getItem('senac_token');
+
+    try {
+        const resposta = await fetch(
+            `${APP_CONFIG.AUTH_URL}/accounts/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const resultado = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(
+                resultado.error ||
+                'Não foi possível excluir o usuário.'
+            );
+        }
+
+        alert('Usuário excluído com sucesso!');
+        window.location.reload();
+
+    } catch (erro) {
+        alert(erro.message);
+    }
+}
 		</script>
 	</body>
 </html>

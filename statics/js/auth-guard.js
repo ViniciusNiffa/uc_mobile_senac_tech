@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Se a url contém '/pages/usuario/', login.html está na mesma pasta.
             // Se a url contém '/pages/', login.html está em 'usuario/login.html'
             let pathToLogin = 'login.html';
-            if (currentPath.includes('/pages/painel-admin.html')) {
+            if (
+                currentPath.includes('/pages/painel-admin.html') ||
+                currentPath.includes('/pages/editar-usuario.html')
+            ) {
                 pathToLogin = 'usuario/login.html';
             }
             
@@ -32,14 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // Se JÁ está logado
         const user = API.getUser();
-        
-        // Regra 1: Impedir de ver a página de login/cadastro
-        if (isAuthPage) {
+
+        const adminCriandoUsuario =
+            currentPath.includes('cadastro.html') &&
+            new URLSearchParams(window.location.search).get('admin') === '1' &&
+            user?.role === 'admin';
+
+        // Impede usuário logado de acessar login/cadastro,
+        // exceto quando o administrador estiver cadastrando alguém.
+        if (isAuthPage && !adminCriandoUsuario) {
             if (user && user.role === 'admin') {
                 window.location.href = '../painel-admin.html';
             } else {
                 window.location.href = 'painel-usuario.html';
             }
+
             return;
         }
         

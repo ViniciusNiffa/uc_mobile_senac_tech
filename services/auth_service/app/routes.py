@@ -4,7 +4,7 @@ from collections import defaultdict
 from flask import Blueprint, request, jsonify
 from .service import (register_user, login_user, logout_user, refresh_access_token,
                       request_password_reset, verify_reset_code, reset_password,
-                      login_with_google, verificar_otp_email, reenviar_otp_verificacao, get_account_by_email)
+                      login_with_google, verificar_otp_email, reenviar_otp_verificacao, get_account_by_email, delete_account)
 from .auth import token_required
 
 main = Blueprint('main', __name__)
@@ -134,3 +134,25 @@ def search_account():
         }), 404
 
     return jsonify(account), 200
+
+@main.route("/accounts/<int:account_id>", methods=["DELETE"])
+@token_required
+def remove_account(account_id):
+    usuario_logado = request.user
+
+    if usuario_logado.get("role") != "admin":
+        return jsonify({
+            "error": "Apenas administradores podem excluir usuários."
+        }), 403
+
+    if usuario_logado.get("id") == account_id:
+        return jsonify({
+            "error": "Você não pode excluir sua própria conta administrativa."
+        }), 400
+
+    resultado, status = delete_account(
+        account_id,
+        request.headers.get("Authorization", "")
+    )
+
+    return jsonify(resultado), status

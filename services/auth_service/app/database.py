@@ -1,3 +1,4 @@
+from .validator import hash_password
 import os
 import sqlite3
 from dotenv import load_dotenv
@@ -44,6 +45,55 @@ def init_db():
         ON DELETE CASCADE
     );
     """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS password_resets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        conta_id INTEGER NOT NULL,
+        codigo_hash TEXT NOT NULL,
+        expira_em TEXT NOT NULL,
+        usado INTEGER NOT NULL DEFAULT 0,
+        tentativas INTEGER NOT NULL DEFAULT 0,
+        criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (conta_id)
+            REFERENCES contas(id)
+            ON DELETE CASCADE
+    )
+""")
+
+    admin_email = os.getenv("ADMIN_EMAIL")
+    admin_password = os.getenv("ADMIN_PASSWORD")
+
+    if admin_email and admin_password:
+        cursor.execute("""
+            SELECT id
+            FROM contas
+            WHERE email = ?
+        """, (admin_email,))
+
+        admin = cursor.fetchone()
+
+        if admin is None:
+            cursor.execute("""
+                INSERT INTO contas (
+                    email,
+                    senha_hash,
+                    is_admin,
+                    ativo
+                )
+                VALUES (?, ?, 1, 1)
+            """, (
+                admin_email,
+                hash_password(admin_password)
+            ))
+        else:
+            cursor.execute("""
+                UPDATE contas
+                SET is_admin = 1,
+                    ativo = 1
+                WHERE email = ?
+            """, (admin_email,))
 
     conn.commit()
     cursor.close()

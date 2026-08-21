@@ -26,3 +26,9 @@ env/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+
+/services/auth_service/credentials.json
+/services/auth_service/token.json
+
+/services/user_service/uploads/

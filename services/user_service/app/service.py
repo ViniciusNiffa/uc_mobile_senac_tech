@@ -259,3 +259,51 @@ def remove_favorite(perfil_id, fav_id):
     cursor.close()
     conn.close()
     return success
+
+def get_all_users():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT
+                id,
+                nome,
+                sobrenome,
+                usuario,
+                celular,
+                criado_em
+            FROM perfis
+            ORDER BY nome
+        """)
+
+        users = cursor.fetchall()
+        return [dict(user) for user in users]
+
+    finally:
+        cursor.close()
+        conn.close()
+
+def delete_user_profile(perfil_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            DELETE FROM perfis
+            WHERE id = ?
+        """, (perfil_id,))
+
+        excluiu = cursor.rowcount > 0
+        conn.commit()
+
+        return excluiu
+
+    except sqlite3.Error as error:
+        conn.rollback()
+        print(f"Erro ao excluir perfil: {error}")
+        return False
+
+    finally:
+        cursor.close()
+        conn.close()

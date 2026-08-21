@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const msgBox  = document.getElementById('mensagem-perfil');
     const btnSair = document.getElementById('btn-logout');
 
+    const inputFoto =
+    document.getElementById('upload-foto');
+
+    const imagemPerfil =
+    document.getElementById('img-perfil');
+
     const user = API.getUser();
     if (!user) return; // auth-guard já cuida do redirecionamento
 
@@ -18,11 +24,80 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ── Carrega dados do perfil ─────────────────────────────────────
     const perfil = await API.getProfile(user.id);
     if (perfil && !perfil.error) {
+    if (perfil.foto_perfil && imagemPerfil) {
+        imagemPerfil.src =
+            `${APP_CONFIG.USER_URL}/uploads/` +
+            encodeURIComponent(perfil.foto_perfil);
+    }
         const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
         setVal('nome', perfil.nome || `${perfil.primeiro_nome || ''} ${perfil.sobrenome || ''}`.trim());
         setVal('email', perfil.email);
         setVal('telefone', perfil.celular || perfil.telefone || '');
     }
+
+    if (inputFoto) {
+    inputFoto.addEventListener(
+        'change',
+        async () => {
+            const arquivo = inputFoto.files[0];
+
+            if (!arquivo) return;
+
+            if (arquivo.size > 1024 * 1024) {
+                exibirMensagem(
+                    'A foto deve ter no máximo 5 MB.',
+                    'erro'
+                );
+                inputFoto.value = '';
+                return;
+            }
+
+            const dadosFoto = new FormData();
+            dadosFoto.append('foto', arquivo);
+
+            try {
+                const resposta = await fetch(
+                    `${APP_CONFIG.USER_URL}` +
+                    `/users/${user.id}/photo`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Authorization:
+                                `Bearer ${localStorage.getItem(
+                                    'senac_token'
+                                )}`
+                        },
+                        body: dadosFoto
+                    }
+                );
+
+                const resultado =
+                    await resposta.json();
+
+                if (!resposta.ok) {
+                    throw new Error(
+                        resultado.error ||
+                        'Não foi possível enviar a foto.'
+                    );
+                }
+
+                imagemPerfil.src =
+                    resultado.foto_url;
+
+                exibirMensagem(
+                    'Foto atualizada com sucesso!',
+                    'sucesso'
+                );
+
+            } catch (erro) {
+                exibirMensagem(
+                    erro.message,
+                    'erro'
+                );
+            }
+        }
+    );
+}
 
     // ── Salva alterações ────────────────────────────────────────────
     if (form) {

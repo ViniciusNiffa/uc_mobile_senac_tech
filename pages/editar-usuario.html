@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Senac Tech - Editar Usuário</title>
+
+    <link rel="stylesheet" href="../statics/css/base.css">
+    <link rel="stylesheet" href="../statics/css/menu.css">
+    <link rel="stylesheet" href="../statics/css/usuario/usuario.css">
+    <link rel="stylesheet" href="../statics/css/admin/admin.css">
+</head>
+<body>
+    <div id="header-component"></div>
+
+    <main class="usuario-container usuario-container--largo">
+        <h2>Editar usuário</h2>
+
+        <form id="form-editar-usuario"
+              class="form-usuario form-usuario--grade"
+              novalidate>
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" required>
+            </div>
+
+            <div class="campo">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" id="sobrenome" required>
+            </div>
+
+            <div class="campo">
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" required>
+            </div>
+
+            <div class="campo">
+                <label for="celular">Celular</label>
+                <input type="tel" id="celular" required>
+            </div>
+
+            <div class="campo">
+                <label for="data_nasc">Data de nascimento</label>
+                <input type="date" id="data_nasc" required>
+            </div>
+
+            <div class="campo">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" required>
+            </div>
+
+            <div class="campo">
+                <label for="rg">RG</label>
+                <input type="text" id="rg" required>
+            </div>
+
+            <div class="campo campo--completo">
+                <label for="observacao">Observação</label>
+                <textarea id="observacao" rows="4"></textarea>
+            </div>
+
+            <p id="mensagem-edicao"
+               class="mensagem campo--completo"
+               role="alert"></p>
+
+            <div class="acoes campo--completo">
+                <button type="submit">Salvar alterações</button>
+                <button type="button" id="btn-cancelar">Cancelar</button>
+            </div>
+        </form>
+    </main>
+
+    <div id="footer-component"></div>
+
+    <script src="../statics/js/config.js"></script>
+    <script src="../statics/js/api.js"></script>
+    <script src="../statics/js/auth-guard.js"></script>
+    <script src="../statics/js/components.js"></script>
+    <script src="../statics/js/admin-editar-usuario.js"></script>
+    <script src="../statics/js/menu.js"></script>
+</body>
+</html>
