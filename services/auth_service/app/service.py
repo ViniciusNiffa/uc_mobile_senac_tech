@@ -950,3 +950,40 @@ def delete_account(account_id, authorization_header):
     finally:
         cursor.close()
         conn.close()
+
+def get_all_accounts():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            SELECT
+                id,
+                email,
+                is_admin,
+                ativo,
+                criado_em
+            FROM contas
+            ORDER BY id
+        """)
+
+        accounts = cursor.fetchall()
+
+        return [
+            {
+                "id": account["id"],
+                "email": account["email"],
+                "role": (
+                    "admin"
+                    if account["is_admin"] == 1
+                    else "user"
+                ),
+                "ativo": bool(account["ativo"]),
+                "criado_em": account["criado_em"]
+            }
+            for account in accounts
+        ]
+
+    finally:
+        cursor.close()
+        conn.close()

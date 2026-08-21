@@ -4,7 +4,7 @@ from collections import defaultdict
 from flask import Blueprint, request, jsonify
 from .service import (register_user, login_user, logout_user, refresh_access_token,
                       request_password_reset, verify_reset_code, reset_password,
-                      login_with_google, verificar_otp_email, reenviar_otp_verificacao, get_account_by_email, delete_account)
+                      login_with_google, verificar_otp_email, reenviar_otp_verificacao, get_account_by_email, get_all_accounts, delete_account)
 from .auth import token_required
 
 main = Blueprint('main', __name__)
@@ -105,6 +105,16 @@ def resend_otp():
     data = request.json or {}
     response, status = reenviar_otp_verificacao(data.get('usuario_id'))
     return jsonify(response), status
+
+@main.route("/accounts", methods=["GET"])
+@token_required
+def list_accounts():
+    if request.user.get("role") != "admin":
+        return jsonify({
+            "error": "Acesso permitido somente para administradores."
+        }), 403
+
+    return jsonify(get_all_accounts()), 200
 
 @main.route("/accounts/search", methods=["GET"])
 @token_required
